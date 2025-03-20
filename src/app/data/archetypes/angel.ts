@@ -1,0 +1,29 @@
+import { halcyon } from "../styles/angel/halcyon";
+import { Archetype } from "../types/Archetype";
+
+export const angel: Archetype = {
+    name: "Angel",
+    focusedAbilities: [
+        "Your Challenges are Unblockable By Shields.",
+        "At the start of your turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
+        "After you challenge an enemy, deal 1 damage to them and heal 1.",
+    ],
+    fusedAbilities: [
+        "Your Challenges are Unblockable by Shields.",
+        "At the start of your turn, you may heal 2, then if you did, Challenge an enemy you can see.",
+        "After you Challenge an enemy, you deal 1 damage to them.",
+    ],
+    franticAbilities: [
+        "Your Challenges are Unblockable by Shields.",
+        "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 dmaage to them.",
+        "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1.",
+    ],
+    actions: [
+        {
+            name: "Siren Song",
+            cost: "2+ or 5+",
+            desc: "Challenge one enemy you can see. You may Pull them up to 3.\n5+: Challenge every enemy adjacent to the initial target, then Pull 1 to everyone Challenged by Siren Song.",
+        },
+    ],
+    styles: [halcyon],
+};
