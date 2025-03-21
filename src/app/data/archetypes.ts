@@ -5,6 +5,7 @@ import { demon } from "./archetypes/demon";
 import { flametongue } from "./archetypes/flametongue";
 import { gunkata } from "./archetypes/gunkata";
 import { phantom } from "./archetypes/phantom";
+import { punk } from "./archetypes/punk";
 import { Archetype } from "./types/Archetype";
 
 export const archetypes: Archetype[] = [
@@ -15,4 +16,5 @@ export const archetypes: Archetype[] = [
     flametongue,
     gunkata,
     phantom,
+    punk,
 ];
