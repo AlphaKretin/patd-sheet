@@ -71,8 +71,11 @@ export default function CharacterBuilder() {
     };
 
     // Handle Stance selection
-    const handleStanceSelection = (style: Style, form: Form) => {
-        setCurrentStance({ style, form });
+    const handleStanceSelection = (index: number) => {
+        setCurrentStance({
+            style: selectedStyles[index],
+            form: selectedForms[index],
+        });
     };
 
     // Get available Styles based on selected Archetypes
@@ -259,23 +262,35 @@ export default function CharacterBuilder() {
                                     </select>
                                 </div>
                             </div>
-
-                            {/* Stance Selection Button */}
-                            {selectedStyles[index] && selectedForms[index] && (
-                                <button
-                                    onClick={() =>
-                                        handleStanceSelection(
-                                            selectedStyles[index],
-                                            selectedForms[index]
-                                        )
-                                    }
-                                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    View Stance {index + 1}
-                                </button>
-                            )}
                         </div>
                     ))}
+                </section>
+            )}
+
+            {/* Stance Selection Dropdown */}
+            {heroType && selectedArchetypes.length > 0 && (
+                <section className="mb-8">
+                    <label className="block text-sm font-medium mb-2">
+                        Select Stance to View
+                    </label>
+                    <select
+                        onChange={(e) =>
+                            handleStanceSelection(parseInt(e.target.value))
+                        }
+                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="">Select Stance</option>
+                        {selectedStyles.map(
+                            (style, index) =>
+                                style &&
+                                selectedForms[index] && (
+                                    <option key={index} value={index}>
+                                        {selectedStyles[index].name}{" "}
+                                        {selectedForms[index].name}
+                                    </option>
+                                )
+                        )}
+                    </select>
                 </section>
             )}
 
