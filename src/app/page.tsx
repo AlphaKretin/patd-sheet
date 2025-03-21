@@ -11,8 +11,8 @@ import { Freestyle, Style } from "./data/types/Style";
 export default function CharacterBuilder() {
     const [heroType, setHeroType] = useState<"Focused" | "Fused" | "Frantic" | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(3).fill(""));
-    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(3).fill(""));
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(3).fill({}));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(3).fill({}));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -26,8 +26,8 @@ export default function CharacterBuilder() {
     const handleHeroTypeChange = (type: "Focused" | "Fused" | "Frantic") => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
-        setSelectedStyles(Array(3).fill("")); // Reset Styles
-        setSelectedForms(Array(3).fill("")); // Reset Forms
+        setSelectedStyles(Array(3).fill({})); // Reset Styles
+        setSelectedForms(Array(3).fill({})); // Reset Forms
         setCurrentStance(null); // Reset Stance
     };
 
@@ -50,6 +50,11 @@ export default function CharacterBuilder() {
         const newStyles = [...selectedStyles];
         const newStyle = availableStyles.find((s) => s.name === style);
         if (isDefined(newStyle)) {
+            // Check if the selected style is a Freestyle and its bannedForm is selected
+            if (isFreestyle(newStyle) && selectedForms.some((form) => form.name === newStyle.bannedForm)) {
+                alert(`Cannot select ${newStyle.name} because it bans ${newStyle.bannedForm}.`);
+                return;
+            }
             newStyles[index] = newStyle;
         }
         setSelectedStyles(newStyles);
@@ -60,6 +65,12 @@ export default function CharacterBuilder() {
         const newForms = [...selectedForms];
         const newForm = forms.find((a) => a.name === form);
         if (isDefined(newForm)) {
+            // Check if the selected form is banned by any selected Freestyle
+            const banForms = selectedStyles.find((style) => isFreestyle(style) && style.bannedForm === newForm.name);
+            if (banForms !== undefined) {
+                alert(`Cannot select ${newForm.name} because it is banned by the ${banForms.name} Freestyle.`);
+                return;
+            }
             newForms[index] = newForm;
         }
         setSelectedForms(newForms);
