@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { forms } from "./data/forms";
+import { freestyles } from "./data/freestyles";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
 import { Style } from "./data/types/Style";
@@ -47,7 +48,7 @@ export default function CharacterBuilder() {
     // Handle Style selection
     const handleStyleChange = (style: string, index: number) => {
         const newStyles = [...selectedStyles];
-        const newStyle = archetypes.flatMap((a) => a.styles).find((a) => a.name === style);
+        const newStyle = availableStyles.find((s) => s.name === style);
         if (isDefined(newStyle)) {
             newStyles[index] = newStyle;
         }
@@ -107,7 +108,7 @@ export default function CharacterBuilder() {
     };
 
     // Get available Styles based on selected Archetypes
-    const availableStyles = selectedArchetypes.flatMap((archetype) => archetype.styles);
+    const availableStyles = [...selectedArchetypes.flatMap((archetype) => archetype.styles), ...freestyles];
 
     const archetypeAbilities =
         heroType === "Frantic"
