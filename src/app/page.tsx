@@ -21,9 +21,13 @@ export default function CharacterBuilder() {
         Array(3).fill("")
     );
     const [currentStance, setCurrentStance] = useState<{
+        archetype: Archetype;
         style: Style;
         form: Form;
     } | null>(null);
+    const [franticArchetype, setFranticArchetype] = useState<Archetype>();
+    const [franticStyle, setFranticStyle] = useState<Style>();
+    const [franticForm, setFranticForm] = useState<Form>();
 
     // Handle Hero Type selection
     const handleHeroTypeChange = (type: "Focused" | "Fused" | "Frantic") => {
@@ -73,9 +77,43 @@ export default function CharacterBuilder() {
     // Handle Stance selection
     const handleStanceSelection = (index: number) => {
         setCurrentStance({
+            archetype: selectedArchetypes[index], // unused but for Frantic
             style: selectedStyles[index],
             form: selectedForms[index],
         });
+    };
+
+    const handleFranticArchetypeSelection = (index: number) => {
+        setFranticArchetype(selectedArchetypes[index]);
+        if (franticArchetype && franticStyle && franticForm) {
+            setCurrentStance({
+                archetype: franticArchetype,
+                style: franticStyle,
+                form: franticForm,
+            });
+        }
+    };
+
+    const handleFranticStyleSelection = (index: number) => {
+        setFranticStyle(selectedStyles[index]);
+        if (franticArchetype && franticStyle && franticForm) {
+            setCurrentStance({
+                archetype: franticArchetype,
+                style: franticStyle,
+                form: franticForm,
+            });
+        }
+    };
+
+    const handleFranticFormSelection = (index: number) => {
+        setFranticForm(selectedForms[index]);
+        if (franticArchetype && franticStyle && franticForm) {
+            setCurrentStance({
+                archetype: franticArchetype,
+                style: franticStyle,
+                form: franticForm,
+            });
+        }
     };
 
     // Get available Styles based on selected Archetypes
@@ -83,25 +121,33 @@ export default function CharacterBuilder() {
         (archetype) => archetype.styles
     );
 
+    const archetypeAbilities =
+        heroType === "Frantic"
+            ? currentStance?.archetype.franticAbilities || []
+            : selectedArchetypes.flatMap((archetype) => {
+                  switch (heroType) {
+                      case "Focused":
+                          return archetype.focusedAbilities;
+                      case "Fused":
+                          return archetype.fusedAbilities;
+                      default:
+                          return [];
+                  }
+              });
+
     // Combine Abilities and Actions for the selected Stance
     const combinedAbilities = [
-        ...selectedArchetypes.flatMap((archetype) => {
-            switch (heroType) {
-                case "Focused":
-                    return archetype.focusedAbilities;
-                case "Fused":
-                    return archetype.fusedAbilities;
-                case "Frantic":
-                    return archetype.franticAbilities;
-                default:
-                    return [];
-            }
-        }),
+        ...archetypeAbilities,
         ...(currentStance ? [...currentStance.form.abilities] : []),
     ].sort();
 
+    const archetypeActions =
+        heroType === "Frantic"
+            ? currentStance?.archetype.actions || []
+            : selectedArchetypes.flatMap((archetype) => archetype.actions);
+
     const combinedActions = [
-        ...selectedArchetypes.flatMap((archetype) => archetype.actions),
+        ...archetypeActions,
         ...(currentStance
             ? [...currentStance.form.actions, ...currentStance.style.actions]
             : []),
@@ -273,24 +319,83 @@ export default function CharacterBuilder() {
                     <label className="block text-sm font-medium mb-2">
                         Select Stance to View
                     </label>
-                    <select
-                        onChange={(e) =>
-                            handleStanceSelection(parseInt(e.target.value))
-                        }
-                        className="w-full p-2 border rounded bg-gray-800 text-white"
-                    >
-                        <option value="">Select Stance</option>
-                        {selectedStyles.map(
-                            (style, index) =>
-                                style &&
-                                selectedForms[index] && (
-                                    <option key={index} value={index}>
-                                        {selectedStyles[index].name}{" "}
-                                        {selectedForms[index].name}
-                                    </option>
-                                )
-                        )}
-                    </select>
+                    {heroType === "Frantic" ? (
+                        <div className="grid grid-cols-3 gap-4">
+                            <select
+                                onChange={(e) =>
+                                    handleFranticArchetypeSelection(
+                                        parseInt(e.target.value)
+                                    )
+                                }
+                                className="w-full p-2 border rounded bg-gray-800 text-white"
+                            >
+                                <option value="">Select Archetype</option>
+                                {selectedArchetypes.map(
+                                    (archetype, index) =>
+                                        archetype && (
+                                            <option key={index} value={index}>
+                                                {archetype.name}
+                                            </option>
+                                        )
+                                )}
+                            </select>
+                            <select
+                                onChange={(e) =>
+                                    handleFranticStyleSelection(
+                                        parseInt(e.target.value)
+                                    )
+                                }
+                                className="w-full p-2 border rounded bg-gray-800 text-white"
+                            >
+                                <option value="">Select Style</option>
+                                {selectedStyles.map(
+                                    (style, index) =>
+                                        style && (
+                                            <option key={index} value={index}>
+                                                {style.name}
+                                            </option>
+                                        )
+                                )}
+                            </select>
+                            <select
+                                onChange={(e) =>
+                                    handleFranticFormSelection(
+                                        parseInt(e.target.value)
+                                    )
+                                }
+                                className="w-full p-2 border rounded bg-gray-800 text-white"
+                            >
+                                <option value="">Select Form</option>
+                                {selectedForms.map(
+                                    (form, index) =>
+                                        form && (
+                                            <option key={index} value={index}>
+                                                {form.name}
+                                            </option>
+                                        )
+                                )}
+                            </select>
+                        </div>
+                    ) : (
+                        <select
+                            onChange={(e) =>
+                                handleStanceSelection(parseInt(e.target.value))
+                            }
+                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                        >
+                            <option value="">Select Stance</option>
+                            {selectedStyles.map(
+                                (style, index) =>
+                                    style &&
+                                    selectedForms[index] && (
+                                        <option key={index} value={index}>
+                                            {selectedStyles[index].name}{" "}
+                                            {selectedForms[index].name}
+                                        </option>
+                                    )
+                            )}
+                        </select>
+                    )}
                 </section>
             )}
 
