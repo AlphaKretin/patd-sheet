@@ -403,6 +403,9 @@ export default function CharacterBuilder() {
             {currentStance && (
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">
+                        {heroType === "Frantic"
+                            ? currentStance.archetype.name + "'s "
+                            : ""}
                         {currentStance.style.name} {currentStance.form.name}
                     </h2>
                     <div className="p-4 rounded-lg">
