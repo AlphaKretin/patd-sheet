@@ -1,0 +1,22 @@
+import { Style } from "../../types/Style";
+
+export const caged: Style = {
+    name: "Caged",
+    minRange: 1,
+    maxRange: 1,
+    abilities: [
+        "Adjacent enemies cannot gain or spend Speed tokens, and any Action Movement they would take is reduced to zero.",
+    ],
+    actions: [
+        {
+            name: "Welcome To My Maze",
+            cost: "2+",
+            desc: "Deal 1 damage and Pull 3 to an enemy you can see.",
+        },
+        {
+            name: "Rat Trap",
+            cost: "4+ -or- 4 Iron Tokens",
+            desc: "Deal 1 damage and give 2 Fatigue tokens to each adjacent enemy. Usable once per turn.",
+        },
+    ],
+};

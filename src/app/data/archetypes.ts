@@ -7,6 +7,7 @@ import { gunkata } from "./archetypes/gunkata";
 import { phantom } from "./archetypes/phantom";
 import { punk } from "./archetypes/punk";
 import { teacher } from "./archetypes/teacher";
+import { trickster } from "./archetypes/trickster";
 import { Archetype } from "./types/Archetype";
 
 export const archetypes: Archetype[] = [
@@ -19,4 +20,5 @@ export const archetypes: Archetype[] = [
     phantom,
     punk,
     teacher,
+    trickster,
 ];
