@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { bleedAbilities, heroType } from "./data/bleed";
+import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
 import { Archetype } from "./data/types/Archetype";
@@ -12,6 +13,7 @@ import { Freestyle, Style } from "./data/types/Style";
 const NUM_ARCHETYPES = 3;
 
 export default function CharacterBuilder() {
+    const [selectedBuild, setBuild] = useState<Build | null>(null);
     const [heroType, setHeroType] = useState<heroType | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
     const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(NUM_ARCHETYPES).fill({}));
@@ -24,6 +26,13 @@ export default function CharacterBuilder() {
     const [franticArchetype, setFranticArchetype] = useState<Archetype>();
     const [franticStyle, setFranticStyle] = useState<Style>();
     const [franticForm, setFranticForm] = useState<Form>();
+
+    const handleBuildChange = (build: string) => {
+        const newBuild = builds.find((b) => b.name === build);
+        if (isDefined(newBuild)) {
+            setBuild(newBuild);
+        }
+    };
 
     // Handle Hero Type selection
     const handleHeroTypeChange = (type: heroType) => {
@@ -238,6 +247,7 @@ export default function CharacterBuilder() {
         ...(currentStance ? [...currentStance.form.abilities] : []),
         ...(currentStance ? [...currentStance.style.abilities] : []),
         ...(heroType ? [bleedAbilities[heroType]] : []),
+        ...(selectedBuild ? selectedBuild.abilities : []),
     ].sort();
 
     const archetypeActions =
@@ -273,6 +283,22 @@ export default function CharacterBuilder() {
     return (
         <div className="container mx-auto p-4 max-w-4xl">
             <h1 className="text-3xl font-bold mb-6">Character Builder</h1>
+
+            {/* Build Selection */}
+            <section className="mb-8">
+                <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
+                <select
+                    onChange={(e) => handleBuildChange(e.target.value)}
+                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                >
+                    <option value="">Select Build</option>
+                    {builds.map((build) => (
+                        <option key={build.name} value={build.name}>
+                            {build.name}
+                        </option>
+                    ))}
+                </select>
+            </section>
 
             {/* Hero Type Selection */}
             <section className="mb-8">
