@@ -3,20 +3,30 @@
 import { useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { forms } from "./data/forms";
-import { Style } from "./data/types/Style";
 
 export default function CharacterBuilder() {
     const [heroType, setHeroType] = useState<
         "Focused" | "Fused" | "Frantic" | null
     >(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<string[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
-    const [selectedForm, setSelectedForm] = useState<string | null>(null);
+    const [selectedStyles, setSelectedStyles] = useState<string[]>(
+        Array(3).fill("")
+    );
+    const [selectedForms, setSelectedForms] = useState<string[]>(
+        Array(3).fill("")
+    );
+    const [currentStance, setCurrentStance] = useState<{
+        style: string;
+        form: string;
+    } | null>(null);
 
     // Handle Hero Type selection
     const handleHeroTypeChange = (type: "Focused" | "Fused" | "Frantic") => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
+        setSelectedStyles(Array(3).fill("")); // Reset Styles
+        setSelectedForms(Array(3).fill("")); // Reset Forms
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Archetype selection
@@ -36,17 +46,22 @@ export default function CharacterBuilder() {
     };
 
     // Handle Style selection
-    const handleStyleChange = (style: string) => {
-        if (selectedStyles.includes(style)) {
-            setSelectedStyles(selectedStyles.filter((s) => s !== style));
-        } else {
-            setSelectedStyles([...selectedStyles, style]);
-        }
+    const handleStyleChange = (style: string, index: number) => {
+        const newStyles = [...selectedStyles];
+        newStyles[index] = style;
+        setSelectedStyles(newStyles);
     };
 
     // Handle Form selection
-    const handleFormChange = (form: string) => {
-        setSelectedForm(form);
+    const handleFormChange = (form: string, index: number) => {
+        const newForms = [...selectedForms];
+        newForms[index] = form;
+        setSelectedForms(newForms);
+    };
+
+    // Handle Stance selection
+    const handleStanceSelection = (style: string, form: string) => {
+        setCurrentStance({ style, form });
     };
 
     // Get available Styles based on selected Archetypes
@@ -56,25 +71,52 @@ export default function CharacterBuilder() {
 
     // Combine Abilities and Actions for the selected Stance
     const combinedAbilities = [
-        ...selectedArchetypes.flatMap(
-            (archetype) =>
-                archetypes.find((a) => a.name === archetype)
-                    ?.focusedAbilities || []
-        ),
-        ...(selectedForm
-            ? forms.find((f) => f.name === selectedForm)?.abilities || []
+        ...selectedArchetypes.flatMap((archetype) => {
+            const archetypeData = archetypes.find((a) => a.name === archetype);
+            if (!archetypeData) return [];
+            switch (heroType) {
+                case "Focused":
+                    return archetypeData.focusedAbilities;
+                case "Fused":
+                    return archetypeData.fusedAbilities;
+                case "Frantic":
+                    return archetypeData.franticAbilities;
+                default:
+                    return [];
+            }
+        }),
+        ...(currentStance
+            ? [
+                  ...(forms.find((f) => f.name === currentStance.form)
+                      ?.abilities || []),
+              ]
             : []),
-    ];
+    ].sort();
 
     const combinedActions = [
         ...selectedArchetypes.flatMap(
             (archetype) =>
                 archetypes.find((a) => a.name === archetype)?.actions || []
         ),
-        ...(selectedForm
-            ? forms.find((f) => f.name === selectedForm)?.actions || []
+        ...(currentStance
+            ? [
+                  ...(forms.find((f) => f.name === currentStance.form)
+                      ?.actions || []),
+                  ...(archetypes
+                      .find((a) =>
+                          a.styles
+                              .map((s) => s.name)
+                              .includes(currentStance.style)
+                      )
+                      ?.styles.find((s) => s.name === currentStance.style)
+                      ?.actions || []),
+              ]
             : []),
-    ];
+    ].sort((a, b) => {
+        if (a.cost < b.cost) return -1;
+        if (a.cost > b.cost) return 1;
+        return 0;
+    });
 
     return (
         <div className="container mx-auto p-4">
@@ -129,66 +171,98 @@ export default function CharacterBuilder() {
                 </section>
             )}
 
-            {/* Style Selection */}
-            {selectedArchetypes.length > 0 && (
+            {/* Style and Form Selection */}
+            {heroType && selectedArchetypes.length > 0 && (
                 <section className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-4">Styles</h2>
-                    <div className="grid grid-cols-3 gap-4">
-                        {availableStyles.map((style: Style) => (
-                            <div
-                                key={style.name}
-                                className="bg-gray-100 p-4 rounded-lg"
-                            >
-                                <label className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedStyles.includes(
-                                            style.name
-                                        )}
-                                        onChange={() =>
-                                            handleStyleChange(style.name)
+                    <h2 className="text-2xl font-semibold mb-4">
+                        Styles and Forms
+                    </h2>
+                    {Array.from({ length: 3 }).map((_, index) => (
+                        <div key={index} className="mb-6">
+                            <h3 className="text-xl font-medium mb-2">
+                                Stance {index + 1}
+                            </h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                {/* Style Dropdown */}
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">
+                                        Style
+                                    </label>
+                                    <select
+                                        value={selectedStyles[index] || ""}
+                                        onChange={(e) =>
+                                            handleStyleChange(
+                                                e.target.value,
+                                                index
+                                            )
                                         }
-                                        className="mr-2"
-                                    />
-                                    {style.name}
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                    >
+                                        <option value="">Select Style</option>
+                                        {availableStyles.map((style) => (
+                                            <option
+                                                key={style.name}
+                                                value={style.name}
+                                            >
+                                                {style.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
 
-            {/* Form Selection */}
-            {selectedStyles.length > 0 && (
-                <section className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-4">Form</h2>
-                    <div className="grid grid-cols-3 gap-4">
-                        {forms.map((form) => (
-                            <div
-                                key={form.name}
-                                className="bg-gray-100 p-4 rounded-lg"
-                            >
-                                <label className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        checked={selectedForm === form.name}
-                                        onChange={() =>
-                                            handleFormChange(form.name)
+                                {/* Form Dropdown */}
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">
+                                        Form
+                                    </label>
+                                    <select
+                                        value={selectedForms[index] || ""}
+                                        onChange={(e) =>
+                                            handleFormChange(
+                                                e.target.value,
+                                                index
+                                            )
                                         }
-                                        className="mr-2"
-                                    />
-                                    {form.name}
-                                </label>
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                    >
+                                        <option value="">Select Form</option>
+                                        {forms.map((form) => (
+                                            <option
+                                                key={form.name}
+                                                value={form.name}
+                                            >
+                                                {form.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
-                        ))}
-                    </div>
+
+                            {/* Stance Selection Button */}
+                            {selectedStyles[index] && selectedForms[index] && (
+                                <button
+                                    onClick={() =>
+                                        handleStanceSelection(
+                                            selectedStyles[index],
+                                            selectedForms[index]
+                                        )
+                                    }
+                                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+                                >
+                                    View Stance {index + 1}
+                                </button>
+                            )}
+                        </div>
+                    ))}
                 </section>
             )}
 
             {/* Combined Stance Information */}
-            {selectedForm && (
+            {currentStance && (
                 <section>
-                    <h2 className="text-2xl font-semibold mb-4">Stance</h2>
+                    <h2 className="text-2xl font-semibold mb-4">
+                        Stance Details
+                    </h2>
                     <div className="bg-gray-100 p-4 rounded-lg">
                         <h3 className="text-xl font-medium mb-2">Abilities</h3>
                         <ul className="list-disc list-inside">
