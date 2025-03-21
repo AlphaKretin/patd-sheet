@@ -11,4 +11,5 @@ export interface Style {
 
 export interface Freestyle extends Style {
     bannedForm: string;
+    dice: number[];
 }
