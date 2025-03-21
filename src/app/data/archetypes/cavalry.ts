@@ -1,3 +1,8 @@
+import { charging } from "../styles/cavalry/charging";
+import { heroic } from "../styles/cavalry/heroic";
+import { jumping } from "../styles/cavalry/jumping";
+import { rallying } from "../styles/cavalry/rallying";
+import { unbreakable } from "../styles/cavalry/unbreakable";
 import { Archetype } from "../types/Archetype";
 
 export const cavalry: Archetype = {
@@ -18,7 +23,7 @@ export const cavalry: Archetype = {
             desc: "Target an ally within Range 1-5. Pull yourself towards them, 1 space at a time, until you are adjacent to that ally.\n4+: Heal that ally.\n6+: Give that ally Shield 4.\nFirst Aid can only target an ally once per turn.",
         },
     ],
-    styles: [],
+    styles: [charging, heroic, jumping, rallying, unbreakable],
     alphaSuper: {
         name: "Call In The Cavalry",
         desc: "Deal 2 damage to all enemies, then deal 2 damage to all enemies.",
