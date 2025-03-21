@@ -75,9 +75,9 @@ export default function CharacterBuilder() {
 
     const handleFranticArchetypeSelection = (index: number) => {
         setFranticArchetype(selectedArchetypes[index]);
-        if (franticArchetype && franticStyle && franticForm) {
+        if (franticStyle && franticForm) {
             setCurrentStance({
-                archetype: franticArchetype,
+                archetype: selectedArchetypes[index],
                 style: franticStyle,
                 form: franticForm,
             });
@@ -86,10 +86,10 @@ export default function CharacterBuilder() {
 
     const handleFranticStyleSelection = (index: number) => {
         setFranticStyle(selectedStyles[index]);
-        if (franticArchetype && franticStyle && franticForm) {
+        if (franticArchetype && franticForm) {
             setCurrentStance({
                 archetype: franticArchetype,
-                style: franticStyle,
+                style: selectedStyles[index],
                 form: franticForm,
             });
         }
@@ -97,11 +97,11 @@ export default function CharacterBuilder() {
 
     const handleFranticFormSelection = (index: number) => {
         setFranticForm(selectedForms[index]);
-        if (franticArchetype && franticStyle && franticForm) {
+        if (franticArchetype && franticStyle) {
             setCurrentStance({
                 archetype: franticArchetype,
                 style: franticStyle,
-                form: franticForm,
+                form: selectedForms[index],
             });
         }
     };
