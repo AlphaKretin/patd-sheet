@@ -154,7 +154,17 @@ export default function CharacterBuilder() {
 
     // Remove duplicate archetypes from dropdowns, unless in same dropdown where it's selected
     function availableArchetypes(i: number) {
-        return archetypes.filter((a, ind) => ind === i || !selectedArchetypes.some((ar) => ar.name === a.name));
+        return archetypes.filter((a) => {
+            // if archetype is currently selected in *this* box, allow it
+            if (selectedArchetypes[i] && selectedArchetypes[i].name === a.name) {
+                return true;
+            }
+            // if archetype is currently selected in another box, disallow it
+            if (selectedArchetypes.some((ar) => ar.name === a.name)) {
+                return false;
+            }
+            return true;
+        });
     }
 
     // Get available Styles based on selected Archetypes
@@ -163,10 +173,22 @@ export default function CharacterBuilder() {
             ...selectedArchetypes.flatMap((archetype) => archetype.styles),
             ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
         ];
-        aStyles = aStyles.filter((s, ind) => ind === i || !selectedStyles.some((st) => st.name == s.name));
-        if (selectedStyles.some((s) => isFreestyle(s))) {
-            aStyles = aStyles.filter((s) => !isFreestyle(s));
-        }
+        aStyles = aStyles.filter((s) => {
+            // if style is currently selected in *this* box, allow it
+            if (selectedStyles[i] && selectedStyles[i].name === s.name) {
+                return true;
+            }
+            // if style is currently selected in another box, disallow it
+            if (selectedStyles.some((st) => st.name === s.name)) {
+                return false;
+            }
+            // if style is a freestyle and we already have a freestyle selected in a different box, disallow it
+            if (selectedStyles.some((st, ind) => i !== ind && isFreestyle(st)) && isFreestyle(s)) {
+                return false;
+            }
+            return true;
+        });
+
         return aStyles;
     }
 
@@ -174,7 +196,17 @@ export default function CharacterBuilder() {
         let aForms = forms.filter(
             (form) => !selectedStyles.some((style) => isFreestyle(style) && style.bannedForm === form.name)
         );
-        aForms = aForms.filter((f, ind) => ind === i || !selectedForms.some((fo) => fo.name === f.name));
+        aForms = aForms.filter((f) => {
+            // if form is currently selected in *this* box, allow it
+            if (selectedForms[i] && selectedForms[i].name === f.name) {
+                return true;
+            }
+            // if form is currently selected in another box, disallow it
+            if (selectedForms.some((fo) => fo.name === f.name)) {
+                return false;
+            }
+            return true;
+        });
         return aForms;
     }
 
