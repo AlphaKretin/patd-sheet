@@ -9,6 +9,7 @@ import { punk } from "./archetypes/punk";
 import { teacher } from "./archetypes/teacher";
 import { trickster } from "./archetypes/trickster";
 import { underdog } from "./archetypes/underdog";
+import { wardancer } from "./archetypes/wardancer";
 import { Archetype } from "./types/Archetype";
 
 export const archetypes: Archetype[] = [
@@ -23,4 +24,5 @@ export const archetypes: Archetype[] = [
     teacher,
     trickster,
     underdog,
+    wardancer,
 ];
