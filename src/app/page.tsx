@@ -128,13 +128,13 @@ export default function CharacterBuilder() {
               ),
           ].sort(
               (a, b) =>
-                  parseInt(a.replace(/\D/g, "")) -
-                  parseInt(b.replace(/\D/g, ""))
+                  parseInt(b.replace(/\D/g, "")) -
+                  parseInt(a.replace(/\D/g, ""))
           )
         : [];
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 max-w-4xl">
             <h1 className="text-3xl font-bold mb-6">Character Builder</h1>
 
             {/* Hero Type Selection */}
@@ -295,25 +295,29 @@ export default function CharacterBuilder() {
                     </h2>
                     <div className="bg-gray-100 p-4 rounded-lg">
                         <h3 className="text-xl font-medium mb-2">Abilities</h3>
-                        <ul className="list-disc list-inside">
+                        <ul className="list-none list-inside">
                             {combinedAbilities.map((ability, index) => (
-                                <li key={index}>{ability}</li>
+                                <li key={index}>
+                                    {ability.split("\n").map((line, i) => (
+                                        <div key={i}>{line}</div>
+                                    ))}
+                                </li>
                             ))}
                         </ul>
                         <h3 className="text-xl font-medium mt-4 mb-2">
                             Actions
                         </h3>
-                        <ul className="list-disc list-inside">
+                        <ul className="list-none list-inside">
                             {combinedActions.map((action, index) => (
                                 <li key={index}>
-                                    <h4>
+                                    <h4 className="text-xl font-medium mt-4 mb-2">
                                         {action.cost}: {action.name}
                                     </h4>
                                     <div>
                                         {action.desc
                                             .split("\n")
                                             .map((line, i) => (
-                                                <div key={i}>
+                                                <div key={i} className="pl-4">
                                                     {line.includes(":")
                                                         ? line
                                                               .split(":")
