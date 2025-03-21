@@ -57,6 +57,11 @@ export default function CharacterBuilder() {
                 alert(`Cannot select ${newStyle.name} because it bans ${newStyle.bannedForm}.`);
                 return;
             }
+            // Check if the style is already selected
+            if (newStyles.some((s, i) => s.name === newStyle.name && i !== index)) {
+                alert(`Cannot select ${newStyle.name} more than once.`);
+                return;
+            }
             newStyles[index] = newStyle;
         }
         setSelectedStyles(newStyles);
@@ -83,6 +88,11 @@ export default function CharacterBuilder() {
             const banForms = selectedStyles.find((style) => isFreestyle(style) && style.bannedForm === newForm.name);
             if (banForms !== undefined) {
                 alert(`Cannot select ${newForm.name} because it is banned by the ${banForms.name} Freestyle.`);
+                return;
+            }
+            // Check if the form is already selected
+            if (newForms.some((f, i) => f.name === newForm.name && i !== index)) {
+                alert(`Cannot select ${newForm.name} more than once.`);
                 return;
             }
             newForms[index] = newForm;
