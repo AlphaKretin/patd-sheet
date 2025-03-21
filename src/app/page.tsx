@@ -8,11 +8,13 @@ import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
 import { Freestyle, Style } from "./data/types/Style";
 
+const NUM_ARCHETYPES = 3;
+
 export default function CharacterBuilder() {
     const [heroType, setHeroType] = useState<"Focused" | "Fused" | "Frantic" | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(3).fill({}));
-    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(3).fill({}));
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(NUM_ARCHETYPES).fill({}));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(NUM_ARCHETYPES).fill({}));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -26,8 +28,8 @@ export default function CharacterBuilder() {
     const handleHeroTypeChange = (type: "Focused" | "Fused" | "Frantic") => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
-        setSelectedStyles(Array(3).fill({})); // Reset Styles
-        setSelectedForms(Array(3).fill({})); // Reset Forms
+        setSelectedStyles(Array(NUM_ARCHETYPES).fill({})); // Reset Styles
+        setSelectedForms(Array(NUM_ARCHETYPES).fill({})); // Reset Forms
         setCurrentStance(null); // Reset Stance
     };
 
@@ -58,6 +60,18 @@ export default function CharacterBuilder() {
             newStyles[index] = newStyle;
         }
         setSelectedStyles(newStyles);
+
+        // Validate that at least one style from each selected archetype is included if three archetypes are selected
+        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > NUM_ARCHETYPES - 1) {
+            const missingArchetypeStyles = selectedArchetypes.filter(
+                (archetype) => !newStyles.some((style) => archetype.styles.includes(style))
+            );
+            if (missingArchetypeStyles.length > 0) {
+                alert(`You must include at least one style from each selected archetype.`);
+                newStyles[index] = selectedStyles[index]; // Revert the change
+                setSelectedStyles(newStyles);
+            }
+        }
     };
 
     // Handle Form selection
