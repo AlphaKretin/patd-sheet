@@ -6,7 +6,7 @@ import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
-import { Style } from "./data/types/Style";
+import { Freestyle, Style } from "./data/types/Style";
 
 export default function CharacterBuilder() {
     const [heroType, setHeroType] = useState<"Focused" | "Fused" | "Frantic" | null>(null);
@@ -144,7 +144,15 @@ export default function CharacterBuilder() {
         return 0;
     });
 
-    const allDice = currentStance?.form.greenDice.concat(currentStance?.form.purpleDice);
+    function isFreestyle(style: Style): style is Freestyle {
+        return "bannedForm" in style;
+    }
+
+    const allDice = currentStance
+        ? isFreestyle(currentStance.style)
+            ? currentStance.form.purpleDice.concat(currentStance.style.dice)
+            : currentStance.form.purpleDice.concat(currentStance.form.greenDice)
+        : null;
 
     const diceList = allDice
         ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
