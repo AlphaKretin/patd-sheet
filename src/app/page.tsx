@@ -3,15 +3,18 @@
 import { useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { forms } from "./data/forms";
+import { freestyles } from "./data/freestyles";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
-import { Style } from "./data/types/Style";
+import { Freestyle, Style } from "./data/types/Style";
+
+const NUM_ARCHETYPES = 3;
 
 export default function CharacterBuilder() {
     const [heroType, setHeroType] = useState<"Focused" | "Fused" | "Frantic" | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(3).fill(""));
-    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(3).fill(""));
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(NUM_ARCHETYPES).fill({}));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(NUM_ARCHETYPES).fill({}));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -25,8 +28,8 @@ export default function CharacterBuilder() {
     const handleHeroTypeChange = (type: "Focused" | "Fused" | "Frantic") => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
-        setSelectedStyles(Array(3).fill("")); // Reset Styles
-        setSelectedForms(Array(3).fill("")); // Reset Forms
+        setSelectedStyles(Array(NUM_ARCHETYPES).fill({})); // Reset Styles
+        setSelectedForms(Array(NUM_ARCHETYPES).fill({})); // Reset Forms
         setCurrentStance(null); // Reset Stance
     };
 
@@ -47,11 +50,38 @@ export default function CharacterBuilder() {
     // Handle Style selection
     const handleStyleChange = (style: string, index: number) => {
         const newStyles = [...selectedStyles];
-        const newStyle = archetypes.flatMap((a) => a.styles).find((a) => a.name === style);
+        const newStyle = availableStyles.find((s) => s.name === style);
         if (isDefined(newStyle)) {
+            // Check if the selected style is a Freestyle and its bannedForm is selected
+            if (isFreestyle(newStyle) && selectedForms.some((form) => form.name === newStyle.bannedForm)) {
+                alert(`Cannot select ${newStyle.name} because it bans ${newStyle.bannedForm}.`);
+                return;
+            }
+            // Check if the style is already selected
+            if (newStyles.some((s, i) => s.name === newStyle.name && i !== index)) {
+                alert(`Cannot select ${newStyle.name} more than once.`);
+                return;
+            }
+            // Check if more than one Freestyle is selected
+            if (isFreestyle(newStyle) && newStyles.some((s) => isFreestyle(s))) {
+                alert(`Cannot select more than one Freestyle.`);
+                return;
+            }
             newStyles[index] = newStyle;
         }
         setSelectedStyles(newStyles);
+
+        // Validate that at least one style from each selected archetype is included if three archetypes are selected
+        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > NUM_ARCHETYPES - 1) {
+            const missingArchetypeStyles = selectedArchetypes.filter(
+                (archetype) => !newStyles.some((style) => archetype.styles.includes(style))
+            );
+            if (missingArchetypeStyles.length > 0) {
+                alert(`You must include at least one style from each selected archetype.`);
+                newStyles[index] = selectedStyles[index]; // Revert the change
+                setSelectedStyles(newStyles);
+            }
+        }
     };
 
     // Handle Form selection
@@ -59,6 +89,17 @@ export default function CharacterBuilder() {
         const newForms = [...selectedForms];
         const newForm = forms.find((a) => a.name === form);
         if (isDefined(newForm)) {
+            // Check if the selected form is banned by any selected Freestyle
+            const banForms = selectedStyles.find((style) => isFreestyle(style) && style.bannedForm === newForm.name);
+            if (banForms !== undefined) {
+                alert(`Cannot select ${newForm.name} because it is banned by the ${banForms.name} Freestyle.`);
+                return;
+            }
+            // Check if the form is already selected
+            if (newForms.some((f, i) => f.name === newForm.name && i !== index)) {
+                alert(`Cannot select ${newForm.name} more than once.`);
+                return;
+            }
             newForms[index] = newForm;
         }
         setSelectedForms(newForms);
@@ -107,7 +148,24 @@ export default function CharacterBuilder() {
     };
 
     // Get available Styles based on selected Archetypes
-    const availableStyles = selectedArchetypes.flatMap((archetype) => archetype.styles);
+    let availableStyles = [
+        ...selectedArchetypes.flatMap((archetype) => archetype.styles),
+        ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
+    ];
+
+    // Validation
+    availableStyles = availableStyles.filter((s) => !selectedStyles.some((st) => st.name == s.name));
+    if (selectedStyles.some((s) => isFreestyle(s))) {
+        availableStyles = availableStyles.filter((s) => !isFreestyle(s));
+    }
+
+    // Get available Forms based on selected Styles
+    let availableForms = forms.filter(
+        (form) => !selectedStyles.some((style) => isFreestyle(style) && style.bannedForm === form.name)
+    );
+
+    // Validation
+    availableForms = availableForms.filter((f) => !selectedForms.some((fo) => fo.name === f.name));
 
     const archetypeAbilities =
         heroType === "Frantic"
@@ -143,7 +201,15 @@ export default function CharacterBuilder() {
         return 0;
     });
 
-    const allDice = currentStance?.form.greenDice.concat(currentStance?.form.purpleDice);
+    function isFreestyle(style: Style): style is Freestyle {
+        return "bannedForm" in style;
+    }
+
+    const allDice = currentStance
+        ? isFreestyle(currentStance.style)
+            ? currentStance.form.purpleDice.concat(currentStance.style.dice)
+            : currentStance.form.purpleDice.concat(currentStance.form.greenDice)
+        : null;
 
     const diceList = allDice
         ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
@@ -231,7 +297,7 @@ export default function CharacterBuilder() {
                                         className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Form</option>
-                                        {forms.map((form) => (
+                                        {availableForms.map((form) => (
                                             <option key={form.name} value={form.name}>
                                                 {form.name}
                                             </option>
