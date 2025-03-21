@@ -55,7 +55,7 @@ export default function CharacterBuilder() {
     // Handle Style selection
     const handleStyleChange = (style: string, index: number) => {
         const newStyles = [...selectedStyles];
-        const newStyle = availableStyles.find((s) => s.name === style);
+        const newStyle = availableStyles(-1).find((s) => s.name === style);
         if (isDefined(newStyle)) {
             // Check if the selected style is a Freestyle and its bannedForm is selected
             if (isFreestyle(newStyle) && selectedForms.some((form) => form.name === newStyle.bannedForm)) {
@@ -152,28 +152,31 @@ export default function CharacterBuilder() {
         }
     };
 
-    // Remove duplicate archetypes from dropdowns
-    const availableArchetypes = archetypes.filter((a) => !selectedArchetypes.some((ar) => ar.name === a.name));
-
-    // Get available Styles based on selected Archetypes
-    let availableStyles = [
-        ...selectedArchetypes.flatMap((archetype) => archetype.styles),
-        ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
-    ];
-
-    // Validation
-    availableStyles = availableStyles.filter((s) => !selectedStyles.some((st) => st.name == s.name));
-    if (selectedStyles.some((s) => isFreestyle(s))) {
-        availableStyles = availableStyles.filter((s) => !isFreestyle(s));
+    // Remove duplicate archetypes from dropdowns, unless in same dropdown where it's selected
+    function availableArchetypes(i: number) {
+        return archetypes.filter((a, ind) => ind === i || !selectedArchetypes.some((ar) => ar.name === a.name));
     }
 
-    // Get available Forms based on selected Styles
-    let availableForms = forms.filter(
-        (form) => !selectedStyles.some((style) => isFreestyle(style) && style.bannedForm === form.name)
-    );
+    // Get available Styles based on selected Archetypes
+    function availableStyles(i: number) {
+        let aStyles = [
+            ...selectedArchetypes.flatMap((archetype) => archetype.styles),
+            ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
+        ];
+        aStyles = aStyles.filter((s, ind) => ind === i || !selectedStyles.some((st) => st.name == s.name));
+        if (selectedStyles.some((s) => isFreestyle(s))) {
+            aStyles = aStyles.filter((s) => !isFreestyle(s));
+        }
+        return aStyles;
+    }
 
-    // Validation
-    availableForms = availableForms.filter((f) => !selectedForms.some((fo) => fo.name === f.name));
+    function availableForms(i: number) {
+        let aForms = forms.filter(
+            (form) => !selectedStyles.some((style) => isFreestyle(style) && style.bannedForm === form.name)
+        );
+        aForms = aForms.filter((f, ind) => ind === i || !selectedForms.some((fo) => fo.name === f.name));
+        return aForms;
+    }
 
     const archetypeAbilities =
         heroType === "Frantic"
@@ -259,7 +262,7 @@ export default function CharacterBuilder() {
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
                                 >
                                     <option value="">Select Archetype</option>
-                                    {availableArchetypes.map((archetype) => (
+                                    {availableArchetypes(index).map((archetype) => (
                                         <option key={archetype.name} value={archetype.name}>
                                             {archetype.name}
                                         </option>
@@ -288,7 +291,7 @@ export default function CharacterBuilder() {
                                         className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Style</option>
-                                        {availableStyles.map((style) => (
+                                        {availableStyles(index).map((style) => (
                                             <option key={style.name} value={style.name}>
                                                 {style.name}
                                             </option>
@@ -305,7 +308,7 @@ export default function CharacterBuilder() {
                                         className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Form</option>
-                                        {availableForms.map((form) => (
+                                        {availableForms(index).map((form) => (
                                             <option key={form.name} value={form.name}>
                                                 {form.name}
                                             </option>
