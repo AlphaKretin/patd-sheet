@@ -17,7 +17,7 @@ export const blaster: Form = {
         {
             name: "Shockwave",
             cost: "3+ or 6+",
-            desc: "Unblockable by Armor and Shields.\nDeal 1 damage to each enemy within range.\n6+Deal 2 damage to one enemy within range.",
+            desc: "Unblockable by Armor and Shields.\nDeal 1 damage to each enemy within range.\n6+: Deal 2 damage to one enemy within range.",
         },
     ],
     skill: {
