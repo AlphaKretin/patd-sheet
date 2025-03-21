@@ -30,4 +30,12 @@ export const angel: Archetype = {
         },
     ],
     styles: [halcyon, judgment, shining, singing, winged],
+    alphaSuper: {
+        name: "Heaven's Piledriver",
+        desc: "Deal 6 damage to an adjacent enemy. That enemy cannot use Free Movement until after the end of their next tur",
+    },
+    deltaSuper: {
+        name: "Siren's Scream",
+        desc: "Challenge and deal 2 damage to all enemies. Then, you gain an 8-point Shield.",
+    },
 };
