@@ -235,6 +235,7 @@ export default function CharacterBuilder() {
     const combinedAbilities = [
         ...archetypeAbilities,
         ...(currentStance ? [...currentStance.form.abilities] : []),
+        ...(currentStance ? [...currentStance.style.abilities] : []),
     ].sort();
 
     const archetypeActions =
