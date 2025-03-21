@@ -8,3 +8,7 @@ export interface Style {
     abilities: Ability[];
     actions: Action[];
 }
+
+export interface Freestyle extends Style {
+    bannedForm: string;
+}
