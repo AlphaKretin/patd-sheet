@@ -42,6 +42,11 @@ export default function CharacterBuilder() {
         const newArchetypes = [...selectedArchetypes];
         const newArchetype = archetypes.find((a) => a.name === archetype);
         if (isDefined(newArchetype)) {
+            // Check if the archetype is already selected
+            if (newArchetypes.some((a, i) => a.name === newArchetype.name && i !== index)) {
+                alert(`Cannot select ${newArchetype.name} more than once.`);
+                return;
+            }
             newArchetypes[index] = newArchetype;
         }
         setSelectedArchetypes(newArchetypes);
@@ -147,6 +152,9 @@ export default function CharacterBuilder() {
         }
     };
 
+    // Remove duplicate archetypes from dropdowns
+    const availableArchetypes = archetypes.filter((a) => !selectedArchetypes.some((ar) => ar.name === a.name));
+
     // Get available Styles based on selected Archetypes
     let availableStyles = [
         ...selectedArchetypes.flatMap((archetype) => archetype.styles),
@@ -251,7 +259,7 @@ export default function CharacterBuilder() {
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
                                 >
                                     <option value="">Select Archetype</option>
-                                    {archetypes.map((archetype) => (
+                                    {availableArchetypes.map((archetype) => (
                                         <option key={archetype.name} value={archetype.name}>
                                             {archetype.name}
                                         </option>
