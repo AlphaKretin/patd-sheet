@@ -8,18 +8,10 @@ import { Form } from "./data/types/Form";
 import { Style } from "./data/types/Style";
 
 export default function CharacterBuilder() {
-    const [heroType, setHeroType] = useState<
-        "Focused" | "Fused" | "Frantic" | null
-    >(null);
-    const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>(
-        []
-    );
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(
-        Array(3).fill("")
-    );
-    const [selectedForms, setSelectedForms] = useState<Form[]>(
-        Array(3).fill("")
-    );
+    const [heroType, setHeroType] = useState<"Focused" | "Fused" | "Frantic" | null>(null);
+    const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(3).fill(""));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(3).fill(""));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -55,9 +47,7 @@ export default function CharacterBuilder() {
     // Handle Style selection
     const handleStyleChange = (style: string, index: number) => {
         const newStyles = [...selectedStyles];
-        const newStyle = archetypes
-            .flatMap((a) => a.styles)
-            .find((a) => a.name === style);
+        const newStyle = archetypes.flatMap((a) => a.styles).find((a) => a.name === style);
         if (isDefined(newStyle)) {
             newStyles[index] = newStyle;
         }
@@ -117,9 +107,7 @@ export default function CharacterBuilder() {
     };
 
     // Get available Styles based on selected Archetypes
-    const availableStyles = selectedArchetypes.flatMap(
-        (archetype) => archetype.styles
-    );
+    const availableStyles = selectedArchetypes.flatMap((archetype) => archetype.styles);
 
     const archetypeAbilities =
         heroType === "Frantic"
@@ -148,28 +136,18 @@ export default function CharacterBuilder() {
 
     const combinedActions = [
         ...archetypeActions,
-        ...(currentStance
-            ? [...currentStance.form.actions, ...currentStance.style.actions]
-            : []),
+        ...(currentStance ? [...currentStance.form.actions, ...currentStance.style.actions] : []),
     ].sort((a, b) => {
         if (a.cost < b.cost) return -1;
         if (a.cost > b.cost) return 1;
         return 0;
     });
 
-    const allDice = currentStance?.form.greenDice.concat(
-        currentStance?.form.purpleDice
-    );
+    const allDice = currentStance?.form.greenDice.concat(currentStance?.form.purpleDice);
 
     const diceList = allDice
-        ? [
-              ...allDice.map((die) =>
-                  die > 0 ? `d${die}` : `<${Math.abs(die)}>`
-              ),
-          ].sort(
-              (a, b) =>
-                  parseInt(b.replace(/\D/g, "")) -
-                  parseInt(a.replace(/\D/g, ""))
+        ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
+              (a, b) => parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""))
           )
         : [];
 
@@ -181,11 +159,7 @@ export default function CharacterBuilder() {
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
                 <select
-                    onChange={(e) =>
-                        handleHeroTypeChange(
-                            e.target.value as "Focused" | "Fused" | "Frantic"
-                        )
-                    }
+                    onChange={(e) => handleHeroTypeChange(e.target.value as "Focused" | "Fused" | "Frantic")}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
                     <option value="">Select Hero Type</option>
@@ -201,35 +175,18 @@ export default function CharacterBuilder() {
                     <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {Array.from({
-                            length:
-                                heroType === "Focused"
-                                    ? 1
-                                    : heroType === "Fused"
-                                    ? 2
-                                    : 3,
+                            length: heroType === "Focused" ? 1 : heroType === "Fused" ? 2 : 3,
                         }).map((_, index) => (
                             <div key={index} className="p-4 rounded-lg">
-                                <label className="block text-sm font-medium mb-2">
-                                    Archetype {index + 1}
-                                </label>
+                                <label className="block text-sm font-medium mb-2">Archetype {index + 1}</label>
                                 <select
-                                    value={
-                                        selectedArchetypes[index]?.name || ""
-                                    }
-                                    onChange={(e) =>
-                                        handleArchetypeChange(
-                                            e.target.value,
-                                            index
-                                        )
-                                    }
+                                    value={selectedArchetypes[index]?.name || ""}
+                                    onChange={(e) => handleArchetypeChange(e.target.value, index)}
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
                                 >
                                     <option value="">Select Archetype</option>
                                     {archetypes.map((archetype) => (
-                                        <option
-                                            key={archetype.name}
-                                            value={archetype.name}
-                                        >
+                                        <option key={archetype.name} value={archetype.name}>
                                             {archetype.name}
                                         </option>
                                     ))}
@@ -243,38 +200,22 @@ export default function CharacterBuilder() {
             {/* Style and Form Selection */}
             {heroType && selectedArchetypes.length > 0 && (
                 <section className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-4">
-                        Styles and Forms
-                    </h2>
+                    <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
                     {Array.from({ length: 3 }).map((_, index) => (
                         <div key={index} className="mb-6">
-                            <h3 className="text-xl font-medium mb-2">
-                                Stance {index + 1}
-                            </h3>
+                            <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
                             <div className="grid grid-cols-2 gap-4">
                                 {/* Style Dropdown */}
                                 <div>
-                                    <label className="block text-sm font-medium mb-2">
-                                        Style
-                                    </label>
+                                    <label className="block text-sm font-medium mb-2">Style</label>
                                     <select
-                                        value={
-                                            selectedStyles[index]?.name || ""
-                                        }
-                                        onChange={(e) =>
-                                            handleStyleChange(
-                                                e.target.value,
-                                                index
-                                            )
-                                        }
+                                        value={selectedStyles[index]?.name || ""}
+                                        onChange={(e) => handleStyleChange(e.target.value, index)}
                                         className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Style</option>
                                         {availableStyles.map((style) => (
-                                            <option
-                                                key={style.name}
-                                                value={style.name}
-                                            >
+                                            <option key={style.name} value={style.name}>
                                                 {style.name}
                                             </option>
                                         ))}
@@ -283,25 +224,15 @@ export default function CharacterBuilder() {
 
                                 {/* Form Dropdown */}
                                 <div>
-                                    <label className="block text-sm font-medium mb-2">
-                                        Form
-                                    </label>
+                                    <label className="block text-sm font-medium mb-2">Form</label>
                                     <select
                                         value={selectedForms[index]?.name || ""}
-                                        onChange={(e) =>
-                                            handleFormChange(
-                                                e.target.value,
-                                                index
-                                            )
-                                        }
+                                        onChange={(e) => handleFormChange(e.target.value, index)}
                                         className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Form</option>
                                         {forms.map((form) => (
-                                            <option
-                                                key={form.name}
-                                                value={form.name}
-                                            >
+                                            <option key={form.name} value={form.name}>
                                                 {form.name}
                                             </option>
                                         ))}
@@ -316,17 +247,11 @@ export default function CharacterBuilder() {
             {/* Stance Selection Dropdown */}
             {heroType && selectedArchetypes.length > 0 && (
                 <section className="mb-8">
-                    <label className="block text-sm font-medium mb-2">
-                        Select Stance to View
-                    </label>
+                    <label className="block text-sm font-medium mb-2">Select Stance to View</label>
                     {heroType === "Frantic" ? (
                         <div className="grid grid-cols-3 gap-4">
                             <select
-                                onChange={(e) =>
-                                    handleFranticArchetypeSelection(
-                                        parseInt(e.target.value)
-                                    )
-                                }
+                                onChange={(e) => handleFranticArchetypeSelection(parseInt(e.target.value))}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Archetype</option>
@@ -340,11 +265,7 @@ export default function CharacterBuilder() {
                                 )}
                             </select>
                             <select
-                                onChange={(e) =>
-                                    handleFranticStyleSelection(
-                                        parseInt(e.target.value)
-                                    )
-                                }
+                                onChange={(e) => handleFranticStyleSelection(parseInt(e.target.value))}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Style</option>
@@ -358,11 +279,7 @@ export default function CharacterBuilder() {
                                 )}
                             </select>
                             <select
-                                onChange={(e) =>
-                                    handleFranticFormSelection(
-                                        parseInt(e.target.value)
-                                    )
-                                }
+                                onChange={(e) => handleFranticFormSelection(parseInt(e.target.value))}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Form</option>
@@ -378,9 +295,7 @@ export default function CharacterBuilder() {
                         </div>
                     ) : (
                         <select
-                            onChange={(e) =>
-                                handleStanceSelection(parseInt(e.target.value))
-                            }
+                            onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                         >
                             <option value="">Select Stance</option>
@@ -389,8 +304,7 @@ export default function CharacterBuilder() {
                                     style &&
                                     selectedForms[index] && (
                                         <option key={index} value={index}>
-                                            {selectedStyles[index].name}{" "}
-                                            {selectedForms[index].name}
+                                            {selectedStyles[index].name} {selectedForms[index].name}
                                         </option>
                                     )
                             )}
@@ -403,16 +317,13 @@ export default function CharacterBuilder() {
             {currentStance && (
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">
-                        {heroType === "Frantic"
-                            ? currentStance.archetype.name + "'s "
-                            : ""}
+                        {heroType === "Frantic" ? currentStance.archetype.name + "'s " : ""}
                         {currentStance.style.name} {currentStance.form.name}
                     </h2>
                     <div className="p-4 rounded-lg">
                         <div>
                             <strong>Range: </strong>{" "}
-                            {currentStance.style.minRange ===
-                            currentStance.style.maxRange
+                            {currentStance.style.minRange === currentStance.style.maxRange
                                 ? currentStance.style.minRange
                                 : `${currentStance.style.minRange}-${currentStance.style.maxRange}`}{" "}
                             <strong>Dice: {diceList.join(", ")}</strong>
@@ -433,30 +344,17 @@ export default function CharacterBuilder() {
                                         {action.cost}: {action.name}
                                     </h3>
                                     <div>
-                                        {action.desc
-                                            .split("\n")
-                                            .map((line, i) => (
-                                                <div key={i} className="pl-4">
-                                                    {line.includes(":")
-                                                        ? line
-                                                              .split(":")
-                                                              .map((part, j) =>
-                                                                  j === 0 ? (
-                                                                      <strong
-                                                                          key={
-                                                                              j
-                                                                          }
-                                                                      >
-                                                                          {part}
-                                                                          :
-                                                                      </strong>
-                                                                  ) : (
-                                                                      part
-                                                                  )
-                                                              )
-                                                        : line}
-                                                </div>
-                                            ))}
+                                        {action.desc.split("\n").map((line, i) => (
+                                            <div key={i} className="pl-4">
+                                                {line.includes(":")
+                                                    ? line
+                                                          .split(":")
+                                                          .map((part, j) =>
+                                                              j === 0 ? <strong key={j}>{part}:</strong> : part
+                                                          )
+                                                    : line}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             ))}
