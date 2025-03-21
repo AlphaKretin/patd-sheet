@@ -19,7 +19,7 @@ export const angel: Archetype = {
     ],
     franticAbilities: [
         "Your Challenges are Unblockable by Shields.",
-        "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 dmaage to them.",
+        "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
         "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1.",
     ],
     actions: [
