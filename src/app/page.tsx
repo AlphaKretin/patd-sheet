@@ -30,19 +30,10 @@ export default function CharacterBuilder() {
     };
 
     // Handle Archetype selection
-    const handleArchetypeChange = (archetype: string) => {
-        if (selectedArchetypes.includes(archetype)) {
-            setSelectedArchetypes(
-                selectedArchetypes.filter((a) => a !== archetype)
-            );
-        } else {
-            if (heroType === "Focused" && selectedArchetypes.length >= 1)
-                return;
-            if (heroType === "Fused" && selectedArchetypes.length >= 2) return;
-            if (heroType === "Frantic" && selectedArchetypes.length >= 3)
-                return;
-            setSelectedArchetypes([...selectedArchetypes, archetype]);
-        }
+    const handleArchetypeChange = (archetype: string, index: number) => {
+        const newArchetypes = [...selectedArchetypes];
+        newArchetypes[index] = archetype;
+        setSelectedArchetypes(newArchetypes);
     };
 
     // Handle Style selection
@@ -118,6 +109,30 @@ export default function CharacterBuilder() {
         return 0;
     });
 
+    const currentStyle = currentStance
+        ? archetypes
+              .flatMap((archetype) => archetype.styles)
+              .find((style) => style.name === currentStance.style)
+        : null;
+
+    const currentForm = currentStance
+        ? forms.find((form) => form.name === currentStance.form)
+        : null;
+
+    const allDice = currentForm?.greenDice.concat(currentForm.purpleDice);
+
+    const diceList = allDice
+        ? [
+              ...allDice.map((die) =>
+                  die > 0 ? `d${die}` : `<${Math.abs(die)}>`
+              ),
+          ].sort(
+              (a, b) =>
+                  parseInt(a.replace(/\D/g, "")) -
+                  parseInt(b.replace(/\D/g, ""))
+          )
+        : [];
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-6">Character Builder</h1>
@@ -144,27 +159,42 @@ export default function CharacterBuilder() {
             {heroType && (
                 <section className="mb-8">
                     <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
-                    <div className="grid grid-cols-3 gap-4">
-                        {archetypes.map((archetype) => (
+                    <div className="grid grid-cols-1 gap-4">
+                        {Array.from({
+                            length:
+                                heroType === "Focused"
+                                    ? 1
+                                    : heroType === "Fused"
+                                    ? 2
+                                    : 3,
+                        }).map((_, index) => (
                             <div
-                                key={archetype.name}
+                                key={index}
                                 className="bg-gray-100 p-4 rounded-lg"
                             >
-                                <label className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedArchetypes.includes(
-                                            archetype.name
-                                        )}
-                                        onChange={() =>
-                                            handleArchetypeChange(
-                                                archetype.name
-                                            )
-                                        }
-                                        className="mr-2"
-                                    />
-                                    {archetype.name}
+                                <label className="block text-sm font-medium mb-2">
+                                    Archetype {index + 1}
                                 </label>
+                                <select
+                                    value={selectedArchetypes[index] || ""}
+                                    onChange={(e) =>
+                                        handleArchetypeChange(
+                                            e.target.value,
+                                            index
+                                        )
+                                    }
+                                    className="w-full p-2 border border-gray-300 rounded"
+                                >
+                                    <option value="">Select Archetype</option>
+                                    {archetypes.map((archetype) => (
+                                        <option
+                                            key={archetype.name}
+                                            value={archetype.name}
+                                        >
+                                            {archetype.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         ))}
                     </div>
@@ -276,11 +306,57 @@ export default function CharacterBuilder() {
                         <ul className="list-disc list-inside">
                             {combinedActions.map((action, index) => (
                                 <li key={index}>
-                                    <strong>{action.name}</strong> (
-                                    {action.cost}): {action.desc}
+                                    <h4>
+                                        {action.cost}: {action.name}
+                                    </h4>
+                                    <div>
+                                        {action.desc
+                                            .split("\n")
+                                            .map((line, i) => (
+                                                <div key={i}>
+                                                    {line.includes(":")
+                                                        ? line
+                                                              .split(":")
+                                                              .map((part, j) =>
+                                                                  j === 0 ? (
+                                                                      <strong
+                                                                          key={
+                                                                              j
+                                                                          }
+                                                                      >
+                                                                          {part}
+                                                                          :
+                                                                      </strong>
+                                                                  ) : (
+                                                                      part
+                                                                  )
+                                                              )
+                                                        : line}
+                                                </div>
+                                            ))}
+                                    </div>
                                 </li>
                             ))}
                         </ul>
+                        {currentStyle && (
+                            <div className="mt-4">
+                                <h3 className="text-xl font-medium mb-2">
+                                    Range
+                                </h3>
+                                <p>
+                                    {currentStyle.minRange}-
+                                    {currentStyle.maxRange}
+                                </p>
+                            </div>
+                        )}
+                        {currentForm && (
+                            <div className="mt-4">
+                                <h3 className="text-xl font-medium mb-2">
+                                    Dice
+                                </h3>
+                                <p>{diceList.join(", ")}</p>
+                            </div>
+                        )}
                     </div>
                 </section>
             )}
