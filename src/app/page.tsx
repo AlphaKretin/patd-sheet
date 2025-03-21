@@ -418,8 +418,8 @@ export default function CharacterBuilder() {
                             <option value="">Select Stance</option>
                             {selectedStyles.map(
                                 (style, index) =>
-                                    style &&
-                                    selectedForms[index] && (
+                                    "name" in style &&
+                                    "name" in selectedForms[index] && (
                                         <option key={index} value={index}>
                                             {selectedStyles[index].name} {selectedForms[index].name}
                                         </option>
