@@ -108,11 +108,9 @@ export default function CharacterBuilder() {
         return 0;
     });
 
-    const currentStyle = currentStance?.style;
-
-    const currentForm = currentStance?.form;
-
-    const allDice = currentForm?.greenDice.concat(currentForm?.purpleDice);
+    const allDice = currentStance?.form.greenDice.concat(
+        currentStance?.form.purpleDice
+    );
 
     const diceList = allDice
         ? [
@@ -161,10 +159,7 @@ export default function CharacterBuilder() {
                                     ? 2
                                     : 3,
                         }).map((_, index) => (
-                            <div
-                                key={index}
-                                className="bg-gray-100 p-4 rounded-lg"
-                            >
+                            <div key={index} className="p-4 rounded-lg">
                                 <label className="block text-sm font-medium mb-2">
                                     Archetype {index + 1}
                                 </label>
@@ -288,28 +283,32 @@ export default function CharacterBuilder() {
             {currentStance && (
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">
-                        Stance Details
+                        {currentStance.style.name} {currentStance.form.name}
                     </h2>
-                    <div className="bg-gray-100 p-4 rounded-lg">
-                        <h3 className="text-xl font-medium mb-2">Abilities</h3>
-                        <ul className="list-none list-inside">
+                    <div className="p-4 rounded-lg">
+                        <div>
+                            <strong>Range: </strong>{" "}
+                            {currentStance.style.minRange ===
+                            currentStance.style.maxRange
+                                ? currentStance.style.minRange
+                                : `${currentStance.style.minRange}-${currentStance.style.maxRange}`}{" "}
+                            <strong>Dice: {diceList.join(", ")}</strong>
+                        </div>
+                        <div>
                             {combinedAbilities.map((ability, index) => (
-                                <li key={index}>
+                                <div key={index}>
                                     {ability.split("\n").map((line, i) => (
                                         <div key={i}>{line}</div>
                                     ))}
-                                </li>
+                                </div>
                             ))}
-                        </ul>
-                        <h3 className="text-xl font-medium mt-4 mb-2">
-                            Actions
-                        </h3>
-                        <ul className="list-none list-inside">
+                        </div>
+                        <div>
                             {combinedActions.map((action, index) => (
-                                <li key={index}>
-                                    <h4 className="text-xl font-medium mt-4 mb-2">
+                                <div key={index}>
+                                    <h3 className="text-xl font-medium mt-4 mb-2">
                                         {action.cost}: {action.name}
-                                    </h4>
+                                    </h3>
                                     <div>
                                         {action.desc
                                             .split("\n")
@@ -336,28 +335,9 @@ export default function CharacterBuilder() {
                                                 </div>
                                             ))}
                                     </div>
-                                </li>
+                                </div>
                             ))}
-                        </ul>
-                        {currentStyle && (
-                            <div className="mt-4">
-                                <h3 className="text-xl font-medium mb-2">
-                                    Range
-                                </h3>
-                                <p>
-                                    {currentStyle.minRange}-
-                                    {currentStyle.maxRange}
-                                </p>
-                            </div>
-                        )}
-                        {currentForm && (
-                            <div className="mt-4">
-                                <h3 className="text-xl font-medium mb-2">
-                                    Dice
-                                </h3>
-                                <p>{diceList.join(", ")}</p>
-                            </div>
-                        )}
+                        </div>
                     </div>
                 </section>
             )}
