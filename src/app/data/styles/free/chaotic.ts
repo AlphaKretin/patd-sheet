@@ -5,7 +5,7 @@ export const chaotic: Freestyle = {
     dice: [6, 4],
     name: "Chaotic",
     minRange: 1,
-    maxRange: 2,
+    maxRange: 1,
     abilities: [
         "Before each Action you perform, you may Move 1.",
         "After your first Action on your turn, Move 1, then deal 2 damage to an enemy within range.",
