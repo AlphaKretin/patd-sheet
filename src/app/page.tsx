@@ -62,6 +62,11 @@ export default function CharacterBuilder() {
                 alert(`Cannot select ${newStyle.name} more than once.`);
                 return;
             }
+            // Check if more than one Freestyle is selected
+            if (isFreestyle(newStyle) && newStyles.some((s) => isFreestyle(s))) {
+                alert(`Cannot select more than one Freestyle.`);
+                return;
+            }
             newStyles[index] = newStyle;
         }
         setSelectedStyles(newStyles);
