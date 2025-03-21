@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { archetypes } from "./data/archetypes";
+import { bleedAbilities, heroType } from "./data/bleed";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
 import { Archetype } from "./data/types/Archetype";
@@ -11,7 +12,7 @@ import { Freestyle, Style } from "./data/types/Style";
 const NUM_ARCHETYPES = 3;
 
 export default function CharacterBuilder() {
-    const [heroType, setHeroType] = useState<"Focused" | "Fused" | "Frantic" | null>(null);
+    const [heroType, setHeroType] = useState<heroType | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
     const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(NUM_ARCHETYPES).fill({}));
     const [selectedForms, setSelectedForms] = useState<Form[]>(Array(NUM_ARCHETYPES).fill({}));
@@ -25,7 +26,7 @@ export default function CharacterBuilder() {
     const [franticForm, setFranticForm] = useState<Form>();
 
     // Handle Hero Type selection
-    const handleHeroTypeChange = (type: "Focused" | "Fused" | "Frantic") => {
+    const handleHeroTypeChange = (type: heroType) => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
         setSelectedStyles(Array(NUM_ARCHETYPES).fill({})); // Reset Styles
@@ -236,6 +237,7 @@ export default function CharacterBuilder() {
         ...archetypeAbilities,
         ...(currentStance ? [...currentStance.form.abilities] : []),
         ...(currentStance ? [...currentStance.style.abilities] : []),
+        ...(heroType ? [bleedAbilities[heroType]] : []),
     ].sort();
 
     const archetypeActions =
@@ -276,7 +278,7 @@ export default function CharacterBuilder() {
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
                 <select
-                    onChange={(e) => handleHeroTypeChange(e.target.value as "Focused" | "Fused" | "Frantic")}
+                    onChange={(e) => handleHeroTypeChange(e.target.value as heroType)}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
                     <option value="">Select Hero Type</option>
