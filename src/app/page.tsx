@@ -137,7 +137,7 @@ export default function CharacterBuilder() {
                             e.target.value as "Focused" | "Fused" | "Frantic"
                         )
                     }
-                    className="w-full p-2 border border-gray-300 rounded"
+                    className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
                     <option value="">Select Hero Type</option>
                     <option value="Focused">Focused</option>
@@ -173,7 +173,7 @@ export default function CharacterBuilder() {
                                             index
                                         )
                                     }
-                                    className="w-full p-2 border border-gray-300 rounded"
+                                    className="w-full p-2 border rounded bg-gray-800 text-white"
                                 >
                                     <option value="">Select Archetype</option>
                                     {archetypes.map((archetype) => (
@@ -218,7 +218,7 @@ export default function CharacterBuilder() {
                                                 index
                                             )
                                         }
-                                        className="w-full p-2 border border-gray-300 rounded"
+                                        className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Style</option>
                                         {availableStyles.map((style) => (
@@ -245,7 +245,7 @@ export default function CharacterBuilder() {
                                                 index
                                             )
                                         }
-                                        className="w-full p-2 border border-gray-300 rounded"
+                                        className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Form</option>
                                         {forms.map((form) => (
