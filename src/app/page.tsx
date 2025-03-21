@@ -148,7 +148,24 @@ export default function CharacterBuilder() {
     };
 
     // Get available Styles based on selected Archetypes
-    const availableStyles = [...selectedArchetypes.flatMap((archetype) => archetype.styles), ...freestyles];
+    let availableStyles = [
+        ...selectedArchetypes.flatMap((archetype) => archetype.styles),
+        ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
+    ];
+
+    // Validation
+    availableStyles = availableStyles.filter((s) => !selectedStyles.some((st) => st.name == s.name));
+    if (selectedStyles.some((s) => isFreestyle(s))) {
+        availableStyles = availableStyles.filter((s) => !isFreestyle(s));
+    }
+
+    // Get available Forms based on selected Styles
+    let availableForms = forms.filter(
+        (form) => !selectedStyles.some((style) => isFreestyle(style) && style.bannedForm === form.name)
+    );
+
+    // Validation
+    availableForms = availableForms.filter((f) => !selectedForms.some((fo) => fo.name === f.name));
 
     const archetypeAbilities =
         heroType === "Frantic"
@@ -280,7 +297,7 @@ export default function CharacterBuilder() {
                                         className="w-full p-2 border rounded bg-gray-800 text-white"
                                     >
                                         <option value="">Select Form</option>
-                                        {forms.map((form) => (
+                                        {availableForms.map((form) => (
                                             <option key={form.name} value={form.name}>
                                                 {form.name}
                                             </option>
