@@ -3,21 +3,26 @@
 import { useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { forms } from "./data/forms";
+import { Archetype } from "./data/types/Archetype";
+import { Form } from "./data/types/Form";
+import { Style } from "./data/types/Style";
 
 export default function CharacterBuilder() {
     const [heroType, setHeroType] = useState<
         "Focused" | "Fused" | "Frantic" | null
     >(null);
-    const [selectedArchetypes, setSelectedArchetypes] = useState<string[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<string[]>(
+    const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>(
+        []
+    );
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(
         Array(3).fill("")
     );
-    const [selectedForms, setSelectedForms] = useState<string[]>(
+    const [selectedForms, setSelectedForms] = useState<Form[]>(
         Array(3).fill("")
     );
     const [currentStance, setCurrentStance] = useState<{
-        style: string;
-        form: string;
+        style: Style;
+        form: Form;
     } | null>(null);
 
     // Handle Hero Type selection
@@ -29,79 +34,73 @@ export default function CharacterBuilder() {
         setCurrentStance(null); // Reset Stance
     };
 
+    function isDefined<T>(arg: T | undefined): arg is T {
+        return arg !== undefined;
+    }
+
     // Handle Archetype selection
     const handleArchetypeChange = (archetype: string, index: number) => {
         const newArchetypes = [...selectedArchetypes];
-        newArchetypes[index] = archetype;
+        const newArchetype = archetypes.find((a) => a.name === archetype);
+        if (isDefined(newArchetype)) {
+            newArchetypes[index] = newArchetype;
+        }
         setSelectedArchetypes(newArchetypes);
     };
 
     // Handle Style selection
     const handleStyleChange = (style: string, index: number) => {
         const newStyles = [...selectedStyles];
-        newStyles[index] = style;
+        const newStyle = archetypes
+            .flatMap((a) => a.styles)
+            .find((a) => a.name === style);
+        if (isDefined(newStyle)) {
+            newStyles[index] = newStyle;
+        }
         setSelectedStyles(newStyles);
     };
 
     // Handle Form selection
     const handleFormChange = (form: string, index: number) => {
         const newForms = [...selectedForms];
-        newForms[index] = form;
+        const newForm = forms.find((a) => a.name === form);
+        if (isDefined(newForm)) {
+            newForms[index] = newForm;
+        }
         setSelectedForms(newForms);
     };
 
     // Handle Stance selection
-    const handleStanceSelection = (style: string, form: string) => {
+    const handleStanceSelection = (style: Style, form: Form) => {
         setCurrentStance({ style, form });
     };
 
     // Get available Styles based on selected Archetypes
-    const availableStyles = archetypes
-        .filter((archetype) => selectedArchetypes.includes(archetype.name))
-        .flatMap((archetype) => archetype.styles);
+    const availableStyles = selectedArchetypes.flatMap(
+        (archetype) => archetype.styles
+    );
 
     // Combine Abilities and Actions for the selected Stance
     const combinedAbilities = [
         ...selectedArchetypes.flatMap((archetype) => {
-            const archetypeData = archetypes.find((a) => a.name === archetype);
-            if (!archetypeData) return [];
             switch (heroType) {
                 case "Focused":
-                    return archetypeData.focusedAbilities;
+                    return archetype.focusedAbilities;
                 case "Fused":
-                    return archetypeData.fusedAbilities;
+                    return archetype.fusedAbilities;
                 case "Frantic":
-                    return archetypeData.franticAbilities;
+                    return archetype.franticAbilities;
                 default:
                     return [];
             }
         }),
-        ...(currentStance
-            ? [
-                  ...(forms.find((f) => f.name === currentStance.form)
-                      ?.abilities || []),
-              ]
-            : []),
+        ...(currentStance ? [...currentStance.form.abilities] : []),
     ].sort();
 
     const combinedActions = [
-        ...selectedArchetypes.flatMap(
-            (archetype) =>
-                archetypes.find((a) => a.name === archetype)?.actions || []
-        ),
+        ...selectedArchetypes.flatMap((archetype) => archetype.actions),
         ...(currentStance
-            ? [
-                  ...(forms.find((f) => f.name === currentStance.form)
-                      ?.actions || []),
-                  ...(archetypes
-                      .find((a) =>
-                          a.styles
-                              .map((s) => s.name)
-                              .includes(currentStance.style)
-                      )
-                      ?.styles.find((s) => s.name === currentStance.style)
-                      ?.actions || []),
-              ]
+            ? [...currentStance.form.actions, ...currentStance.style.actions]
             : []),
     ].sort((a, b) => {
         if (a.cost < b.cost) return -1;
@@ -109,17 +108,11 @@ export default function CharacterBuilder() {
         return 0;
     });
 
-    const currentStyle = currentStance
-        ? archetypes
-              .flatMap((archetype) => archetype.styles)
-              .find((style) => style.name === currentStance.style)
-        : null;
+    const currentStyle = currentStance?.style;
 
-    const currentForm = currentStance
-        ? forms.find((form) => form.name === currentStance.form)
-        : null;
+    const currentForm = currentStance?.form;
 
-    const allDice = currentForm?.greenDice.concat(currentForm.purpleDice);
+    const allDice = currentForm?.greenDice.concat(currentForm?.purpleDice);
 
     const diceList = allDice
         ? [
@@ -176,7 +169,9 @@ export default function CharacterBuilder() {
                                     Archetype {index + 1}
                                 </label>
                                 <select
-                                    value={selectedArchetypes[index] || ""}
+                                    value={
+                                        selectedArchetypes[index]?.name || ""
+                                    }
                                     onChange={(e) =>
                                         handleArchetypeChange(
                                             e.target.value,
@@ -219,7 +214,9 @@ export default function CharacterBuilder() {
                                         Style
                                     </label>
                                     <select
-                                        value={selectedStyles[index] || ""}
+                                        value={
+                                            selectedStyles[index]?.name || ""
+                                        }
                                         onChange={(e) =>
                                             handleStyleChange(
                                                 e.target.value,
@@ -246,7 +243,7 @@ export default function CharacterBuilder() {
                                         Form
                                     </label>
                                     <select
-                                        value={selectedForms[index] || ""}
+                                        value={selectedForms[index]?.name || ""}
                                         onChange={(e) =>
                                             handleFormChange(
                                                 e.target.value,
