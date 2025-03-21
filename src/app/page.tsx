@@ -55,7 +55,8 @@ export default function CharacterBuilder() {
     // Handle Style selection
     const handleStyleChange = (style: string, index: number) => {
         const newStyles = [...selectedStyles];
-        const newStyle = availableStyles(-1).find((s) => s.name === style);
+        const allStyles = [...archetypes.flatMap((a) => a.styles), ...freestyles];
+        const newStyle = allStyles.find((s) => s.name === style);
         if (isDefined(newStyle)) {
             // Check if the selected style is a Freestyle and its bannedForm is selected
             if (isFreestyle(newStyle) && selectedForms.some((form) => form.name === newStyle.bannedForm)) {
@@ -68,7 +69,7 @@ export default function CharacterBuilder() {
                 return;
             }
             // Check if more than one Freestyle is selected
-            if (isFreestyle(newStyle) && newStyles.some((s) => isFreestyle(s))) {
+            if (isFreestyle(newStyle) && newStyles.some((s, i) => i !== index && isFreestyle(s))) {
                 alert(`Cannot select more than one Freestyle.`);
                 return;
             }
@@ -183,8 +184,14 @@ export default function CharacterBuilder() {
                 return false;
             }
             // if style is a freestyle and we already have a freestyle selected in a different box, disallow it
-            if (selectedStyles.some((st, ind) => i !== ind && isFreestyle(st)) && isFreestyle(s)) {
-                return false;
+            if (isFreestyle(s)) {
+                // allow choosing freestyle if a freestyle is already chosen in this slot
+                if (selectedStyles[i] && isFreestyle(selectedStyles[i])) {
+                    return true;
+                }
+                if (selectedStyles.some((st) => isFreestyle(st))) {
+                    return false;
+                }
             }
             return true;
         });
