@@ -1,4 +1,8 @@
 import { halcyon } from "../styles/angel/halcyon";
+import { judgment } from "../styles/angel/judgment";
+import { shining } from "../styles/angel/shining";
+import { singing } from "../styles/angel/singing";
+import { winged } from "../styles/angel/winged";
 import { Archetype } from "../types/Archetype";
 
 export const angel: Archetype = {
@@ -25,5 +29,5 @@ export const angel: Archetype = {
             desc: "Challenge one enemy you can see. You may Pull them up to 3.\n5+: Challenge every enemy adjacent to the initial target, then Pull 1 to everyone Challenged by Siren Song.",
         },
     ],
-    styles: [halcyon],
+    styles: [halcyon, judgment, shining, singing, winged],
 };
