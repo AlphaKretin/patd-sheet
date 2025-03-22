@@ -97,6 +97,9 @@ export default function CharacterBuilder() {
             newArchetypes[index] = newArchetype;
         }
         setSelectedArchetypes(newArchetypes);
+        setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
+        setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Forms
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Style selection
@@ -135,6 +138,8 @@ export default function CharacterBuilder() {
                 setSelectedStyles(newStyles);
             }
         }
+
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Form selection
@@ -156,6 +161,7 @@ export default function CharacterBuilder() {
             newForms[index] = newForm;
         }
         setSelectedForms(newForms);
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Stance selection
@@ -377,6 +383,9 @@ export default function CharacterBuilder() {
     }
 
     function getArchetypeAbilities(): Ability[] {
+        if (selectedArchetypes.length === 0) {
+            return [];
+        }
         const aAbilities: Ability[] = [];
         if (heroType === "Frantic") {
             if (currentStance) {
@@ -391,7 +400,7 @@ export default function CharacterBuilder() {
         }
         if (heroType === "Focused") {
             aAbilities.concat(selectedArchetypes[0].focusedAbilities);
-            if ("name" in selectedArchetypes[1]) {
+            if (1 in selectedArchetypes) {
                 if (characterLevel < 9) {
                     aAbilities.concat(selectedArchetypes[1].fusedAbilities);
                 } else {
@@ -803,6 +812,7 @@ export default function CharacterBuilder() {
                         </div>
                     ) : (
                         <select
+                            value={currentStance?.style.name + " " + currentStance?.form.name}
                             onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                         >
