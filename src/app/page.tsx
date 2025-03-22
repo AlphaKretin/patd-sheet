@@ -6,7 +6,14 @@ import { bleedAbilities, heroType } from "./data/bleed";
 import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
-import { bonusAbilities, bonusDice } from "./data/levelbonuses";
+import {
+    bonusAbilities,
+    bonusDice,
+    numArchetypes,
+    numFranticForms,
+    numFranticStyles,
+    numStances,
+} from "./data/levelbonuses";
 import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
@@ -574,7 +581,7 @@ export default function CharacterBuilder() {
                     <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {Array.from({
-                            length: heroType === "Focused" ? 1 : heroType === "Fused" ? 2 : 3,
+                            length: numArchetypes[heroType][characterLevel],
                         }).map((_, index) => (
                             <div key={index} className="p-4 rounded-lg">
                                 <label className="block text-sm font-medium mb-2">Archetype {index + 1}</label>
@@ -600,46 +607,91 @@ export default function CharacterBuilder() {
             {heroType && selectedArchetypes.length > 0 && (
                 <section className="mb-8">
                     <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
-                    {Array.from({ length: 3 }).map((_, index) => (
-                        <div key={index} className="mb-6">
-                            <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
-                            <div className="grid grid-cols-2 gap-4">
-                                {/* Style Dropdown */}
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Style</label>
-                                    <select
-                                        value={selectedStyles[index]?.name || ""}
-                                        onChange={(e) => handleStyleChange(e.target.value, index)}
-                                        className="w-full p-2 border rounded bg-gray-800 text-white"
-                                    >
-                                        <option value="">Select Style</option>
-                                        {availableStyles(index).map((style) => (
-                                            <option key={style.name} value={style.name}>
-                                                {style.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                {/* Form Dropdown */}
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Form</label>
-                                    <select
-                                        value={selectedForms[index]?.name || ""}
-                                        onChange={(e) => handleFormChange(e.target.value, index)}
-                                        className="w-full p-2 border rounded bg-gray-800 text-white"
-                                    >
-                                        <option value="">Select Form</option>
-                                        {availableForms(index).map((form) => (
-                                            <option key={form.name} value={form.name}>
-                                                {form.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                    {heroType === "Frantic" ? (
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <h3 className="text-xl font-medium mb-2">Styles</h3>
+                                {Array.from({ length: numFranticStyles[characterLevel] }).map((_, index) => (
+                                    <div key={index} className="mb-6">
+                                        <label className="block text-sm font-medium mb-2">Style {index + 1}</label>
+                                        <select
+                                            value={selectedStyles[index]?.name || ""}
+                                            onChange={(e) => handleStyleChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Style</option>
+                                            {availableStyles(index).map((style) => (
+                                                <option key={style.name} value={style.name}>
+                                                    {style.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-medium mb-2">Forms</h3>
+                                {Array.from({ length: numFranticForms[characterLevel] }).map((_, index) => (
+                                    <div key={index} className="mb-6">
+                                        <label className="block text-sm font-medium mb-2">Form {index + 1}</label>
+                                        <select
+                                            value={selectedForms[index]?.name || ""}
+                                            onChange={(e) => handleFormChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Form</option>
+                                            {availableForms(index).map((form) => (
+                                                <option key={form.name} value={form.name}>
+                                                    {form.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ))}
+                    ) : (
+                        Array.from({ length: numStances[heroType][characterLevel] }).map((_, index) => (
+                            <div key={index} className="mb-6">
+                                <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    {/* Style Dropdown */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Style</label>
+                                        <select
+                                            value={selectedStyles[index]?.name || ""}
+                                            onChange={(e) => handleStyleChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Style</option>
+                                            {availableStyles(index).map((style) => (
+                                                <option key={style.name} value={style.name}>
+                                                    {style.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Form Dropdown */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Form</label>
+                                        <select
+                                            value={selectedForms[index]?.name || ""}
+                                            onChange={(e) => handleFormChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Form</option>
+                                            {availableForms(index).map((form) => (
+                                                <option key={form.name} value={form.name}>
+                                                    {form.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </section>
             )}
 
