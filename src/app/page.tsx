@@ -35,6 +35,7 @@ export default function CharacterBuilder() {
     });
     const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
     const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
+    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false); // New state for sidebar
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -410,8 +411,40 @@ export default function CharacterBuilder() {
         : [];
 
     return (
-        <div className="container mx-auto p-4 max-w-4xl">
-            <h1 className="text-3xl font-bold mb-6">Character Builder</h1>
+        <div className="container mx-auto p-4 max-w-4xl relative">
+            {/* Hamburger Menu */}
+            <button className="p-2 bg-gray-800 text-white rounded" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                ☰
+            </button>
+
+            {/* Sidebar */}
+            <div
+                className={`fixed top-0 left-0 h-full bg-gray-800 p-4 transition-transform transform ${
+                    sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
+                style={{ width: "250px" }}
+            >
+                <button className="p-2 bg-red-500 text-white rounded mb-4" onClick={() => setSidebarOpen(false)}>
+                    Close
+                </button>
+                <h2 className="text-2xl font-semibold mb-4">About</h2>
+                <p className="text-white">
+                    This app allows you to record the details for a character in Panic At The Dojo 2nd Edition, and
+                    review the data for a chosen stance all at once, including abilities and actions from all sources.
+                </p>
+                <br />
+                <p className="text-white">
+                    Created by LunaFlare. This app is not associated with or endorsed by the authors or publishers of
+                    Panic At The Dojo.
+                </p>
+                <br />
+                <p className="text-white">
+                    This app is a work in progress. See future features, leave feedback, and contribute at{" "}
+                    <a href="https://github.com/AlphaKretin/patd-sheet">https://github.com/AlphaKretin/patd-sheet</a>
+                </p>
+            </div>
+
+            <h1 className="text-3xl font-bold mb-6">Panic At The Dojo 2e Digital Character Sheet</h1>
 
             {/* Character Name Input */}
             <section className="mb-8">
