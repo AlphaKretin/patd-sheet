@@ -200,7 +200,7 @@ export default function CharacterBuilder() {
         setSelectedSkills(newSkills);
     };
 
-    const handleCustomSkillChange = (field: "name" | "description", value: string) => {
+    const handleCustomSkillChange = (field: "name" | "desc", value: string) => {
         setCustomSkill({ ...customSkill, [field]: value });
     };
 
@@ -707,7 +707,7 @@ export default function CharacterBuilder() {
                         />
                         <textarea
                             value={customSkill.desc}
-                            onChange={(e) => handleCustomSkillChange("description", e.target.value)}
+                            onChange={(e) => handleCustomSkillChange("desc", e.target.value)}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                             placeholder="Enter custom skill description"
                         />
