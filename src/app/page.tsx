@@ -89,11 +89,6 @@ export default function CharacterBuilder() {
         const newArchetypes = [...selectedArchetypes];
         const newArchetype = archetypes.find((a) => a.name === archetype);
         if (isDefined(newArchetype)) {
-            // Check if the archetype is already selected
-            if (newArchetypes.some((a, i) => a && a.name === newArchetype.name && i !== index)) {
-                alert(`Cannot select ${newArchetype.name} more than once.`);
-                return;
-            }
             newArchetypes[index] = newArchetype;
         }
         setSelectedArchetypes(newArchetypes);
@@ -108,36 +103,9 @@ export default function CharacterBuilder() {
         const allStyles = [...archetypes.flatMap((a) => a.styles), ...freestyles];
         const newStyle = allStyles.find((s) => s.name === style);
         if (isDefined(newStyle)) {
-            // Check if the selected style is a Freestyle and its bannedForm is selected
-            if (isFreestyle(newStyle) && selectedForms.some((form) => form.name === newStyle.bannedForm)) {
-                alert(`Cannot select ${newStyle.name} because it bans ${newStyle.bannedForm}.`);
-                return;
-            }
-            // Check if the style is already selected
-            if (newStyles.some((s, i) => s.name === newStyle.name && i !== index)) {
-                alert(`Cannot select ${newStyle.name} more than once.`);
-                return;
-            }
-            // Check if more than one Freestyle is selected
-            if (isFreestyle(newStyle) && newStyles.some((s, i) => i !== index && isFreestyle(s))) {
-                alert(`Cannot select more than one Freestyle.`);
-                return;
-            }
             newStyles[index] = newStyle;
         }
         setSelectedStyles(newStyles);
-
-        // Validate that at least one style from each selected archetype is included if three archetypes are selected
-        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > DEFAULT_STANCE_COUNT - 1) {
-            const missingArchetypeStyles = selectedArchetypes.filter(
-                (archetype) => !newStyles.some((style) => archetype.styles.includes(style))
-            );
-            if (missingArchetypeStyles.length > 0) {
-                alert(`You must include at least one style from each selected archetype.`);
-                newStyles[index] = selectedStyles[index]; // Revert the change
-                setSelectedStyles(newStyles);
-            }
-        }
 
         setCurrentStance(null); // Reset Stance
     };
@@ -147,17 +115,6 @@ export default function CharacterBuilder() {
         const newForms = [...selectedForms];
         const newForm = forms.find((a) => a.name === form);
         if (isDefined(newForm)) {
-            // Check if the selected form is banned by any selected Freestyle
-            const banForms = selectedStyles.find((style) => isFreestyle(style) && style.bannedForm === newForm.name);
-            if (banForms !== undefined) {
-                alert(`Cannot select ${newForm.name} because it is banned by the ${banForms.name} Freestyle.`);
-                return;
-            }
-            // Check if the form is already selected
-            if (newForms.some((f, i) => f.name === newForm.name && i !== index)) {
-                alert(`Cannot select ${newForm.name} more than once.`);
-                return;
-            }
             newForms[index] = newForm;
         }
         setSelectedForms(newForms);
@@ -453,7 +410,7 @@ export default function CharacterBuilder() {
             : selectedArchetypes.flatMap((archetype) => archetype.actions);
 
     const superMoveActions: Action[] = superMoves
-        .filter((s) => "name" in s)
+        .filter((s) => s && "name" in s)
         .map((s) => {
             const alphaSupers = archetypes.map((a) => a.alphaSuper.name);
             let cost = "";
@@ -480,7 +437,7 @@ export default function CharacterBuilder() {
     });
 
     function isFreestyle(style: Style): style is Freestyle {
-        return "bannedForm" in style;
+        return style && "bannedForm" in style;
     }
 
     const allDice = currentStance
@@ -785,7 +742,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Archetype</option>
                                 {selectedArchetypes
-                                    .filter((a, i) => "name" in a && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
+                                    .filter((a, i) => a && "name" in a && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
                                     .map(
                                         (archetype) =>
                                             archetype && (
@@ -802,7 +759,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Style</option>
                                 {selectedStyles
-                                    .filter((a) => "name" in a)
+                                    .filter((a) => a && "name" in a)
                                     .map(
                                         (style) =>
                                             style && (
@@ -819,7 +776,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Form</option>
                                 {selectedForms
-                                    .filter((a) => "name" in a)
+                                    .filter((a) => a && "name" in a)
                                     .map(
                                         (form) =>
                                             form && (
@@ -839,7 +796,9 @@ export default function CharacterBuilder() {
                             <option value="">Select Stance</option>
                             {selectedStyles.map(
                                 (style, index) =>
+                                    style &&
                                     "name" in style &&
+                                    selectedForms[index] &&
                                     "name" in selectedForms[index] && (
                                         <option key={index} value={index}>
                                             {selectedStyles[index].name} {selectedForms[index].name}
