@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { bleedAbilities, heroType } from "./data/bleed";
 import { Build, builds } from "./data/builds";
@@ -8,11 +8,13 @@ import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
+import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
 
 const NUM_ARCHETYPES = 3;
 
 export default function CharacterBuilder() {
+    const [characterName, setCharacterName] = useState<string>("");
     const [selectedBuild, setBuild] = useState<Build | null>(null);
     const [heroType, setHeroType] = useState<heroType | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
@@ -26,6 +28,20 @@ export default function CharacterBuilder() {
     const [franticArchetype, setFranticArchetype] = useState<Archetype>();
     const [franticStyle, setFranticStyle] = useState<Style>();
     const [franticForm, setFranticForm] = useState<Form>();
+    const [selectedSkills, setSelectedSkills] = useState<Skill[]>(Array(3).fill(""));
+    const [customSkill, setCustomSkill] = useState<Skill>({
+        name: "",
+        desc: "",
+    });
+    const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
+
+    useEffect(() => {
+        if (selectedForms.every((form) => form.name)) {
+            const newDefaultSkills = selectedForms.map((form) => form.skill);
+            setDefaultSkills(newDefaultSkills);
+            setSelectedSkills(newDefaultSkills);
+        }
+    }, [selectedForms]);
 
     const handleBuildChange = (build: string) => {
         const newBuild = builds.find((b) => b.name === build);
@@ -163,6 +179,24 @@ export default function CharacterBuilder() {
         }
     };
 
+    const handleSkillChange = (skill: string, index: number) => {
+        const newSkills = [...selectedSkills];
+        const newSkill = forms.map((f) => f.skill).find((s) => s.name === skill);
+        if (isDefined(newSkill)) {
+            newSkills[index] = newSkill;
+        }
+        const changedSkills = defaultSkills.filter((s) => !newSkills.some((sk) => sk.name === s.name)).length;
+        if (changedSkills > 1) {
+            alert("You can only change one of your skills!");
+            return;
+        }
+        setSelectedSkills(newSkills);
+    };
+
+    const handleCustomSkillChange = (field: "name" | "description", value: string) => {
+        setCustomSkill({ ...customSkill, [field]: value });
+    };
+
     // Remove duplicate archetypes from dropdowns, unless in same dropdown where it's selected
     function availableArchetypes(i: number) {
         return archetypes.filter((a) => {
@@ -227,6 +261,36 @@ export default function CharacterBuilder() {
         return aForms;
     }
 
+    function availableSkillForms(i: number): Form[] {
+        // if user has already swapped out a skill in a different box, disallow all other skills not associated with forms
+        let baseFormList: Form[] = [];
+        const changedSkills = selectedSkills.filter((s) => !defaultSkills.some((sk) => sk.name === s.name));
+        if (changedSkills.length > 0) {
+            const changedSkill = changedSkills[0];
+            const changedIndex = selectedSkills.findIndex((s) => s.name === changedSkill.name);
+            if (changedIndex !== i) {
+                baseFormList = defaultSkills
+                    .map((s) => forms.find((f) => f.skill.name === s.name))
+                    .filter((f) => isDefined(f));
+            }
+        }
+        if (baseFormList.length < 1) {
+            baseFormList = [...forms];
+        }
+        const aForms = baseFormList.filter((f) => {
+            // if skill is currently selected in this box, allow it
+            if (selectedSkills[i].name === f.skill.name) {
+                return true;
+            }
+            // if skill is currently selected in another box, disallow it
+            if (selectedSkills.some((s) => f.skill.name === s.name)) {
+                return false;
+            }
+            return true;
+        });
+        return aForms;
+    }
+
     const archetypeAbilities =
         heroType === "Frantic"
             ? currentStance?.archetype.franticAbilities || []
@@ -283,6 +347,18 @@ export default function CharacterBuilder() {
     return (
         <div className="container mx-auto p-4 max-w-4xl">
             <h1 className="text-3xl font-bold mb-6">Character Builder</h1>
+
+            {/* Character Name Input */}
+            <section className="mb-8">
+                <h2 className="text-2xl font-semibold mb-4">Character Name</h2>
+                <input
+                    type="text"
+                    value={characterName}
+                    onChange={(e) => setCharacterName(e.target.value)}
+                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                    placeholder="Enter your character's name"
+                />
+            </section>
 
             {/* Build Selection */}
             <section className="mb-8">
@@ -504,6 +580,52 @@ export default function CharacterBuilder() {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Skills Selection */}
+            {selectedForms.every((form) => form.name) && (
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <div key={index} className="p-4 rounded-lg">
+                                <label className="block text-sm font-medium mb-2">Skill {index + 1}</label>
+                                <select
+                                    value={selectedSkills[index].name || ""}
+                                    onChange={(e) => handleSkillChange(e.target.value, index)}
+                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                >
+                                    <option value="">Select Skill</option>
+                                    {availableSkillForms(index).map((f) => {
+                                        const skill = f.skill;
+                                        return (
+                                            <option key={skill.name} value={skill.name}>
+                                                {skill.name} ({f.name})
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                                <p className="text-sm text-gray-400 mt-2">{selectedSkills[index].desc || ""}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="p-4 rounded-lg mt-4">
+                        <label className="block text-sm font-medium mb-2">Custom Skill</label>
+                        <input
+                            type="text"
+                            value={customSkill.name}
+                            onChange={(e) => handleCustomSkillChange("name", e.target.value)}
+                            className="w-full p-2 border rounded bg-gray-800 text-white mb-2"
+                            placeholder="Enter custom skill name"
+                        />
+                        <textarea
+                            value={customSkill.desc}
+                            onChange={(e) => handleCustomSkillChange("description", e.target.value)}
+                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                            placeholder="Enter custom skill description"
+                        />
                     </div>
                 </section>
             )}
