@@ -14,6 +14,7 @@ import {
     numFranticStyles,
     numStances,
 } from "./data/levelbonuses";
+import { Ability } from "./data/types/Ability";
 import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
@@ -375,19 +376,40 @@ export default function CharacterBuilder() {
         return aForms;
     }
 
-    const archetypeAbilities =
-        heroType === "Frantic"
-            ? currentStance?.archetype.franticAbilities || []
-            : selectedArchetypes.flatMap((archetype) => {
-                  switch (heroType) {
-                      case "Focused":
-                          return archetype.focusedAbilities;
-                      case "Fused":
-                          return archetype.fusedAbilities;
-                      default:
-                          return [];
-                  }
-              });
+    function getArchetypeAbilities(): Ability[] {
+        const aAbilities: Ability[] = [];
+        if (heroType === "Frantic") {
+            if (currentStance) {
+                aAbilities.concat(currentStance.archetype.franticAbilities);
+            }
+            if (3 in selectedArchetypes) {
+                aAbilities.concat(selectedArchetypes[3].fusedAbilities);
+            }
+            if (5 in selectedArchetypes) {
+                aAbilities.concat(selectedArchetypes[5].fusedAbilities);
+            }
+        }
+        if (heroType === "Focused") {
+            aAbilities.concat(selectedArchetypes[0].focusedAbilities);
+            if ("name" in selectedArchetypes[1]) {
+                if (characterLevel < 9) {
+                    aAbilities.concat(selectedArchetypes[1].fusedAbilities);
+                } else {
+                    aAbilities.concat(selectedArchetypes[1].focusedAbilities);
+                }
+            }
+        }
+        // Fused
+        if (characterLevel > 6) {
+            aAbilities.concat(selectedArchetypes[0].focusedAbilities);
+            aAbilities.concat(selectedArchetypes.slice(1).flatMap((a) => a.fusedAbilities));
+        } else {
+            aAbilities.concat(selectedArchetypes.flatMap((a) => a.fusedAbilities));
+        }
+        return aAbilities;
+    }
+
+    const archetypeAbilities = getArchetypeAbilities();
 
     const levelAbilities = heroType
         ? Object.entries(bonusAbilities[heroType])
@@ -478,13 +500,25 @@ export default function CharacterBuilder() {
             return "Improved Fused Archetype";
         }
         if (heroType === "Fused") {
+            if (characterLevel > 6 && index == 0) {
+                return "Greater Fused Archetype";
+            }
             return `Fused Archetype ${index + 1}`;
         }
         // Frantic
-        if (index < 4) {
+        if (index < 3) {
             return `Frantic Ability ${index + 1}`;
         }
-        return `Fused Archetype ${index - 3}`;
+        if (index === 3) {
+            return "Improved Frenzy Ability";
+        }
+        if (index === 4) {
+            return "Fused Archetype 1";
+        }
+        if (index === 5) {
+            return "Greater Frenzy Ability";
+        }
+        return `Fused Archetype 2`;
     }
 
     return (

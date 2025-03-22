@@ -62,10 +62,10 @@ export const numArchetypes: Record<heroType, Record<number, number>> = {
         4: 4,
         5: 5,
         6: 5,
-        7: 5,
-        8: 5,
-        9: 6,
-        10: 6,
+        7: 6,
+        8: 6,
+        9: 7,
+        10: 7,
     },
 };
 
