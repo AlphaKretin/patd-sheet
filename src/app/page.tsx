@@ -34,6 +34,13 @@ export default function CharacterBuilder() {
         desc: "",
     });
     const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
+    const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setSavedCharacters(Object.keys(localStorage));
+        }
+    }, []);
 
     useEffect(() => {
         if (selectedForms.every((form) => form.name)) {
@@ -217,6 +224,7 @@ export default function CharacterBuilder() {
             customSkill,
         };
         localStorage.setItem(characterName, JSON.stringify(characterData));
+        setSavedCharacters(Object.keys(localStorage));
         alert("Character saved successfully!");
     };
 
@@ -252,11 +260,6 @@ export default function CharacterBuilder() {
         } else {
             alert("No saved data found for this character.");
         }
-    };
-
-    // Get list of saved characters from localStorage
-    const getSavedCharacters = () => {
-        return Object.keys(localStorage);
     };
 
     // Remove duplicate archetypes from dropdowns, unless in same dropdown where it's selected
@@ -432,7 +435,7 @@ export default function CharacterBuilder() {
                     className="p-2 border rounded bg-gray-800 text-white"
                 >
                     <option value="">Load Character</option>
-                    {getSavedCharacters().map((name) => (
+                    {savedCharacters.map((name) => (
                         <option key={name} value={name}>
                             {name}
                         </option>
