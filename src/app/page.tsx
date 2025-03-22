@@ -269,20 +269,20 @@ export default function CharacterBuilder() {
                 characterLevel,
                 superMoves,
             } = JSON.parse(characterData);
-            setCharacterName(name);
-            setBuild(selectedBuild);
-            setHeroType(heroType);
-            setSelectedArchetypes(selectedArchetypes);
-            setSelectedStyles(selectedStyles);
-            setSelectedForms(selectedForms);
-            setCurrentStance(currentStance);
-            setFranticArchetype(franticArchetype);
-            setFranticStyle(franticStyle);
-            setFranticForm(franticForm);
-            setSelectedSkills(selectedSkills);
-            setCustomSkill(customSkill);
-            setCharacterLevel(characterLevel);
-            setSuperMoves(superMoves);
+            if (name) setCharacterName(name);
+            if (selectedBuild) setBuild(selectedBuild);
+            if (heroType) setHeroType(heroType);
+            if (selectedArchetypes) setSelectedArchetypes(selectedArchetypes);
+            if (selectedStyles) setSelectedStyles(selectedStyles);
+            if (selectedForms) setSelectedForms(selectedForms);
+            if (currentStance) setCurrentStance(currentStance);
+            if (franticArchetype) setFranticArchetype(franticArchetype);
+            if (franticStyle) setFranticStyle(franticStyle);
+            if (franticForm) setFranticForm(franticForm);
+            if (selectedSkills) setSelectedSkills(selectedSkills);
+            if (customSkill) setCustomSkill(customSkill);
+            if (characterLevel) setCharacterLevel(characterLevel);
+            if (superMoves) setSuperMoves(superMoves);
         } else {
             alert("No saved data found for this character.");
         }
