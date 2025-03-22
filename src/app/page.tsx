@@ -447,6 +447,7 @@ export default function CharacterBuilder() {
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Build</h2>
                 <select
+                    value={selectedBuild?.name || ""}
                     onChange={(e) => handleBuildChange(e.target.value)}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
@@ -463,6 +464,7 @@ export default function CharacterBuilder() {
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
                 <select
+                    value={heroType || ""}
                     onChange={(e) => handleHeroTypeChange(e.target.value as heroType)}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
