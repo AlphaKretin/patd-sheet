@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { bleedAbilities, heroType } from "./data/bleed";
-import { bonusDice } from "./data/bonusdice";
 import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
+import { bonusAbilities, bonusDice } from "./data/levelbonuses";
 import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
@@ -382,6 +382,12 @@ export default function CharacterBuilder() {
                   }
               });
 
+    const levelAbilities = heroType
+        ? Object.entries(bonusAbilities[heroType])
+              .filter((pair) => characterLevel >= parseInt(pair[0]))
+              .map((pair) => pair[1])
+        : [];
+
     // Combine Abilities and Actions for the selected Stance
     const combinedAbilities = [
         ...archetypeAbilities,
@@ -389,6 +395,7 @@ export default function CharacterBuilder() {
         ...(currentStance ? [...currentStance.style.abilities] : []),
         ...(heroType ? [bleedAbilities[heroType]] : []),
         ...(selectedBuild ? selectedBuild.abilities : []),
+        ...(levelAbilities ? levelAbilities : []),
     ].sort();
 
     const archetypeActions =
