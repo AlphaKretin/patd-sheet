@@ -6,20 +6,31 @@ import { bleedAbilities, heroType } from "./data/bleed";
 import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
+import {
+    bonusAbilities,
+    bonusDice,
+    numArchetypes,
+    numFranticForms,
+    numFranticStyles,
+    numStances,
+} from "./data/levelbonuses";
+import { Ability } from "./data/types/Ability";
+import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
 import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
+import { SuperMove } from "./data/types/Super";
 
-const NUM_ARCHETYPES = 3;
+const DEFAULT_STANCE_COUNT = 3;
 
 export default function CharacterBuilder() {
     const [characterName, setCharacterName] = useState<string>("");
     const [selectedBuild, setBuild] = useState<Build | null>(null);
     const [heroType, setHeroType] = useState<heroType | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(NUM_ARCHETYPES).fill({}));
-    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(NUM_ARCHETYPES).fill({}));
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(DEFAULT_STANCE_COUNT).fill({}));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(DEFAULT_STANCE_COUNT).fill({}));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -35,7 +46,9 @@ export default function CharacterBuilder() {
     });
     const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
     const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
-    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false); // New state for sidebar
+    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+    const [characterLevel, setCharacterLevel] = useState<number>(1);
+    const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill({}));
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -62,8 +75,8 @@ export default function CharacterBuilder() {
     const handleHeroTypeChange = (type: heroType) => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
-        setSelectedStyles(Array(NUM_ARCHETYPES).fill({})); // Reset Styles
-        setSelectedForms(Array(NUM_ARCHETYPES).fill({})); // Reset Forms
+        setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
+        setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Forms
         setCurrentStance(null); // Reset Stance
     };
 
@@ -77,13 +90,16 @@ export default function CharacterBuilder() {
         const newArchetype = archetypes.find((a) => a.name === archetype);
         if (isDefined(newArchetype)) {
             // Check if the archetype is already selected
-            if (newArchetypes.some((a, i) => a.name === newArchetype.name && i !== index)) {
+            if (newArchetypes.some((a, i) => a && a.name === newArchetype.name && i !== index)) {
                 alert(`Cannot select ${newArchetype.name} more than once.`);
                 return;
             }
             newArchetypes[index] = newArchetype;
         }
         setSelectedArchetypes(newArchetypes);
+        setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
+        setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Forms
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Style selection
@@ -112,7 +128,7 @@ export default function CharacterBuilder() {
         setSelectedStyles(newStyles);
 
         // Validate that at least one style from each selected archetype is included if three archetypes are selected
-        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > NUM_ARCHETYPES - 1) {
+        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > DEFAULT_STANCE_COUNT - 1) {
             const missingArchetypeStyles = selectedArchetypes.filter(
                 (archetype) => !newStyles.some((style) => archetype.styles.includes(style))
             );
@@ -122,6 +138,8 @@ export default function CharacterBuilder() {
                 setSelectedStyles(newStyles);
             }
         }
+
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Form selection
@@ -143,6 +161,7 @@ export default function CharacterBuilder() {
             newForms[index] = newForm;
         }
         setSelectedForms(newForms);
+        setCurrentStance(null); // Reset Stance
     };
 
     // Handle Stance selection
@@ -154,36 +173,46 @@ export default function CharacterBuilder() {
         });
     };
 
-    const handleFranticArchetypeSelection = (index: number) => {
-        setFranticArchetype(selectedArchetypes[index]);
-        if (franticStyle && franticForm) {
-            setCurrentStance({
-                archetype: selectedArchetypes[index],
-                style: franticStyle,
-                form: franticForm,
-            });
+    const handleFranticArchetypeSelection = (archetype: string) => {
+        const newArchetype = archetypes.find((a) => a.name === archetype);
+        if (isDefined(newArchetype)) {
+            setFranticArchetype(newArchetype);
+            if (franticStyle && franticForm) {
+                setCurrentStance({
+                    archetype: newArchetype,
+                    style: franticStyle,
+                    form: franticForm,
+                });
+            }
         }
     };
 
-    const handleFranticStyleSelection = (index: number) => {
-        setFranticStyle(selectedStyles[index]);
-        if (franticArchetype && franticForm) {
-            setCurrentStance({
-                archetype: franticArchetype,
-                style: selectedStyles[index],
-                form: franticForm,
-            });
+    const handleFranticStyleSelection = (style: string) => {
+        const allStyles = [...archetypes.flatMap((a) => a.styles), ...freestyles];
+        const newStyle = allStyles.find((s) => s.name === style);
+        if (isDefined(newStyle)) {
+            setFranticStyle(newStyle);
+            if (franticArchetype && franticForm) {
+                setCurrentStance({
+                    archetype: franticArchetype,
+                    style: newStyle,
+                    form: franticForm,
+                });
+            }
         }
     };
 
-    const handleFranticFormSelection = (index: number) => {
-        setFranticForm(selectedForms[index]);
-        if (franticArchetype && franticStyle) {
-            setCurrentStance({
-                archetype: franticArchetype,
-                style: franticStyle,
-                form: selectedForms[index],
-            });
+    const handleFranticFormSelection = (form: string) => {
+        const newForm = forms.find((f) => f.name === form);
+        if (isDefined(newForm)) {
+            setFranticForm(newForm);
+            if (franticArchetype && franticStyle) {
+                setCurrentStance({
+                    archetype: franticArchetype,
+                    style: franticStyle,
+                    form: newForm,
+                });
+            }
         }
     };
 
@@ -223,6 +252,8 @@ export default function CharacterBuilder() {
             franticForm,
             selectedSkills,
             customSkill,
+            characterLevel,
+            superMoves,
         };
         localStorage.setItem(characterName, JSON.stringify(characterData));
         setSavedCharacters(Object.keys(localStorage));
@@ -245,19 +276,23 @@ export default function CharacterBuilder() {
                 franticForm,
                 selectedSkills,
                 customSkill,
+                characterLevel,
+                superMoves,
             } = JSON.parse(characterData);
-            setCharacterName(name);
-            setBuild(selectedBuild);
-            setHeroType(heroType);
-            setSelectedArchetypes(selectedArchetypes);
-            setSelectedStyles(selectedStyles);
-            setSelectedForms(selectedForms);
-            setCurrentStance(currentStance);
-            setFranticArchetype(franticArchetype);
-            setFranticStyle(franticStyle);
-            setFranticForm(franticForm);
-            setSelectedSkills(selectedSkills);
-            setCustomSkill(customSkill);
+            if (name) setCharacterName(name);
+            if (selectedBuild) setBuild(selectedBuild);
+            if (heroType) setHeroType(heroType);
+            if (selectedArchetypes) setSelectedArchetypes(selectedArchetypes);
+            if (selectedStyles) setSelectedStyles(selectedStyles);
+            if (selectedForms) setSelectedForms(selectedForms);
+            if (currentStance) setCurrentStance(currentStance);
+            if (franticArchetype) setFranticArchetype(franticArchetype);
+            if (franticStyle) setFranticStyle(franticStyle);
+            if (franticForm) setFranticForm(franticForm);
+            if (selectedSkills) setSelectedSkills(selectedSkills);
+            if (customSkill) setCustomSkill(customSkill);
+            if (characterLevel) setCharacterLevel(characterLevel);
+            if (superMoves) setSuperMoves(superMoves);
         } else {
             alert("No saved data found for this character.");
         }
@@ -271,7 +306,7 @@ export default function CharacterBuilder() {
                 return true;
             }
             // if archetype is currently selected in another box, disallow it
-            if (selectedArchetypes.some((ar) => ar.name === a.name)) {
+            if (selectedArchetypes.some((ar) => ar && ar.name === a.name)) {
                 return false;
             }
             return true;
@@ -357,19 +392,50 @@ export default function CharacterBuilder() {
         return aForms;
     }
 
-    const archetypeAbilities =
-        heroType === "Frantic"
-            ? currentStance?.archetype.franticAbilities || []
-            : selectedArchetypes.flatMap((archetype) => {
-                  switch (heroType) {
-                      case "Focused":
-                          return archetype.focusedAbilities;
-                      case "Fused":
-                          return archetype.fusedAbilities;
-                      default:
-                          return [];
-                  }
-              });
+    function getArchetypeAbilities(): Ability[] {
+        if (selectedArchetypes.length === 0) {
+            return [];
+        }
+        const aAbilities: Ability[] = [];
+        if (heroType === "Frantic") {
+            if (currentStance) {
+                aAbilities.push(...currentStance.archetype.franticAbilities);
+            }
+            if (4 in selectedArchetypes) {
+                aAbilities.push(...selectedArchetypes[4].fusedAbilities);
+            }
+            if (6 in selectedArchetypes) {
+                aAbilities.push(...selectedArchetypes[6].fusedAbilities);
+            }
+        }
+        if (heroType === "Focused") {
+            aAbilities.push(...selectedArchetypes[0].focusedAbilities);
+            if (1 in selectedArchetypes) {
+                if (characterLevel < 9) {
+                    aAbilities.push(...selectedArchetypes[1].fusedAbilities);
+                } else {
+                    aAbilities.push(...selectedArchetypes[1].focusedAbilities);
+                }
+            }
+        }
+        if (heroType === "Fused") {
+            if (characterLevel > 6) {
+                aAbilities.push(...selectedArchetypes[0].focusedAbilities);
+                aAbilities.push(...selectedArchetypes.slice(1).flatMap((a) => a.fusedAbilities));
+            } else {
+                aAbilities.push(...selectedArchetypes.flatMap((a) => a.fusedAbilities));
+            }
+        }
+        return aAbilities;
+    }
+
+    const archetypeAbilities = getArchetypeAbilities();
+
+    const levelAbilities = heroType
+        ? Object.entries(bonusAbilities[heroType])
+              .filter((pair) => characterLevel >= parseInt(pair[0]))
+              .map((pair) => pair[1])
+        : [];
 
     // Combine Abilities and Actions for the selected Stance
     const combinedAbilities = [
@@ -378,6 +444,7 @@ export default function CharacterBuilder() {
         ...(currentStance ? [...currentStance.style.abilities] : []),
         ...(heroType ? [bleedAbilities[heroType]] : []),
         ...(selectedBuild ? selectedBuild.abilities : []),
+        ...(levelAbilities ? levelAbilities : []),
     ].sort();
 
     const archetypeActions =
@@ -385,9 +452,27 @@ export default function CharacterBuilder() {
             ? currentStance?.archetype.actions || []
             : selectedArchetypes.flatMap((archetype) => archetype.actions);
 
+    const superMoveActions: Action[] = superMoves
+        .filter((s) => "name" in s)
+        .map((s) => {
+            const alphaSupers = archetypes.map((a) => a.alphaSuper.name);
+            let cost = "";
+            if (alphaSupers.includes(s.name)) {
+                cost = "Alpha Super";
+            } else {
+                cost = "Delta Super";
+            }
+            return {
+                name: s.name,
+                cost,
+                desc: s.desc,
+            };
+        });
+
     const combinedActions = [
         ...archetypeActions,
         ...(currentStance ? [...currentStance.form.actions, ...currentStance.style.actions] : []),
+        ...superMoveActions,
     ].sort((a, b) => {
         if (a.cost < b.cost) return -1;
         if (a.cost > b.cost) return 1;
@@ -404,11 +489,57 @@ export default function CharacterBuilder() {
             : currentStance.form.purpleDice.concat(currentStance.form.greenDice)
         : null;
 
+    if (allDice && characterLevel in bonusDice) {
+        allDice.push(bonusDice[characterLevel]);
+    }
+
     const diceList = allDice
         ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
               (a, b) => parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""))
           )
         : [];
+
+    const handleSuperMoveChange = (move: string, index: number) => {
+        const newSuperMoves = [...superMoves];
+        const newMove = archetypes.flatMap((a) => [a.alphaSuper, a.deltaSuper]).find((m) => m.name === move);
+        if (isDefined(newMove)) {
+            newSuperMoves[index] = newMove;
+        }
+        setSuperMoves(newSuperMoves);
+    };
+
+    function archetypeHeader(heroType: heroType, index: number): string {
+        if (heroType === "Focused") {
+            if (index === 0) {
+                return "Focused Archetype";
+            }
+            // second archetype
+            if (characterLevel < 9) {
+                return "Fused Archetype";
+            }
+            return "Improved Fused Archetype";
+        }
+        if (heroType === "Fused") {
+            if (characterLevel > 6 && index == 0) {
+                return "Greater Fused Archetype";
+            }
+            return `Fused Archetype ${index + 1}`;
+        }
+        // Frantic
+        if (index < 3) {
+            return `Frantic Ability ${index + 1}`;
+        }
+        if (index === 3) {
+            return "Improved Frenzy Ability";
+        }
+        if (index === 4) {
+            return "Fused Archetype 1";
+        }
+        if (index === 5) {
+            return "Greater Frenzy Ability";
+        }
+        return `Fused Archetype 2`;
+    }
 
     return (
         <div className="container mx-auto p-4 max-w-4xl relative">
@@ -446,16 +577,27 @@ export default function CharacterBuilder() {
 
             <h1 className="text-3xl font-bold mb-6">Panic At The Dojo 2e Digital Character Sheet</h1>
 
-            {/* Character Name Input */}
+            {/* Character Name and Level Input */}
             <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">Character Name</h2>
-                <input
-                    type="text"
-                    value={characterName}
-                    onChange={(e) => setCharacterName(e.target.value)}
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                    placeholder="Enter your character's name"
-                />
+                <h2 className="text-2xl font-semibold mb-4">Character Name and Level</h2>
+                <div className="flex space-x-4">
+                    <input
+                        type="text"
+                        value={characterName}
+                        onChange={(e) => setCharacterName(e.target.value)}
+                        className="w-3/4 p-2 border rounded bg-gray-800 text-white"
+                        placeholder="Enter your character's name"
+                    />
+                    <input
+                        type="number"
+                        value={characterLevel}
+                        onChange={(e) => setCharacterLevel(Math.max(1, Math.min(10, parseInt(e.target.value))))}
+                        className="w-1/4 p-2 border rounded bg-gray-800 text-white"
+                        placeholder="Level"
+                        min="1"
+                        max="10"
+                    />
+                </div>
             </section>
 
             {/* Save and Load Buttons */}
@@ -514,10 +656,12 @@ export default function CharacterBuilder() {
                     <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {Array.from({
-                            length: heroType === "Focused" ? 1 : heroType === "Fused" ? 2 : 3,
+                            length: numArchetypes[heroType][characterLevel],
                         }).map((_, index) => (
                             <div key={index} className="p-4 rounded-lg">
-                                <label className="block text-sm font-medium mb-2">Archetype {index + 1}</label>
+                                <label className="block text-sm font-medium mb-2">
+                                    {archetypeHeader(heroType, index)}
+                                </label>
                                 <select
                                     value={selectedArchetypes[index]?.name || ""}
                                     onChange={(e) => handleArchetypeChange(e.target.value, index)}
@@ -540,46 +684,91 @@ export default function CharacterBuilder() {
             {heroType && selectedArchetypes.length > 0 && (
                 <section className="mb-8">
                     <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
-                    {Array.from({ length: 3 }).map((_, index) => (
-                        <div key={index} className="mb-6">
-                            <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
-                            <div className="grid grid-cols-2 gap-4">
-                                {/* Style Dropdown */}
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Style</label>
-                                    <select
-                                        value={selectedStyles[index]?.name || ""}
-                                        onChange={(e) => handleStyleChange(e.target.value, index)}
-                                        className="w-full p-2 border rounded bg-gray-800 text-white"
-                                    >
-                                        <option value="">Select Style</option>
-                                        {availableStyles(index).map((style) => (
-                                            <option key={style.name} value={style.name}>
-                                                {style.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                {/* Form Dropdown */}
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Form</label>
-                                    <select
-                                        value={selectedForms[index]?.name || ""}
-                                        onChange={(e) => handleFormChange(e.target.value, index)}
-                                        className="w-full p-2 border rounded bg-gray-800 text-white"
-                                    >
-                                        <option value="">Select Form</option>
-                                        {availableForms(index).map((form) => (
-                                            <option key={form.name} value={form.name}>
-                                                {form.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                    {heroType === "Frantic" ? (
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <h3 className="text-xl font-medium mb-2">Styles</h3>
+                                {Array.from({ length: numFranticStyles[characterLevel] }).map((_, index) => (
+                                    <div key={index} className="mb-6">
+                                        <label className="block text-sm font-medium mb-2">Style {index + 1}</label>
+                                        <select
+                                            value={selectedStyles[index]?.name || ""}
+                                            onChange={(e) => handleStyleChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Style</option>
+                                            {availableStyles(index).map((style) => (
+                                                <option key={style.name} value={style.name}>
+                                                    {style.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-medium mb-2">Forms</h3>
+                                {Array.from({ length: numFranticForms[characterLevel] }).map((_, index) => (
+                                    <div key={index} className="mb-6">
+                                        <label className="block text-sm font-medium mb-2">Form {index + 1}</label>
+                                        <select
+                                            value={selectedForms[index]?.name || ""}
+                                            onChange={(e) => handleFormChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Form</option>
+                                            {availableForms(index).map((form) => (
+                                                <option key={form.name} value={form.name}>
+                                                    {form.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ))}
+                    ) : (
+                        Array.from({ length: numStances[heroType][characterLevel] }).map((_, index) => (
+                            <div key={index} className="mb-6">
+                                <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    {/* Style Dropdown */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Style</label>
+                                        <select
+                                            value={selectedStyles[index]?.name || ""}
+                                            onChange={(e) => handleStyleChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Style</option>
+                                            {availableStyles(index).map((style) => (
+                                                <option key={style.name} value={style.name}>
+                                                    {style.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Form Dropdown */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2">Form</label>
+                                        <select
+                                            value={selectedForms[index]?.name || ""}
+                                            onChange={(e) => handleFormChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Form</option>
+                                            {availableForms(index).map((form) => (
+                                                <option key={form.name} value={form.name}>
+                                                    {form.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </section>
             )}
 
@@ -590,50 +779,60 @@ export default function CharacterBuilder() {
                     {heroType === "Frantic" ? (
                         <div className="grid grid-cols-3 gap-4">
                             <select
-                                onChange={(e) => handleFranticArchetypeSelection(parseInt(e.target.value))}
+                                value={franticArchetype?.name || ""}
+                                onChange={(e) => handleFranticArchetypeSelection(e.target.value)}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Archetype</option>
-                                {selectedArchetypes.map(
-                                    (archetype, index) =>
-                                        archetype && (
-                                            <option key={index} value={index}>
-                                                {archetype.name}
-                                            </option>
-                                        )
-                                )}
+                                {selectedArchetypes
+                                    .filter((a, i) => "name" in a && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
+                                    .map(
+                                        (archetype) =>
+                                            archetype && (
+                                                <option key={archetype.name} value={archetype.name}>
+                                                    {archetype.name}
+                                                </option>
+                                            )
+                                    )}
                             </select>
                             <select
-                                onChange={(e) => handleFranticStyleSelection(parseInt(e.target.value))}
+                                value={franticStyle?.name || ""}
+                                onChange={(e) => handleFranticStyleSelection(e.target.value)}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Style</option>
-                                {selectedStyles.map(
-                                    (style, index) =>
-                                        style && (
-                                            <option key={index} value={index}>
-                                                {style.name}
-                                            </option>
-                                        )
-                                )}
+                                {selectedStyles
+                                    .filter((a) => "name" in a)
+                                    .map(
+                                        (style) =>
+                                            style && (
+                                                <option key={style.name} value={style.name}>
+                                                    {style.name}
+                                                </option>
+                                            )
+                                    )}
                             </select>
                             <select
-                                onChange={(e) => handleFranticFormSelection(parseInt(e.target.value))}
+                                value={franticForm?.name || ""}
+                                onChange={(e) => handleFranticFormSelection(e.target.value)}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Form</option>
-                                {selectedForms.map(
-                                    (form, index) =>
-                                        form && (
-                                            <option key={index} value={index}>
-                                                {form.name}
-                                            </option>
-                                        )
-                                )}
+                                {selectedForms
+                                    .filter((a) => "name" in a)
+                                    .map(
+                                        (form) =>
+                                            form && (
+                                                <option key={form.name} value={form.name}>
+                                                    {form.name}
+                                                </option>
+                                            )
+                                    )}
                             </select>
                         </div>
                     ) : (
                         <select
+                            value={currentStance?.style.name + " " + currentStance?.form.name}
                             onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                         >
@@ -649,6 +848,34 @@ export default function CharacterBuilder() {
                             )}
                         </select>
                     )}
+                </section>
+            )}
+
+            {/* Super Move Selection */}
+            {characterLevel >= 2 && (
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold mb-4">Super Moves</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        {Array.from({ length: characterLevel >= 6 ? 2 : 1 }).map((_, index) => (
+                            <div key={index} className="p-4 rounded-lg">
+                                <label className="block text-sm font-medium mb-2">Super Move {index + 1}</label>
+                                <select
+                                    value={superMoves[index].name || ""}
+                                    onChange={(e) => handleSuperMoveChange(e.target.value, index)}
+                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                >
+                                    <option value="">Select Super Move</option>
+                                    {selectedArchetypes.flatMap((archetype) =>
+                                        [archetype.alphaSuper, archetype.deltaSuper].map((move) => (
+                                            <option key={move.name} value={move.name}>
+                                                {move.name}
+                                            </option>
+                                        ))
+                                    )}
+                                </select>
+                            </div>
+                        ))}
+                    </div>
                 </section>
             )}
 

@@ -32,7 +32,7 @@ export const angel: Archetype = {
     styles: [halcyon, judgment, shining, singing, winged],
     alphaSuper: {
         name: "Heaven's Piledriver",
-        desc: "Deal 6 damage to an adjacent enemy. That enemy cannot use Free Movement until after the end of their next tur",
+        desc: "Deal 6 damage to an adjacent enemy. That enemy cannot use Free Movement until after the end of their next turn.",
     },
     deltaSuper: {
         name: "Siren's Scream",
