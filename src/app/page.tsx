@@ -90,7 +90,7 @@ export default function CharacterBuilder() {
         const newArchetype = archetypes.find((a) => a.name === archetype);
         if (isDefined(newArchetype)) {
             // Check if the archetype is already selected
-            if (newArchetypes.some((a, i) => a.name === newArchetype.name && i !== index)) {
+            if (newArchetypes.some((a, i) => a && a.name === newArchetype.name && i !== index)) {
                 alert(`Cannot select ${newArchetype.name} more than once.`);
                 return;
             }
@@ -306,7 +306,7 @@ export default function CharacterBuilder() {
                 return true;
             }
             // if archetype is currently selected in another box, disallow it
-            if (selectedArchetypes.some((ar) => ar.name === a.name)) {
+            if (selectedArchetypes.some((ar) => ar && ar.name === a.name)) {
                 return false;
             }
             return true;
@@ -399,31 +399,32 @@ export default function CharacterBuilder() {
         const aAbilities: Ability[] = [];
         if (heroType === "Frantic") {
             if (currentStance) {
-                aAbilities.concat(currentStance.archetype.franticAbilities);
+                aAbilities.push(...currentStance.archetype.franticAbilities);
             }
-            if (3 in selectedArchetypes) {
-                aAbilities.concat(selectedArchetypes[3].fusedAbilities);
+            if (4 in selectedArchetypes) {
+                aAbilities.push(...selectedArchetypes[4].fusedAbilities);
             }
-            if (5 in selectedArchetypes) {
-                aAbilities.concat(selectedArchetypes[5].fusedAbilities);
+            if (6 in selectedArchetypes) {
+                aAbilities.push(...selectedArchetypes[6].fusedAbilities);
             }
         }
         if (heroType === "Focused") {
-            aAbilities.concat(selectedArchetypes[0].focusedAbilities);
+            aAbilities.push(...selectedArchetypes[0].focusedAbilities);
             if (1 in selectedArchetypes) {
                 if (characterLevel < 9) {
-                    aAbilities.concat(selectedArchetypes[1].fusedAbilities);
+                    aAbilities.push(...selectedArchetypes[1].fusedAbilities);
                 } else {
-                    aAbilities.concat(selectedArchetypes[1].focusedAbilities);
+                    aAbilities.push(...selectedArchetypes[1].focusedAbilities);
                 }
             }
         }
-        // Fused
-        if (characterLevel > 6) {
-            aAbilities.concat(selectedArchetypes[0].focusedAbilities);
-            aAbilities.concat(selectedArchetypes.slice(1).flatMap((a) => a.fusedAbilities));
-        } else {
-            aAbilities.concat(selectedArchetypes.flatMap((a) => a.fusedAbilities));
+        if (heroType === "Fused") {
+            if (characterLevel > 6) {
+                aAbilities.push(...selectedArchetypes[0].focusedAbilities);
+                aAbilities.push(...selectedArchetypes.slice(1).flatMap((a) => a.fusedAbilities));
+            } else {
+                aAbilities.push(...selectedArchetypes.flatMap((a) => a.fusedAbilities));
+            }
         }
         return aAbilities;
     }
@@ -784,7 +785,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Archetype</option>
                                 {selectedArchetypes
-                                    .filter((a) => "name" in a)
+                                    .filter((a, i) => "name" in a && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
                                     .map(
                                         (archetype) =>
                                             archetype && (
