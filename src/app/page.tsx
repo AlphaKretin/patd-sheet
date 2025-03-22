@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { archetypes } from "./data/archetypes";
 import { bleedAbilities, heroType } from "./data/bleed";
+import { bonusDice } from "./data/bonusdice";
 import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
@@ -11,15 +12,15 @@ import { Form } from "./data/types/Form";
 import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
 
-const NUM_ARCHETYPES = 3;
+const DEFAULT_STANCE_COUNT = 3;
 
 export default function CharacterBuilder() {
     const [characterName, setCharacterName] = useState<string>("");
     const [selectedBuild, setBuild] = useState<Build | null>(null);
     const [heroType, setHeroType] = useState<heroType | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(NUM_ARCHETYPES).fill({}));
-    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(NUM_ARCHETYPES).fill({}));
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(DEFAULT_STANCE_COUNT).fill({}));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(DEFAULT_STANCE_COUNT).fill({}));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -35,7 +36,8 @@ export default function CharacterBuilder() {
     });
     const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
     const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
-    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false); // New state for sidebar
+    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+    const [characterLevel, setCharacterLevel] = useState<number>(1);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -62,8 +64,8 @@ export default function CharacterBuilder() {
     const handleHeroTypeChange = (type: heroType) => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
-        setSelectedStyles(Array(NUM_ARCHETYPES).fill({})); // Reset Styles
-        setSelectedForms(Array(NUM_ARCHETYPES).fill({})); // Reset Forms
+        setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
+        setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Forms
         setCurrentStance(null); // Reset Stance
     };
 
@@ -112,7 +114,7 @@ export default function CharacterBuilder() {
         setSelectedStyles(newStyles);
 
         // Validate that at least one style from each selected archetype is included if three archetypes are selected
-        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > NUM_ARCHETYPES - 1) {
+        if (newStyles.filter((s) => "name" in s && s.name.length > 0).length > DEFAULT_STANCE_COUNT - 1) {
             const missingArchetypeStyles = selectedArchetypes.filter(
                 (archetype) => !newStyles.some((style) => archetype.styles.includes(style))
             );
@@ -404,6 +406,10 @@ export default function CharacterBuilder() {
             : currentStance.form.purpleDice.concat(currentStance.form.greenDice)
         : null;
 
+    if (allDice && characterLevel in bonusDice) {
+        allDice.push(bonusDice[characterLevel]);
+    }
+
     const diceList = allDice
         ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
               (a, b) => parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""))
@@ -446,16 +452,27 @@ export default function CharacterBuilder() {
 
             <h1 className="text-3xl font-bold mb-6">Panic At The Dojo 2e Digital Character Sheet</h1>
 
-            {/* Character Name Input */}
+            {/* Character Name and Level Input */}
             <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">Character Name</h2>
-                <input
-                    type="text"
-                    value={characterName}
-                    onChange={(e) => setCharacterName(e.target.value)}
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                    placeholder="Enter your character's name"
-                />
+                <h2 className="text-2xl font-semibold mb-4">Character Name and Level</h2>
+                <div className="flex space-x-4">
+                    <input
+                        type="text"
+                        value={characterName}
+                        onChange={(e) => setCharacterName(e.target.value)}
+                        className="w-3/4 p-2 border rounded bg-gray-800 text-white"
+                        placeholder="Enter your character's name"
+                    />
+                    <input
+                        type="number"
+                        value={characterLevel}
+                        onChange={(e) => setCharacterLevel(Math.max(1, Math.min(10, parseInt(e.target.value))))}
+                        className="w-1/4 p-2 border rounded bg-gray-800 text-white"
+                        placeholder="Level"
+                        min="1"
+                        max="10"
+                    />
+                </div>
             </section>
 
             {/* Save and Load Buttons */}
