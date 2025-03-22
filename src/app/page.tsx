@@ -466,6 +466,27 @@ export default function CharacterBuilder() {
         setSuperMoves(newSuperMoves);
     };
 
+    function archetypeHeader(heroType: heroType, index: number): string {
+        if (heroType === "Focused") {
+            if (index === 0) {
+                return "Focused Archetype";
+            }
+            // second archetype
+            if (characterLevel < 9) {
+                return "Fused Archetype";
+            }
+            return "Improved Fused Archetype";
+        }
+        if (heroType === "Fused") {
+            return `Fused Archetype ${index + 1}`;
+        }
+        // Frantic
+        if (index < 4) {
+            return `Frantic Ability ${index + 1}`;
+        }
+        return `Fused Archetype ${index - 3}`;
+    }
+
     return (
         <div className="container mx-auto p-4 max-w-4xl relative">
             {/* Hamburger Menu */}
@@ -584,7 +605,9 @@ export default function CharacterBuilder() {
                             length: numArchetypes[heroType][characterLevel],
                         }).map((_, index) => (
                             <div key={index} className="p-4 rounded-lg">
-                                <label className="block text-sm font-medium mb-2">Archetype {index + 1}</label>
+                                <label className="block text-sm font-medium mb-2">
+                                    {archetypeHeader(heroType, index)}
+                                </label>
                                 <select
                                     value={selectedArchetypes[index]?.name || ""}
                                     onChange={(e) => handleArchetypeChange(e.target.value, index)}
