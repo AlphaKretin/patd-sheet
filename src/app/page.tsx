@@ -225,6 +225,7 @@ export default function CharacterBuilder() {
             franticForm,
             selectedSkills,
             customSkill,
+            characterLevel,
         };
         localStorage.setItem(characterName, JSON.stringify(characterData));
         setSavedCharacters(Object.keys(localStorage));
@@ -247,6 +248,7 @@ export default function CharacterBuilder() {
                 franticForm,
                 selectedSkills,
                 customSkill,
+                characterLevel,
             } = JSON.parse(characterData);
             setCharacterName(name);
             setBuild(selectedBuild);
@@ -260,6 +262,7 @@ export default function CharacterBuilder() {
             setFranticForm(franticForm);
             setSelectedSkills(selectedSkills);
             setCustomSkill(customSkill);
+            setCharacterLevel(characterLevel);
         } else {
             alert("No saved data found for this character.");
         }
