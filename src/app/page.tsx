@@ -34,6 +34,13 @@ export default function CharacterBuilder() {
         desc: "",
     });
     const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
+    const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setSavedCharacters(Object.keys(localStorage));
+        }
+    }, []);
 
     useEffect(() => {
         if (selectedForms.every((form) => form.name)) {
@@ -195,6 +202,64 @@ export default function CharacterBuilder() {
 
     const handleCustomSkillChange = (field: "name" | "description", value: string) => {
         setCustomSkill({ ...customSkill, [field]: value });
+    };
+
+    // Save current selections to localStorage
+    const saveCharacter = () => {
+        if (!characterName) {
+            alert("Please enter a character name before saving.");
+            return;
+        }
+        const characterData = {
+            selectedBuild,
+            heroType,
+            selectedArchetypes,
+            selectedStyles,
+            selectedForms,
+            currentStance,
+            franticArchetype,
+            franticStyle,
+            franticForm,
+            selectedSkills,
+            customSkill,
+        };
+        localStorage.setItem(characterName, JSON.stringify(characterData));
+        setSavedCharacters(Object.keys(localStorage));
+        alert("Character saved successfully!");
+    };
+
+    // Load saved character selections from localStorage
+    const loadCharacter = (name: string) => {
+        const characterData = localStorage.getItem(name);
+        if (characterData) {
+            const {
+                selectedBuild,
+                heroType,
+                selectedArchetypes,
+                selectedStyles,
+                selectedForms,
+                currentStance,
+                franticArchetype,
+                franticStyle,
+                franticForm,
+                selectedSkills,
+                customSkill,
+            } = JSON.parse(characterData);
+            setCharacterName(name);
+            setBuild(selectedBuild);
+            setHeroType(heroType);
+            setSelectedArchetypes(selectedArchetypes);
+            setSelectedStyles(selectedStyles);
+            setSelectedForms(selectedForms);
+            setCurrentStance(currentStance);
+            setFranticArchetype(franticArchetype);
+            setFranticStyle(franticStyle);
+            setFranticForm(franticForm);
+            setSelectedSkills(selectedSkills);
+            setCustomSkill(customSkill);
+        } else {
+            alert("No saved data found for this character.");
+        }
     };
 
     // Remove duplicate archetypes from dropdowns, unless in same dropdown where it's selected
@@ -360,10 +425,29 @@ export default function CharacterBuilder() {
                 />
             </section>
 
+            {/* Save and Load Buttons */}
+            <section className="mb-8">
+                <button onClick={saveCharacter} className="p-2 bg-blue-500 text-white rounded mr-2">
+                    Save Character
+                </button>
+                <select
+                    onChange={(e) => loadCharacter(e.target.value)}
+                    className="p-2 border rounded bg-gray-800 text-white"
+                >
+                    <option value="">Load Character</option>
+                    {savedCharacters.map((name) => (
+                        <option key={name} value={name}>
+                            {name}
+                        </option>
+                    ))}
+                </select>
+            </section>
+
             {/* Build Selection */}
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Build</h2>
                 <select
+                    value={selectedBuild?.name || ""}
                     onChange={(e) => handleBuildChange(e.target.value)}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
@@ -380,6 +464,7 @@ export default function CharacterBuilder() {
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
                 <select
+                    value={heroType || ""}
                     onChange={(e) => handleHeroTypeChange(e.target.value as heroType)}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
