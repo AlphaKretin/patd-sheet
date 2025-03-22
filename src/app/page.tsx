@@ -173,36 +173,46 @@ export default function CharacterBuilder() {
         });
     };
 
-    const handleFranticArchetypeSelection = (index: number) => {
-        setFranticArchetype(selectedArchetypes[index]);
-        if (franticStyle && franticForm) {
-            setCurrentStance({
-                archetype: selectedArchetypes[index],
-                style: franticStyle,
-                form: franticForm,
-            });
+    const handleFranticArchetypeSelection = (archetype: string) => {
+        const newArchetype = archetypes.find((a) => a.name === archetype);
+        if (isDefined(newArchetype)) {
+            setFranticArchetype(newArchetype);
+            if (franticStyle && franticForm) {
+                setCurrentStance({
+                    archetype: newArchetype,
+                    style: franticStyle,
+                    form: franticForm,
+                });
+            }
         }
     };
 
-    const handleFranticStyleSelection = (index: number) => {
-        setFranticStyle(selectedStyles[index]);
-        if (franticArchetype && franticForm) {
-            setCurrentStance({
-                archetype: franticArchetype,
-                style: selectedStyles[index],
-                form: franticForm,
-            });
+    const handleFranticStyleSelection = (style: string) => {
+        const allStyles = [...archetypes.flatMap((a) => a.styles), ...freestyles];
+        const newStyle = allStyles.find((s) => s.name === style);
+        if (isDefined(newStyle)) {
+            setFranticStyle(newStyle);
+            if (franticArchetype && franticForm) {
+                setCurrentStance({
+                    archetype: franticArchetype,
+                    style: newStyle,
+                    form: franticForm,
+                });
+            }
         }
     };
 
-    const handleFranticFormSelection = (index: number) => {
-        setFranticForm(selectedForms[index]);
-        if (franticArchetype && franticStyle) {
-            setCurrentStance({
-                archetype: franticArchetype,
-                style: franticStyle,
-                form: selectedForms[index],
-            });
+    const handleFranticFormSelection = (form: string) => {
+        const newForm = forms.find((f) => f.name === form);
+        if (isDefined(newForm)) {
+            setFranticForm(newForm);
+            if (franticArchetype && franticStyle) {
+                setCurrentStance({
+                    archetype: franticArchetype,
+                    style: franticStyle,
+                    form: newForm,
+                });
+            }
         }
     };
 
@@ -768,46 +778,55 @@ export default function CharacterBuilder() {
                     {heroType === "Frantic" ? (
                         <div className="grid grid-cols-3 gap-4">
                             <select
-                                onChange={(e) => handleFranticArchetypeSelection(parseInt(e.target.value))}
+                                value={franticArchetype?.name || ""}
+                                onChange={(e) => handleFranticArchetypeSelection(e.target.value)}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Archetype</option>
-                                {selectedArchetypes.map(
-                                    (archetype, index) =>
-                                        archetype && (
-                                            <option key={index} value={index}>
-                                                {archetype.name}
-                                            </option>
-                                        )
-                                )}
+                                {selectedArchetypes
+                                    .filter((a) => "name" in a)
+                                    .map(
+                                        (archetype) =>
+                                            archetype && (
+                                                <option key={archetype.name} value={archetype.name}>
+                                                    {archetype.name}
+                                                </option>
+                                            )
+                                    )}
                             </select>
                             <select
-                                onChange={(e) => handleFranticStyleSelection(parseInt(e.target.value))}
+                                value={franticStyle?.name || ""}
+                                onChange={(e) => handleFranticStyleSelection(e.target.value)}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Style</option>
-                                {selectedStyles.map(
-                                    (style, index) =>
-                                        style && (
-                                            <option key={index} value={index}>
-                                                {style.name}
-                                            </option>
-                                        )
-                                )}
+                                {selectedStyles
+                                    .filter((a) => "name" in a)
+                                    .map(
+                                        (style) =>
+                                            style && (
+                                                <option key={style.name} value={style.name}>
+                                                    {style.name}
+                                                </option>
+                                            )
+                                    )}
                             </select>
                             <select
-                                onChange={(e) => handleFranticFormSelection(parseInt(e.target.value))}
+                                value={franticForm?.name || ""}
+                                onChange={(e) => handleFranticFormSelection(e.target.value)}
                                 className="w-full p-2 border rounded bg-gray-800 text-white"
                             >
                                 <option value="">Select Form</option>
-                                {selectedForms.map(
-                                    (form, index) =>
-                                        form && (
-                                            <option key={index} value={index}>
-                                                {form.name}
-                                            </option>
-                                        )
-                                )}
+                                {selectedForms
+                                    .filter((a) => "name" in a)
+                                    .map(
+                                        (form) =>
+                                            form && (
+                                                <option key={form.name} value={form.name}>
+                                                    {form.name}
+                                                </option>
+                                            )
+                                    )}
                             </select>
                         </div>
                     ) : (
