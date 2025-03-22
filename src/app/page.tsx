@@ -7,10 +7,12 @@ import { bonusDice } from "./data/bonusdice";
 import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
+import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
 import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
+import { SuperMove } from "./data/types/Super";
 
 const DEFAULT_STANCE_COUNT = 3;
 
@@ -38,6 +40,7 @@ export default function CharacterBuilder() {
     const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [characterLevel, setCharacterLevel] = useState<number>(1);
+    const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill({}));
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -226,6 +229,7 @@ export default function CharacterBuilder() {
             selectedSkills,
             customSkill,
             characterLevel,
+            superMoves,
         };
         localStorage.setItem(characterName, JSON.stringify(characterData));
         setSavedCharacters(Object.keys(localStorage));
@@ -249,6 +253,7 @@ export default function CharacterBuilder() {
                 selectedSkills,
                 customSkill,
                 characterLevel,
+                superMoves,
             } = JSON.parse(characterData);
             setCharacterName(name);
             setBuild(selectedBuild);
@@ -263,6 +268,7 @@ export default function CharacterBuilder() {
             setSelectedSkills(selectedSkills);
             setCustomSkill(customSkill);
             setCharacterLevel(characterLevel);
+            setSuperMoves(superMoves);
         } else {
             alert("No saved data found for this character.");
         }
@@ -390,9 +396,27 @@ export default function CharacterBuilder() {
             ? currentStance?.archetype.actions || []
             : selectedArchetypes.flatMap((archetype) => archetype.actions);
 
+    const superMoveActions: Action[] = superMoves
+        .filter((s) => "name" in s)
+        .map((s) => {
+            const alphaSupers = archetypes.map((a) => a.alphaSuper.name);
+            let cost = "";
+            if (alphaSupers.includes(s.name)) {
+                cost = "Alpha Super";
+            } else {
+                cost = "Delta Super";
+            }
+            return {
+                name: s.name,
+                cost,
+                desc: s.desc,
+            };
+        });
+
     const combinedActions = [
         ...archetypeActions,
         ...(currentStance ? [...currentStance.form.actions, ...currentStance.style.actions] : []),
+        ...superMoveActions,
     ].sort((a, b) => {
         if (a.cost < b.cost) return -1;
         if (a.cost > b.cost) return 1;
@@ -418,6 +442,15 @@ export default function CharacterBuilder() {
               (a, b) => parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""))
           )
         : [];
+
+    const handleSuperMoveChange = (move: string, index: number) => {
+        const newSuperMoves = [...superMoves];
+        const newMove = archetypes.flatMap((a) => [a.alphaSuper, a.deltaSuper]).find((m) => m.name === move);
+        if (isDefined(newMove)) {
+            newSuperMoves[index] = newMove;
+        }
+        setSuperMoves(newSuperMoves);
+    };
 
     return (
         <div className="container mx-auto p-4 max-w-4xl relative">
@@ -669,6 +702,34 @@ export default function CharacterBuilder() {
                             )}
                         </select>
                     )}
+                </section>
+            )}
+
+            {/* Super Move Selection */}
+            {characterLevel >= 2 && (
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold mb-4">Super Moves</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        {Array.from({ length: characterLevel >= 6 ? 2 : 1 }).map((_, index) => (
+                            <div key={index} className="p-4 rounded-lg">
+                                <label className="block text-sm font-medium mb-2">Super Move {index + 1}</label>
+                                <select
+                                    value={superMoves[index].name || ""}
+                                    onChange={(e) => handleSuperMoveChange(e.target.value, index)}
+                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                >
+                                    <option value="">Select Super Move</option>
+                                    {selectedArchetypes.flatMap((archetype) =>
+                                        [archetype.alphaSuper, archetype.deltaSuper].map((move) => (
+                                            <option key={move.name} value={move.name}>
+                                                {move.name}
+                                            </option>
+                                        ))
+                                    )}
+                                </select>
+                            </div>
+                        ))}
+                    </div>
                 </section>
             )}
 
