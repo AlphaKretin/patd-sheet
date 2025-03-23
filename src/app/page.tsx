@@ -58,6 +58,7 @@ export default function CharacterBuilder() {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [characterLevel, setCharacterLevel] = useState<number>(1);
     const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill(nullSuper));
+    const [customSort, setCustomSort] = useState<boolean>(true);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -461,13 +462,19 @@ export default function CharacterBuilder() {
 
     // Combine Abilities and Actions for the selected Stance
     const combinedAbilities = [
+        ...(heroType ? [bleedAbilities[heroType]] : []),
+        ...(levelAbilities ? levelAbilities : []),
+        ...(selectedBuild ? selectedBuild.abilities : []),
         ...archetypeAbilities,
         ...(currentStance ? [...currentStance.form.abilities] : []),
         ...(currentStance ? [...currentStance.style.abilities] : []),
-        ...(heroType ? [bleedAbilities[heroType]] : []),
-        ...(selectedBuild ? selectedBuild.abilities : []),
-        ...(levelAbilities ? levelAbilities : []),
-    ].sort();
+    ];
+
+    // if user enables, sort by text to put triggers near each other
+    // otherwise, will remain in its order, based on the source of the ability
+    if (customSort) {
+        combinedAbilities.sort();
+    }
 
     const archetypeActions =
         heroType === "Frantic"
@@ -493,11 +500,13 @@ export default function CharacterBuilder() {
 
     const combinedActions = [
         ...archetypeActions,
-        ...(currentStance ? [...currentStance.form.actions, ...currentStance.style.actions] : []),
+        ...(currentStance ? [...currentStance.style.actions, ...currentStance.form.actions] : []),
         ...superMoveActions,
     ].sort((a, b) => {
-        if (a.cost < b.cost) return -1;
-        if (a.cost > b.cost) return 1;
+        if (customSort) {
+            if (a.cost < b.cost) return -1;
+            if (a.cost > b.cost) return 1;
+        }
         return 0;
     });
 
@@ -562,6 +571,10 @@ export default function CharacterBuilder() {
         }
         return `Fused Archetype 2`;
     }
+
+    const handleSortToggle = () => {
+        setCustomSort(!customSort);
+    };
 
     return (
         <div className="container mx-auto p-4 max-w-4xl relative">
@@ -876,6 +889,10 @@ export default function CharacterBuilder() {
                             )}
                         </select>
                     )}
+                    <label className="block text-sm font-medium mb-2">
+                        <input type="checkbox" checked={customSort} onChange={handleSortToggle} className="mr-2" />
+                        Custom Sorting
+                    </label>
                 </section>
             )}
 
@@ -934,26 +951,34 @@ export default function CharacterBuilder() {
                             ))}
                         </div>
                         <div>
-                            {combinedActions.map((action, index) => (
-                                <div key={index}>
-                                    <h3 className="text-xl font-medium mt-4 mb-2">
-                                        {action.cost}: {action.name}
-                                    </h3>
-                                    <div>
-                                        {action.desc.split("\n").map((line, i) => (
-                                            <div key={i} className="pl-4">
-                                                {line.includes(":")
-                                                    ? line
-                                                          .split(":")
-                                                          .map((part, j) =>
-                                                              j === 0 ? <strong key={j}>{part}:</strong> : part
-                                                          )
-                                                    : line}
-                                            </div>
-                                        ))}
+                            {combinedActions
+                                .sort((a, b) => {
+                                    if (customSort) {
+                                        if (a.cost < b.cost) return -1;
+                                        if (a.cost > b.cost) return 1;
+                                    }
+                                    return 0;
+                                })
+                                .map((action, index) => (
+                                    <div key={index}>
+                                        <h3 className="text-xl font-medium mt-4 mb-2">
+                                            {action.cost}: {action.name}
+                                        </h3>
+                                        <div>
+                                            {action.desc.split("\n").map((line, i) => (
+                                                <div key={i} className="pl-4">
+                                                    {line.includes(":")
+                                                        ? line
+                                                              .split(":")
+                                                              .map((part, j) =>
+                                                                  j === 0 ? <strong key={j}>{part}:</strong> : part
+                                                              )
+                                                        : line}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
                         </div>
                     </div>
                 </section>
