@@ -68,11 +68,13 @@ export default function CharacterBuilder() {
         const newBuild = builds.find((b) => b.name === build);
         if (isDefined(newBuild)) {
             setBuild(newBuild);
+        } else {
+            setBuild(null);
         }
     };
 
     // Handle Hero Type selection
-    const handleHeroTypeChange = (type: heroType) => {
+    const handleHeroTypeChange = (type: heroType | null) => {
         setHeroType(type);
         setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
         setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
@@ -90,6 +92,8 @@ export default function CharacterBuilder() {
         const newArchetype = archetypes.find((a) => a.name === archetype);
         if (isDefined(newArchetype)) {
             newArchetypes[index] = newArchetype;
+        } else {
+            newArchetypes.splice(index);
         }
         setSelectedArchetypes(newArchetypes);
         setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
@@ -104,6 +108,8 @@ export default function CharacterBuilder() {
         const newStyle = allStyles.find((s) => s.name === style);
         if (isDefined(newStyle)) {
             newStyles[index] = newStyle;
+        } else {
+            newStyles.splice(index);
         }
         setSelectedStyles(newStyles);
 
@@ -116,6 +122,8 @@ export default function CharacterBuilder() {
         const newForm = forms.find((a) => a.name === form);
         if (isDefined(newForm)) {
             newForms[index] = newForm;
+        } else {
+            newForms.splice(index);
         }
         setSelectedForms(newForms);
         setCurrentStance(null); // Reset Stance
@@ -141,6 +149,8 @@ export default function CharacterBuilder() {
                     form: franticForm,
                 });
             }
+        } else {
+            setFranticArchetype(undefined);
         }
     };
 
@@ -156,6 +166,8 @@ export default function CharacterBuilder() {
                     form: franticForm,
                 });
             }
+        } else {
+            setFranticStyle(undefined);
         }
     };
 
@@ -170,6 +182,8 @@ export default function CharacterBuilder() {
                     form: newForm,
                 });
             }
+        } else {
+            setFranticForm(undefined);
         }
     };
 
@@ -178,6 +192,8 @@ export default function CharacterBuilder() {
         const newSkill = forms.map((f) => f.skill).find((s) => s.name === skill);
         if (isDefined(newSkill)) {
             newSkills[index] = newSkill;
+        } else {
+            newSkills.splice(index);
         }
         const changedSkills = defaultSkills.filter((s) => !newSkills.some((sk) => sk.name === s.name)).length;
         if (changedSkills > 1) {
