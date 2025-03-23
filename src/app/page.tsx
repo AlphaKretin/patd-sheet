@@ -321,7 +321,7 @@ export default function CharacterBuilder() {
     // Get available Styles based on selected Archetypes
     function availableStyles(i: number) {
         let aStyles = [
-            ...selectedArchetypes.flatMap((archetype) => archetype.styles),
+            ...selectedArchetypes.filter((a) => !isNull(a)).flatMap((archetype) => archetype.styles),
             ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
         ];
         aStyles = aStyles.filter((s) => {
@@ -882,13 +882,15 @@ export default function CharacterBuilder() {
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
                                 >
                                     <option value="">Select Super Move</option>
-                                    {selectedArchetypes.flatMap((archetype) =>
-                                        [archetype.alphaSuper, archetype.deltaSuper].map((move) => (
-                                            <option key={move.name} value={move.name}>
-                                                {move.name}
-                                            </option>
-                                        ))
-                                    )}
+                                    {selectedArchetypes
+                                        .filter((a) => !isNull(a))
+                                        .flatMap((archetype) =>
+                                            [archetype.alphaSuper, archetype.deltaSuper].map((move) => (
+                                                <option key={move.name} value={move.name}>
+                                                    {move.name}
+                                                </option>
+                                            ))
+                                        )}
                                 </select>
                             </div>
                         ))}
