@@ -44,6 +44,7 @@ export default function CharacterBuilder() {
         archetype: Archetype;
         style: Style;
         form: Form;
+        index: number;
     } | null>(null);
     const [franticArchetype, setFranticArchetype] = useState<Archetype>();
     const [franticStyle, setFranticStyle] = useState<Style>();
@@ -169,6 +170,7 @@ export default function CharacterBuilder() {
             archetype: selectedArchetypes[index], // unused but for Frantic
             style: selectedStyles[index],
             form: selectedForms[index],
+            index,
         });
     };
 
@@ -181,6 +183,7 @@ export default function CharacterBuilder() {
                     archetype: newArchetype,
                     style: franticStyle,
                     form: franticForm,
+                    index: -1,
                 });
             }
         } else {
@@ -198,6 +201,7 @@ export default function CharacterBuilder() {
                     archetype: franticArchetype,
                     style: newStyle,
                     form: franticForm,
+                    index: -1,
                 });
             }
         } else {
@@ -214,6 +218,7 @@ export default function CharacterBuilder() {
                     archetype: franticArchetype,
                     style: franticStyle,
                     form: newForm,
+                    index: -1,
                 });
             }
         } else {
@@ -873,7 +878,7 @@ export default function CharacterBuilder() {
                         </div>
                     ) : (
                         <select
-                            value={currentStance?.style.name + " " + currentStance?.form.name}
+                            value={currentStance?.index}
                             onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                         >
