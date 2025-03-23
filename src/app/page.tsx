@@ -698,7 +698,7 @@ export default function CharacterBuilder() {
             )}
 
             {/* Style and Form Selection */}
-            {heroType && selectedArchetypes.length > 0 && (
+            {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
                 <section className="mb-8">
                     <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
                     {heroType === "Frantic" ? (
@@ -790,7 +790,7 @@ export default function CharacterBuilder() {
             )}
 
             {/* Stance Selection Dropdown */}
-            {heroType && selectedArchetypes.length > 0 && (
+            {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
                 <section className="mb-8">
                     <label className="block text-sm font-medium mb-2">Select Stance to View</label>
                     {heroType === "Frantic" ? (
