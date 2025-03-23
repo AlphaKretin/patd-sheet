@@ -608,6 +608,12 @@ export default function CharacterBuilder() {
                 </p>
                 <br />
                 <p className="text-white">
+                    To ensure data doesn not get into an invalid state, editing any selections further up the page will
+                    reset everything below. Please try to build your character top down to avoid this inconvenience.
+                    Apologies, I am hoping to find a better solution in the future.
+                </p>
+                <br />
+                <p className="text-white">
                     This app is a work in progress. See future features, leave feedback, and contribute at{" "}
                     <a href="https://github.com/AlphaKretin/patd-sheet">https://github.com/AlphaKretin/patd-sheet</a>
                 </p>
