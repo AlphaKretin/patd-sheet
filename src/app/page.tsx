@@ -14,6 +14,7 @@ import {
     numFranticStyles,
     numStances,
 } from "./data/levelbonuses";
+import { nullArchetype, nullForm, nullSkill, nullStyle, nullSuper } from "./data/nulls";
 import { Ability } from "./data/types/Ability";
 import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
@@ -28,9 +29,9 @@ export default function CharacterBuilder() {
     const [characterName, setCharacterName] = useState<string>("");
     const [selectedBuild, setBuild] = useState<Build | null>(null);
     const [heroType, setHeroType] = useState<heroType | null>(null);
-    const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([]);
-    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(DEFAULT_STANCE_COUNT).fill({}));
-    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(DEFAULT_STANCE_COUNT).fill({}));
+    const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([nullArchetype]);
+    const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(DEFAULT_STANCE_COUNT).fill(nullStyle));
+    const [selectedForms, setSelectedForms] = useState<Form[]>(Array(DEFAULT_STANCE_COUNT).fill(nullForm));
     const [currentStance, setCurrentStance] = useState<{
         archetype: Archetype;
         style: Style;
@@ -39,16 +40,20 @@ export default function CharacterBuilder() {
     const [franticArchetype, setFranticArchetype] = useState<Archetype>();
     const [franticStyle, setFranticStyle] = useState<Style>();
     const [franticForm, setFranticForm] = useState<Form>();
-    const [selectedSkills, setSelectedSkills] = useState<Skill[]>(Array(3).fill(""));
+    const [selectedSkills, setSelectedSkills] = useState<Skill[]>(Array(3).fill(nullSkill));
     const [customSkill, setCustomSkill] = useState<Skill>({
         name: "",
         desc: "",
     });
-    const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(""));
+    const [defaultSkills, setDefaultSkills] = useState<Skill[]>(Array(3).fill(nullSkill));
     const [savedCharacters, setSavedCharacters] = useState<string[]>([]);
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [characterLevel, setCharacterLevel] = useState<number>(1);
-    const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill({}));
+    const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill(nullSuper));
+
+    function isNull(o: Archetype | Style | Form | Skill | SuperMove) {
+        return o.name === "";
+    }
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -76,10 +81,22 @@ export default function CharacterBuilder() {
     // Handle Hero Type selection
     const handleHeroTypeChange = (type: heroType | null) => {
         setHeroType(type);
-        setSelectedArchetypes([]); // Reset Archetypes when Hero Type changes
-        setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
-        setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Forms
-        setCurrentStance(null); // Reset Stance
+        if (type) {
+            setSelectedArchetypes(Array(numArchetypes[type][characterLevel]).fill(nullArchetype)); // Reset Archetypes when Hero Type changes
+            if (type === "Frantic") {
+                setSelectedStyles(Array(numFranticStyles[characterLevel]).fill(nullStyle)); // Reset Styles
+                setSelectedForms(Array(numFranticForms[characterLevel]).fill(nullForm)); // Reset Forms
+            } else {
+                setSelectedStyles(Array(numStances[type][characterLevel]).fill(nullStyle)); // Reset Styles
+                setSelectedForms(Array(numStances[type][characterLevel]).fill(nullForm)); // Reset Forms
+            }
+            setCurrentStance(null); // Reset Stance
+        } else {
+            setSelectedArchetypes([nullArchetype]);
+            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle)); // Reset Styles
+            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm)); // Reset Forms
+            setCurrentStance(null); // Reset Stance
+        }
     };
 
     function isDefined<T>(arg: T | undefined): arg is T {
@@ -93,12 +110,23 @@ export default function CharacterBuilder() {
         if (isDefined(newArchetype)) {
             newArchetypes[index] = newArchetype;
         } else {
-            newArchetypes.splice(index);
+            newArchetypes[index] = nullArchetype;
         }
         setSelectedArchetypes(newArchetypes);
-        setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Styles
-        setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill({})); // Reset Forms
-        setCurrentStance(null); // Reset Stance
+        if (heroType) {
+            if (heroType === "Frantic") {
+                setSelectedStyles(Array(numFranticStyles[characterLevel]).fill(nullStyle)); // Reset Styles
+                setSelectedForms(Array(numFranticForms[characterLevel]).fill(nullForm)); // Reset Forms
+            } else {
+                setSelectedStyles(Array(numStances[heroType][characterLevel]).fill(nullStyle)); // Reset Styles
+                setSelectedForms(Array(numStances[heroType][characterLevel]).fill(nullForm)); // Reset Forms
+            }
+            setCurrentStance(null); // Reset Stance
+        } else {
+            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle)); // Reset Styles
+            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm)); // Reset Forms
+            setCurrentStance(null); // Reset Stance
+        }
     };
 
     // Handle Style selection
@@ -109,7 +137,7 @@ export default function CharacterBuilder() {
         if (isDefined(newStyle)) {
             newStyles[index] = newStyle;
         } else {
-            newStyles.splice(index);
+            newStyles[index] = nullStyle;
         }
         setSelectedStyles(newStyles);
 
@@ -123,7 +151,7 @@ export default function CharacterBuilder() {
         if (isDefined(newForm)) {
             newForms[index] = newForm;
         } else {
-            newForms.splice(index);
+            newForms[index] = nullForm;
         }
         setSelectedForms(newForms);
         setCurrentStance(null); // Reset Stance
@@ -193,7 +221,7 @@ export default function CharacterBuilder() {
         if (isDefined(newSkill)) {
             newSkills[index] = newSkill;
         } else {
-            newSkills.splice(index);
+            newSkills[index] = nullSkill;
         }
         const changedSkills = defaultSkills.filter((s) => !newSkills.some((sk) => sk.name === s.name)).length;
         if (changedSkills > 1) {
@@ -426,7 +454,7 @@ export default function CharacterBuilder() {
             : selectedArchetypes.flatMap((archetype) => archetype.actions);
 
     const superMoveActions: Action[] = superMoves
-        .filter((s) => s && "name" in s)
+        .filter((s) => !isNull(s))
         .map((s) => {
             const alphaSupers = archetypes.map((a) => a.alphaSuper.name);
             let cost = "";
@@ -758,7 +786,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Archetype</option>
                                 {selectedArchetypes
-                                    .filter((a, i) => a && "name" in a && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
+                                    .filter((a, i) => !isNull(a) && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
                                     .map(
                                         (archetype) =>
                                             archetype && (
@@ -775,7 +803,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Style</option>
                                 {selectedStyles
-                                    .filter((a) => a && "name" in a)
+                                    .filter((a) => !isNull(a))
                                     .map(
                                         (style) =>
                                             style && (
@@ -792,7 +820,7 @@ export default function CharacterBuilder() {
                             >
                                 <option value="">Select Form</option>
                                 {selectedForms
-                                    .filter((a) => a && "name" in a)
+                                    .filter((a) => !isNull(a))
                                     .map(
                                         (form) =>
                                             form && (
@@ -812,10 +840,8 @@ export default function CharacterBuilder() {
                             <option value="">Select Stance</option>
                             {selectedStyles.map(
                                 (style, index) =>
-                                    style &&
-                                    "name" in style &&
-                                    selectedForms[index] &&
-                                    "name" in selectedForms[index] && (
+                                    !isNull(style) &&
+                                    !isNull(selectedForms[index]) && (
                                         <option key={index} value={index}>
                                             {selectedStyles[index].name} {selectedForms[index].name}
                                         </option>
