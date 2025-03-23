@@ -326,7 +326,7 @@ export default function CharacterBuilder() {
         ];
         aStyles = aStyles.filter((s) => {
             // null entires can appear in duplicate, we don't want them messing things up
-            if (isNull(selectedStyles[i])) {
+            if (isNull(s)) {
                 return true;
             }
             // if style is currently selected in *this* box, allow it
@@ -359,7 +359,7 @@ export default function CharacterBuilder() {
         );
         aForms = aForms.filter((f) => {
             // null entires can appear in duplicate, we don't want them messing things up
-            if (isNull(selectedForms[i])) {
+            if (isNull(f)) {
                 return true;
             }
             // if form is currently selected in *this* box, allow it
@@ -393,7 +393,7 @@ export default function CharacterBuilder() {
         }
         const aForms = baseFormList.filter((f) => {
             // null entires can appear in duplicate, we don't want them messing things up
-            if (isNull(selectedSkills[i])) {
+            if (isNull(f)) {
                 return true;
             }
             // if skill is currently selected in this box, allow it
