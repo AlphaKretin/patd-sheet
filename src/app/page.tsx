@@ -99,6 +99,27 @@ export default function CharacterBuilder() {
         }
     };
 
+    function handleLevelChange(levelInput: string) {
+        const level = Math.max(1, Math.min(10, parseInt(levelInput)));
+        setCharacterLevel(level);
+        if (heroType) {
+            setSelectedArchetypes(Array(numArchetypes[heroType][level]).fill(nullArchetype)); // Reset Archetypes when Hero Type changes
+            if (heroType === "Frantic") {
+                setSelectedStyles(Array(numFranticStyles[level]).fill(nullStyle)); // Reset Styles
+                setSelectedForms(Array(numFranticForms[level]).fill(nullForm)); // Reset Forms
+            } else {
+                setSelectedStyles(Array(numStances[heroType][level]).fill(nullStyle)); // Reset Styles
+                setSelectedForms(Array(numStances[heroType][level]).fill(nullForm)); // Reset Forms
+            }
+            setCurrentStance(null); // Reset Stance
+        } else {
+            setSelectedArchetypes([nullArchetype]);
+            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle)); // Reset Styles
+            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm)); // Reset Forms
+            setCurrentStance(null); // Reset Stance
+        }
+    }
+
     function isDefined<T>(arg: T | undefined): arg is T {
         return arg !== undefined;
     }
@@ -608,7 +629,7 @@ export default function CharacterBuilder() {
                     <input
                         type="number"
                         value={characterLevel}
-                        onChange={(e) => setCharacterLevel(Math.max(1, Math.min(10, parseInt(e.target.value))))}
+                        onChange={(e) => handleLevelChange(e.target.value)}
                         className="w-1/4 p-2 border rounded bg-gray-800 text-white"
                         placeholder="Level"
                         min="1"
