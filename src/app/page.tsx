@@ -302,6 +302,10 @@ export default function CharacterBuilder() {
     // Remove duplicate archetypes from dropdowns, unless in same dropdown where it's selected
     function availableArchetypes(i: number) {
         return archetypes.filter((a) => {
+            // null entires can appear in duplicate, we don't want them messing things up
+            if (isNull(a)) {
+                return true;
+            }
             // if archetype is currently selected in *this* box, allow it
             if (selectedArchetypes[i] && selectedArchetypes[i].name === a.name) {
                 return true;
@@ -321,6 +325,10 @@ export default function CharacterBuilder() {
             ...freestyles.filter((freestyle) => !selectedForms.some((form) => form.name === freestyle.bannedForm)),
         ];
         aStyles = aStyles.filter((s) => {
+            // null entires can appear in duplicate, we don't want them messing things up
+            if (isNull(selectedStyles[i])) {
+                return true;
+            }
             // if style is currently selected in *this* box, allow it
             if (selectedStyles[i] && selectedStyles[i].name === s.name) {
                 return true;
@@ -350,6 +358,10 @@ export default function CharacterBuilder() {
             (form) => !selectedStyles.some((style) => isFreestyle(style) && style.bannedForm === form.name)
         );
         aForms = aForms.filter((f) => {
+            // null entires can appear in duplicate, we don't want them messing things up
+            if (isNull(selectedForms[i])) {
+                return true;
+            }
             // if form is currently selected in *this* box, allow it
             if (selectedForms[i] && selectedForms[i].name === f.name) {
                 return true;
@@ -380,6 +392,10 @@ export default function CharacterBuilder() {
             baseFormList = [...forms];
         }
         const aForms = baseFormList.filter((f) => {
+            // null entires can appear in duplicate, we don't want them messing things up
+            if (isNull(selectedSkills[i])) {
+                return true;
+            }
             // if skill is currently selected in this box, allow it
             if (selectedSkills[i].name === f.skill.name) {
                 return true;
