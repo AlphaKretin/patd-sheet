@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { archetypes } from "./data/archetypes";
-import { bleedAbilities, heroType } from "./data/bleed";
+import { bleedAbilities, HeroType } from "./data/bleed";
 import { Build, builds } from "./data/builds";
 import { forms } from "./data/forms";
 import { freestyles } from "./data/freestyles";
@@ -25,10 +25,18 @@ import { SuperMove } from "./data/types/Super";
 
 const DEFAULT_STANCE_COUNT = 3;
 
+function isNull(o: Archetype | Style | Form | Skill | SuperMove) {
+    return o.name === "";
+}
+
+function isDefined<T>(arg: T | undefined): arg is T {
+    return arg !== undefined;
+}
+
 export default function CharacterBuilder() {
     const [characterName, setCharacterName] = useState<string>("");
     const [selectedBuild, setBuild] = useState<Build | null>(null);
-    const [heroType, setHeroType] = useState<heroType | null>(null);
+    const [heroType, setHeroType] = useState<HeroType | null>(null);
     const [selectedArchetypes, setSelectedArchetypes] = useState<Archetype[]>([nullArchetype]);
     const [selectedStyles, setSelectedStyles] = useState<Style[]>(Array(DEFAULT_STANCE_COUNT).fill(nullStyle));
     const [selectedForms, setSelectedForms] = useState<Form[]>(Array(DEFAULT_STANCE_COUNT).fill(nullForm));
@@ -50,10 +58,6 @@ export default function CharacterBuilder() {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [characterLevel, setCharacterLevel] = useState<number>(1);
     const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill(nullSuper));
-
-    function isNull(o: Archetype | Style | Form | Skill | SuperMove) {
-        return o.name === "";
-    }
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -79,49 +83,43 @@ export default function CharacterBuilder() {
     };
 
     // Handle Hero Type selection
-    const handleHeroTypeChange = (type: heroType | null) => {
+    const handleHeroTypeChange = (type: HeroType | null) => {
         setHeroType(type);
-        if (type) {
-            setSelectedArchetypes(Array(numArchetypes[type][characterLevel]).fill(nullArchetype)); // Reset Archetypes when Hero Type changes
-            if (type === "Frantic") {
-                setSelectedStyles(Array(numFranticStyles[characterLevel]).fill(nullStyle)); // Reset Styles
-                setSelectedForms(Array(numFranticForms[characterLevel]).fill(nullForm)); // Reset Forms
-            } else {
-                setSelectedStyles(Array(numStances[type][characterLevel]).fill(nullStyle)); // Reset Styles
-                setSelectedForms(Array(numStances[type][characterLevel]).fill(nullForm)); // Reset Forms
-            }
-            setCurrentStance(null); // Reset Stance
-        } else {
-            setSelectedArchetypes([nullArchetype]);
-            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle)); // Reset Styles
-            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm)); // Reset Forms
-            setCurrentStance(null); // Reset Stance
-        }
+        resetArchetypes(type, characterLevel);
     };
 
-    function handleLevelChange(levelInput: string) {
-        const level = Math.max(1, Math.min(10, parseInt(levelInput)));
-        setCharacterLevel(level);
-        if (heroType) {
-            setSelectedArchetypes(Array(numArchetypes[heroType][level]).fill(nullArchetype)); // Reset Archetypes when Hero Type changes
-            if (heroType === "Frantic") {
-                setSelectedStyles(Array(numFranticStyles[level]).fill(nullStyle)); // Reset Styles
-                setSelectedForms(Array(numFranticForms[level]).fill(nullForm)); // Reset Forms
-            } else {
-                setSelectedStyles(Array(numStances[heroType][level]).fill(nullStyle)); // Reset Styles
-                setSelectedForms(Array(numStances[heroType][level]).fill(nullForm)); // Reset Forms
-            }
-            setCurrentStance(null); // Reset Stance
+    function resetArchetypes(type: HeroType | null, level: number) {
+        if (type) {
+            setSelectedArchetypes(Array(numArchetypes[type][level]).fill(nullArchetype));
         } else {
             setSelectedArchetypes([nullArchetype]);
-            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle)); // Reset Styles
-            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm)); // Reset Forms
-            setCurrentStance(null); // Reset Stance
         }
+        resetStylesForms(type, level);
     }
 
-    function isDefined<T>(arg: T | undefined): arg is T {
-        return arg !== undefined;
+    function resetStylesForms(type: HeroType | null, level: number) {
+        if (type) {
+            if (type === "Frantic") {
+                setSelectedStyles(Array(numFranticStyles[level]).fill(nullStyle));
+                setSelectedForms(Array(numFranticForms[level]).fill(nullForm));
+            } else {
+                setSelectedStyles(Array(numStances[type][level]).fill(nullStyle));
+                setSelectedForms(Array(numStances[type][level]).fill(nullForm));
+            }
+        } else {
+            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle));
+            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm));
+        }
+        setCurrentStance(null);
+    }
+
+    function handleLevelChange(levelInput: string) {
+        let level = Math.max(1, Math.min(10, parseInt(levelInput)));
+        if (isNaN(level)) {
+            level = 1;
+        }
+        setCharacterLevel(level);
+        resetArchetypes(heroType, level);
     }
 
     // Handle Archetype selection
@@ -134,20 +132,7 @@ export default function CharacterBuilder() {
             newArchetypes[index] = nullArchetype;
         }
         setSelectedArchetypes(newArchetypes);
-        if (heroType) {
-            if (heroType === "Frantic") {
-                setSelectedStyles(Array(numFranticStyles[characterLevel]).fill(nullStyle)); // Reset Styles
-                setSelectedForms(Array(numFranticForms[characterLevel]).fill(nullForm)); // Reset Forms
-            } else {
-                setSelectedStyles(Array(numStances[heroType][characterLevel]).fill(nullStyle)); // Reset Styles
-                setSelectedForms(Array(numStances[heroType][characterLevel]).fill(nullForm)); // Reset Forms
-            }
-            setCurrentStance(null); // Reset Stance
-        } else {
-            setSelectedStyles(Array(DEFAULT_STANCE_COUNT).fill(nullStyle)); // Reset Styles
-            setSelectedForms(Array(DEFAULT_STANCE_COUNT).fill(nullForm)); // Reset Forms
-            setCurrentStance(null); // Reset Stance
-        }
+        resetStylesForms(heroType, characterLevel);
     };
 
     // Handle Style selection
@@ -161,8 +146,7 @@ export default function CharacterBuilder() {
             newStyles[index] = nullStyle;
         }
         setSelectedStyles(newStyles);
-
-        setCurrentStance(null); // Reset Stance
+        setCurrentStance(null);
     };
 
     // Handle Form selection
@@ -175,7 +159,7 @@ export default function CharacterBuilder() {
             newForms[index] = nullForm;
         }
         setSelectedForms(newForms);
-        setCurrentStance(null); // Reset Stance
+        setCurrentStance(null);
     };
 
     // Handle Stance selection
@@ -546,7 +530,7 @@ export default function CharacterBuilder() {
         setSuperMoves(newSuperMoves);
     };
 
-    function archetypeHeader(heroType: heroType, index: number): string {
+    function archetypeHeader(heroType: HeroType, index: number): string {
         if (heroType === "Focused") {
             if (index === 0) {
                 return "Focused Archetype";
@@ -684,7 +668,7 @@ export default function CharacterBuilder() {
                 <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
                 <select
                     value={heroType || ""}
-                    onChange={(e) => handleHeroTypeChange(e.target.value as heroType)}
+                    onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
                     className="w-full p-2 border rounded bg-gray-800 text-white"
                 >
                     <option value="">Select Hero Type</option>

@@ -1,4 +1,4 @@
-import { heroType } from "./bleed";
+import { HeroType } from "./bleed";
 import { Ability } from "./types/Ability";
 
 // in the current version, all three hero types have the same bonus die tables
@@ -14,7 +14,7 @@ export const bonusDice: Record<number, number> = {
     10: 12,
 };
 
-export const bonusAbilities: Record<heroType, Record<number, Ability>> = {
+export const bonusAbilities: Record<HeroType, Record<number, Ability>> = {
     Focused: {
         3: "Once per Round, after you see the results of any Action Dice you have rolled, you may re-roll up to three of them. You must take the new results, even if they are worse.",
         10: "After you roll your Action Dice for the turn, select one number in your Action Pool and change it to any number you wish, between 1 and 9.",
@@ -30,7 +30,7 @@ export const bonusAbilities: Record<heroType, Record<number, Ability>> = {
     },
 };
 
-export const numArchetypes: Record<heroType, Record<number, number>> = {
+export const numArchetypes: Record<HeroType, Record<number, number>> = {
     Focused: {
         1: 1,
         2: 1,
