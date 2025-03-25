@@ -10,13 +10,16 @@
     ],
     "abilities": [
         {
-            "desc": "After you take damage, pay HP, or are healed, you gain 1 Speed token."
+            "desc": "After you take damage, pay HP, or are healed, you gain 1 Speed token.",
+            "trigger": "after you take damage"
         },
         {
-            "desc": "When you bleed, gain 3 Speed tokens."
+            "desc": "When you bleed, gain 3 Speed tokens.",
+            "trigger": "when you bleed"
         },
         {
-            "desc": "After each Dice action you perform, if it applied Forced Movement to an enemy, they must discard 1 Basic token, if they have any. If it applied Forced Movement to an ally, they heal 1. If it moved, swapped, or teleported you, you heal 1."
+            "desc": "After each Dice action you perform, if it applied Forced Movement to an enemy, they must discard 1 Basic token, if they have any. If it applied Forced Movement to an ally, they heal 1. If it moved, swapped, or teleported you, you heal 1.",
+            "trigger": "after each dice action you perform"
         }
     ],
     "actions": [

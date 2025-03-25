@@ -4,7 +4,8 @@
     "maxRange": 3,
     "abilities": [
         {
-            "desc": "At the start of your turn, you may place up to three Walls into empty adjacent spaces."
+            "desc": "At the start of your turn, you may place up to three Walls into empty adjacent spaces.",
+            "trigger": "at the start of your turn"
         },
         {
             "desc": "You can see and target enemies through Walls."

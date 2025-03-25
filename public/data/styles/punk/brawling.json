@@ -4,10 +4,12 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "At the end of each turn you took damage, you gain Shield 2."
+            "desc": "At the end of each turn you took damage, you gain Shield 2.",
+            "trigger": "at the end of each turn you took damage"
         },
         {
-            "desc": "After your Shield absorbs, you gain 1 Power token."
+            "desc": "After your Shield absorbs, you gain 1 Power token.",
+            "trigger": "after your shield absorbs"
         }
     ],
     "actions": [

@@ -23,7 +23,7 @@ import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
 import { SuperMove } from "./data/types/Super";
 
-type SortOption = "Source (Default)" | "Name" | "Description/Cost";
+type SortOption = "Source (Default)" | "Name" | "Trigger/Cost";
 
 const DEFAULT_STANCE_COUNT = 3;
 
@@ -552,22 +552,37 @@ export default function CharacterBuilder() {
     if (sortOption === "Name") {
         combinedAbilities.sort((a, b) => {
             // both defined
-            if (!!a.name && !!b.name) {
+            if (a.name && b.name) {
                 return a.name.localeCompare(b.name);
             }
             // a undefined, should sort to back
-            if (!a.name && !!b.name) {
+            if (!a.name && b.name) {
                 return -1;
             }
             // b undefined, should sort to back
-            if (!!a.name && !b.name) {
+            if (a.name && !b.name) {
                 return 1;
             }
             // neither defined, leave unchanged
             return 0;
         });
-    } else if (sortOption === "Description/Cost") {
-        combinedAbilities.sort((a, b) => a.desc.localeCompare(b.desc));
+    } else if (sortOption === "Trigger/Cost") {
+        combinedAbilities.sort((a, b) => {
+            // neither passive
+            if (a.trigger && b.trigger) {
+                // TODO: hand-pick an order for ability triggers rather than lexical sorting
+                return a.trigger.localeCompare(b.trigger);
+            }
+            // b is passive, put it first
+            if (a.trigger && !b.trigger) {
+                return 1;
+            }
+            // a is passive, put it first
+            if (!a.trigger && b.trigger) {
+                return -1;
+            }
+            return 0;
+        });
     }
 
     const archetypeActions =
@@ -601,7 +616,7 @@ export default function CharacterBuilder() {
     // Sort actions based on selected sort option
     if (sortOption === "Name") {
         combinedActions.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortOption === "Description/Cost") {
+    } else if (sortOption === "Trigger/Cost") {
         combinedActions.sort((a, b) => a.cost.localeCompare(b.cost));
     }
 
@@ -996,7 +1011,7 @@ export default function CharacterBuilder() {
                     >
                         <option value="Source (Default)">Source (Default)</option>
                         <option value="Name">Name</option>
-                        <option value="Description/Cost">Description/Cost</option>
+                        <option value="Trigger/Cost">Trigger/Cost</option>
                     </select>
                 </section>
             )}

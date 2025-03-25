@@ -4,7 +4,8 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "Adjacent enemies cannot gain or spend Speed tokens, and any Action Movement they would take is reduced to zero."
+            "desc": "Adjacent enemies cannot gain or spend Speed tokens, and any Action Movement they would take is reduced to zero.",
+            "trigger": "adjacent enemies cannot gain or spend speed tokens"
         }
     ],
     "actions": [

@@ -7,7 +7,8 @@
             "desc": "Your allies within range may spend your tokens"
         },
         {
-            "desc": "At the start and end of your turn, give 1 Iron token to each ally within range."
+            "desc": "At the start and end of your turn, give 1 Iron token to each ally within range.",
+            "trigger": "at the start and end of your turn"
         }
     ],
     "actions": [

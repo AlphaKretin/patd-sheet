@@ -4,10 +4,12 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "At the start of your turn, you gain 2 Iron tokens."
+            "desc": "At the start of your turn, you gain 2 Iron tokens.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "After you Reduce a Hit, give 1 Weakness token to your attacker."
+            "desc": "After you Reduce a Hit, give 1 Weakness token to your attacker.",
+            "trigger": "after you reduce a hit"
         }
     ],
     "actions": [

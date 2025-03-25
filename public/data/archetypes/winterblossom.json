@@ -2,17 +2,20 @@
     "name": "Winterblossom",
     "focusedAbilities": [
         {
-            "desc": "At the start of each turn, give 1 Weakness token to one enemy within range of you or your Copies."
+            "desc": "At the start of each turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+            "trigger": "at the start of each turn"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "At the start of each allied turn, give 1 Weakness token to one enemy within range of you or your Copies."
+            "desc": "At the start of each allied turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+            "trigger": "at the start of each allied turn"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "At the start of each turn until your next turn, give 1 Weakness token to one enemy within range of you or your Copies."
+            "desc": "At the start of each turn until your next turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+            "trigger": "at the start of each turn until your next turn"
         }
     ],
     "actions": [

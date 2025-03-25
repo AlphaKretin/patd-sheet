@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "After you deal damage to an enemy with an Action, you may destroy 1 obstacle within range per enemy dealt damage."
+            "desc": "After you deal damage to an enemy with an Action, you may destroy 1 obstacle within range per enemy dealt damage.",
+            "trigger": "after you deal damage to an enemy with an action"
         },
         {
-            "desc": "At the end of your turn, you gain 1 Power token per obstacle you destroyed during that turn."
+            "desc": "At the end of your turn, you gain 1 Power token per obstacle you destroyed during that turn.",
+            "trigger": "at the end of your turn"
         }
     ],
     "actions": [

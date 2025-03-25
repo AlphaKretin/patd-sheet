@@ -4,7 +4,8 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "At the start and end of your turn, each enemy within range must pay 1 HP, then gain 1 Weakness token."
+            "desc": "At the start and end of your turn, each enemy within range must pay 1 HP, then gain 1 Weakness token.",
+            "trigger": "at the start and end of your turn"
         }
     ],
     "actions": [

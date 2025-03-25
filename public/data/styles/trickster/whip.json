@@ -7,7 +7,8 @@
             "desc": "Your Throw Actions may target within range."
         },
         {
-            "desc": "After you Throw or Grapple an enemy, you deal 2 damage to them."
+            "desc": "After you Throw or Grapple an enemy, you deal 2 damage to them.",
+            "trigger": "after you throw or grapple an enemy"
         }
     ],
     "actions": [

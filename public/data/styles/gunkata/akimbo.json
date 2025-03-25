@@ -4,10 +4,12 @@
     "maxRange": 4,
     "abilities": [
         {
-            "desc": "At the start and end of your turn, Move 2."
+            "desc": "At the start and end of your turn, Move 2.",
+            "trigger": "at the start and end of your turn"
         },
         {
-            "desc": "After each Action you perform, Move 1."
+            "desc": "After each Action you perform, Move 1.",
+            "trigger": "after each action you perform"
         }
     ],
     "actions": [

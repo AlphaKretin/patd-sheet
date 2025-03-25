@@ -7,7 +7,8 @@
             "desc": "Your Throws may target any number of enemies within range."
         },
         {
-            "desc": "After you perform an Action that inflicted Forced Movement on any enemies, you deal 1 damage to each enemy moved by that Action."
+            "desc": "After you perform an Action that inflicted Forced Movement on any enemies, you deal 1 damage to each enemy moved by that Action.",
+            "trigger": "after you perform an action that inflicted forced movement on any enemies"
         }
     ],
     "actions": [

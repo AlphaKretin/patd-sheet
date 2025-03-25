@@ -4,7 +4,8 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "After you roll your Action Dice, you may combine two of your numbers into a single, larger number. Then, you may split one of your numbers in half (one rounded up, the other rounded down). You cannot split a 1 - the split number must be 2 or higher."
+            "desc": "After you roll your Action Dice, you may combine two of your numbers into a single, larger number. Then, you may split one of your numbers in half (one rounded up, the other rounded down). You cannot split a 1 - the split number must be 2 or higher.",
+            "trigger": "after you roll your action dice"
         }
     ],
     "actions": [

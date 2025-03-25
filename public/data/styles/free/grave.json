@@ -9,10 +9,12 @@
     "maxRange": 3,
     "abilities": [
         {
-            "desc": "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled."
+            "desc": "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled.",
+            "trigger": "after you spend control tokens"
         },
         {
-            "desc": "At the start of your turn, choose one:\n• Set your Range to 3-6 until your next turn.\n• Set your range to 0-3 until your next turn."
+            "desc": "At the start of your turn, choose one:\n\u00e2\u20ac\u00a2 Set your Range to 3-6 until your next turn.\n\u00e2\u20ac\u00a2 Set your range to 0-3 until your next turn.",
+            "trigger": "at the start of your turn"
         }
     ],
     "actions": [

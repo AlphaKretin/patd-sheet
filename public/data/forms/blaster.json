@@ -13,7 +13,8 @@
         },
         {
             "desc": "When you add Blaster Form to as Style, increase that Style's maximum range by 1.",
-            "bonusMaxRange": 1
+            "bonusMaxRange": 1,
+            "trigger": "when you add blaster form to as style"
         }
     ],
     "actions": [

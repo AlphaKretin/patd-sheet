@@ -4,10 +4,12 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "When an enemy with your Challenge token starts their turn, they do not roll their lowest Action Die. It is discarded and unused. If they are in a Stance that does not roll Action Dice, they get rid of their bonus die, if they have one, or their smallest number, if they do not."
+            "desc": "When an enemy with your Challenge token starts their turn, they do not roll their lowest Action Die. It is discarded and unused. If they are in a Stance that does not roll Action Dice, they get rid of their bonus die, if they have one, or their smallest number, if they do not.",
+            "trigger": "when an enemy with your challenge token starts their turn"
         },
         {
-            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, all numbers currently in their Action Pool are reduced by 2 (to a minimum of 1)."
+            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, all numbers currently in their Action Pool are reduced by 2 (to a minimum of 1).",
+            "trigger": "if an enemy discards your challenge token using an enemy action or ability"
         }
     ],
     "actions": [

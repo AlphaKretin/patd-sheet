@@ -9,13 +9,16 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "Before each Action you perform, you may Move 1."
+            "desc": "Before each Action you perform, you may Move 1.",
+            "trigger": "before each action you perform"
         },
         {
-            "desc": "After your first Action on your turn, Move 1, then deal 2 damage to an enemy within range."
+            "desc": "After your first Action on your turn, Move 1, then deal 2 damage to an enemy within range.",
+            "trigger": "after your first action on your turn"
         },
         {
-            "desc": "At the end of each turn where you performed any Actions, you may deal 1 damage to an enemy within range, then Move 2."
+            "desc": "At the end of each turn where you performed any Actions, you may deal 1 damage to an enemy within range, then Move 2.",
+            "trigger": "at the end of each turn where you performed any actions"
         }
     ],
     "actions": [

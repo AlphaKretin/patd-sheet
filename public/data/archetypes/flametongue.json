@@ -2,17 +2,20 @@
     "name": "Flametongue",
     "focusedAbilities": [
         {
-            "desc": "Three times per turn, after you deal damage to an enemy, give them 2 Burning tokens."
+            "desc": "Three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
+            "trigger": "after you deal damage to an enemy"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "Three times per turn, after you deal damage to an enemy, give them 1 Burning token."
+            "desc": "Three times per turn, after you deal damage to an enemy, give them 1 Burning token.",
+            "trigger": "after you deal damage to an enemy"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "Until your next turn, three times per turn, after you deal damage to an enemy, give them 2 Burning tokens."
+            "desc": "Until your next turn, three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
+            "trigger": "three times per turn"
         }
     ],
     "actions": [

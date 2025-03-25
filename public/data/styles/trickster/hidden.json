@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "At the start of your turn, place Fog into your space."
+            "desc": "At the start of your turn, place Fog into your space.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "While you stand in Fog, you have Armor and your maximum range is increased by 3."
+            "desc": "While you stand in Fog, you have Armor and your maximum range is increased by 3.",
+            "trigger": "while you stand in fog"
         }
     ],
     "actions": [

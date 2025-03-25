@@ -10,10 +10,12 @@
     ],
     "abilities": [
         {
-            "desc": "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled."
+            "desc": "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled.",
+            "trigger": "after you spend control tokens"
         },
         {
-            "desc": "When you add Control Form to a Style, choose one:\n• Increase that Style's maximum range by 3.\n• Set that Style's minimum range to 0."
+            "desc": "When you add Control Form to a Style, choose one:\n\u00e2\u20ac\u00a2 Increase that Style's maximum range by 3.\n\u00e2\u20ac\u00a2 Set that Style's minimum range to 0.",
+            "trigger": "when you add control form to a style"
         }
     ],
     "actions": [

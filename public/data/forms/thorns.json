@@ -10,10 +10,12 @@
     ],
     "abilities": [
         {
-            "desc": "At the start and end of your turn, you gain Shield 2."
+            "desc": "At the start and end of your turn, you gain Shield 2.",
+            "trigger": "at the start and end of your turn"
         },
         {
-            "desc": "After your Shield absorbs from an enemy Action, you deal 1 damage to them. If it broke your Shield, you deal 2 damage instead."
+            "desc": "After your Shield absorbs from an enemy Action, you deal 1 damage to them. If it broke your Shield, you deal 2 damage instead.",
+            "trigger": "after your shield absorbs from an enemy action"
         }
     ],
     "actions": [

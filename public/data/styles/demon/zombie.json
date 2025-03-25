@@ -4,13 +4,16 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "After an enemy destroys any of your Copies, you deal 1 damage to them."
+            "desc": "After an enemy destroys any of your Copies, you deal 1 damage to them.",
+            "trigger": "after an enemy destroys any of your copies"
         },
         {
-            "desc": "At the start of your turn and when you Bleed, place a Copy into a space within range of you or your Copies."
+            "desc": "At the start of your turn and when you Bleed, place a Copy into a space within range of you or your Copies.",
+            "trigger": "at the start of your turn and when you bleed"
         },
         {
-            "desc": "At the end of your turn, you deal 1 damage to each enemy adjacent to any of your Copies."
+            "desc": "At the end of your turn, you deal 1 damage to each enemy adjacent to any of your Copies.",
+            "trigger": "at the end of your turn"
         }
     ],
     "actions": [

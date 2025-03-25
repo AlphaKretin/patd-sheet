@@ -11,10 +11,12 @@
     ],
     "abilities": [
         {
-            "desc": "At the start of your turn, discard up to 2 Status tokens you hold; then, if you are Bleeding, you heal."
+            "desc": "At the start of your turn, discard up to 2 Status tokens you hold; then, if you are Bleeding, you heal.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "At the end of your turn, choose up to two enemies within range and give them each 1 Weakness token."
+            "desc": "At the end of your turn, choose up to two enemies within range and give them each 1 Weakness token.",
+            "trigger": "at the end of your turn"
         }
     ],
     "actions": [
