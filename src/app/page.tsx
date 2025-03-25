@@ -62,6 +62,8 @@ export default function CharacterBuilder() {
     const [characterLevel, setCharacterLevel] = useState<number>(1);
     const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill(nullSuper));
     const [sortOption, setSortOption] = useState<SortOption>("Source (Default)");
+    const [characterDetailsOpen, setCharacterDetailsOpen] = useState<boolean>(true);
+    const [stanceDetailsOpen, setStanceDetailsOpen] = useState<boolean>(true);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -735,440 +737,469 @@ export default function CharacterBuilder() {
 
             <h1 className="text-3xl font-bold mb-6">Panic At The Dojo 2e Digital Character Sheet</h1>
 
-            {/* Character Name and Level Input */}
-            <section className="card">
-                <h2 className="text-2xl font-semibold mb-4">Character Name and Level</h2>
-                <div className="flex space-x-4">
-                    <input
-                        type="text"
-                        value={characterName}
-                        onChange={(e) => setCharacterName(e.target.value)}
-                        className="w-3/4 p-2 border rounded bg-gray-800 text-white"
-                        placeholder="Enter your character's name"
-                    />
-                    <input
-                        type="number"
-                        value={characterLevel}
-                        onChange={(e) => handleLevelChange(e.target.value)}
-                        className="w-1/4 p-2 border rounded bg-gray-800 text-white"
-                        placeholder="Level"
-                        min="1"
-                        max="10"
-                    />
-                </div>
-            </section>
-
-            {/* Save and Load Buttons */}
-            <section className="card">
-                <button onClick={saveCharacter} className="p-2 bg-blue-500 text-white rounded mr-2">
-                    Save Character
-                </button>
-                <select
-                    onChange={(e) => loadCharacter(e.target.value)}
-                    className="p-2 border rounded bg-gray-800 text-white"
+            {/* Collapsible Character Details Section */}
+            <section>
+                <button
+                    className="p-2 bg-gray-800 text-white rounded mb-4"
+                    onClick={() => setCharacterDetailsOpen(!characterDetailsOpen)}
                 >
-                    <option value="">Load Character</option>
-                    {savedCharacters.map((name) => (
-                        <option key={name} value={name}>
-                            {name}
-                        </option>
-                    ))}
-                </select>
-            </section>
+                    {characterDetailsOpen ? "Hide" : "Show"} Character Details
+                </button>
+                {characterDetailsOpen && (
+                    <>
+                        {/* Character Name and Level Input */}
+                        <section className="card">
+                            <h2 className="text-2xl font-semibold mb-4">Character Name and Level</h2>
+                            <div className="flex space-x-4">
+                                <input
+                                    type="text"
+                                    value={characterName}
+                                    onChange={(e) => setCharacterName(e.target.value)}
+                                    className="w-3/4 p-2 border rounded bg-gray-800 text-white"
+                                    placeholder="Enter your character's name"
+                                />
+                                <input
+                                    type="number"
+                                    value={characterLevel}
+                                    onChange={(e) => handleLevelChange(e.target.value)}
+                                    className="w-1/4 p-2 border rounded bg-gray-800 text-white"
+                                    placeholder="Level"
+                                    min="1"
+                                    max="10"
+                                />
+                            </div>
+                        </section>
 
-            {/* Build and Hero Type Selection */}
-            <section className="card">
-                <h2 className="text-2xl font-semibold mb-4">Build and Hero Type</h2>
-                <div className="flex space-x-4">
-                    <select
-                        value={selectedBuild?.name || ""}
-                        onChange={(e) => handleBuildChange(e.target.value)}
-                        className="w-1/2 p-2 border rounded bg-gray-800 text-white"
-                    >
-                        <option value="">Select Build</option>
-                        {builds.map((build) => (
-                            <option key={build.name} value={build.name}>
-                                {build.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        value={heroType || ""}
-                        onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
-                        className="w-1/2 p-2 border rounded bg-gray-800 text-white"
-                    >
-                        <option value="">Select Hero Type</option>
-                        <option value="Focused">Focused</option>
-                        <option value="Fused">Fused</option>
-                        <option value="Frantic">Frantic</option>
-                    </select>
-                </div>
-            </section>
+                        {/* Save and Load Buttons */}
+                        <section className="card">
+                            <button onClick={saveCharacter} className="p-2 bg-blue-500 text-white rounded mr-2">
+                                Save Character
+                            </button>
+                            <select
+                                onChange={(e) => loadCharacter(e.target.value)}
+                                className="p-2 border rounded bg-gray-800 text-white"
+                            >
+                                <option value="">Load Character</option>
+                                {savedCharacters.map((name) => (
+                                    <option key={name} value={name}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </select>
+                        </section>
 
-            {/* Archetype Selection */}
-            {heroType && (
-                <section className="card">
-                    <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        {Array.from({
-                            length: numArchetypes[heroType][characterLevel],
-                        }).map((_, index) => (
-                            <div key={index} className="p-4 rounded-lg">
-                                <label className="block text-sm font-medium mb-2">
-                                    {archetypeHeader(heroType, index)}
-                                </label>
+                        {/* Build and Hero Type Selection */}
+                        <section className="card">
+                            <h2 className="text-2xl font-semibold mb-4">Build and Hero Type</h2>
+                            <div className="flex space-x-4">
                                 <select
-                                    value={selectedArchetypes[index]?.name || ""}
-                                    onChange={(e) => handleArchetypeChange(e.target.value, index)}
-                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                    value={selectedBuild?.name || ""}
+                                    onChange={(e) => handleBuildChange(e.target.value)}
+                                    className="w-1/2 p-2 border rounded bg-gray-800 text-white"
                                 >
-                                    <option value="">Select Archetype</option>
-                                    {availableArchetypes(index).map((archetype) => (
-                                        <option key={archetype.name} value={archetype.name}>
-                                            {archetype.name}
+                                    <option value="">Select Build</option>
+                                    {builds.map((build) => (
+                                        <option key={build.name} value={build.name}>
+                                            {build.name}
                                         </option>
                                     ))}
                                 </select>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
-
-            {/* Style and Form Selection */}
-            {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
-                <section className="card">
-                    <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
-                    {heroType === "Frantic" ? (
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <h3 className="text-xl font-medium mb-2">Styles</h3>
-                                {Array.from({ length: numFranticStyles[characterLevel] }).map((_, index) => (
-                                    <div key={index} className="mb-6">
-                                        <label className="block text-sm font-medium mb-2">Style {index + 1}</label>
-                                        <select
-                                            value={selectedStyles[index]?.name || ""}
-                                            onChange={(e) => handleStyleChange(e.target.value, index)}
-                                            className="w-full p-2 border rounded bg-gray-800 text-white"
-                                        >
-                                            <option value="">Select Style</option>
-                                            {availableStyles(index).map((style) => (
-                                                <option key={style.name} value={style.name}>
-                                                    {style.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                ))}
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-medium mb-2">Forms</h3>
-                                {Array.from({ length: numFranticForms[characterLevel] }).map((_, index) => (
-                                    <div key={index} className="mb-6">
-                                        <label className="block text-sm font-medium mb-2">Form {index + 1}</label>
-                                        <select
-                                            value={selectedForms[index]?.name || ""}
-                                            onChange={(e) => handleFormChange(e.target.value, index)}
-                                            className="w-full p-2 border rounded bg-gray-800 text-white"
-                                        >
-                                            <option value="">Select Form</option>
-                                            {availableForms(index).map((form) => (
-                                                <option key={form.name} value={form.name}>
-                                                    {form.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        Array.from({ length: numStances[heroType][characterLevel] }).map((_, index) => (
-                            <div key={index} className="mb-6">
-                                <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
-                                <div className="grid grid-cols-2 gap-4">
-                                    {/* Style Dropdown */}
-                                    <div>
-                                        <label className="block text-sm font-medium mb-2">Style</label>
-                                        <select
-                                            value={selectedStyles[index]?.name || ""}
-                                            onChange={(e) => handleStyleChange(e.target.value, index)}
-                                            className="w-full p-2 border rounded bg-gray-800 text-white"
-                                        >
-                                            <option value="">Select Style</option>
-                                            {availableStyles(index).map((style) => (
-                                                <option key={style.name} value={style.name}>
-                                                    {style.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-
-                                    {/* Form Dropdown */}
-                                    <div>
-                                        <label className="block text-sm font-medium mb-2">Form</label>
-                                        <select
-                                            value={selectedForms[index]?.name || ""}
-                                            onChange={(e) => handleFormChange(e.target.value, index)}
-                                            className="w-full p-2 border rounded bg-gray-800 text-white"
-                                        >
-                                            <option value="">Select Form</option>
-                                            {availableForms(index).map((form) => (
-                                                <option key={form.name} value={form.name}>
-                                                    {form.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        ))
-                    )}
-                </section>
-            )}
-
-            {/* Stance Selection Dropdown */}
-            {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
-                <section className="card">
-                    <label className="block text-sm font-medium mb-2">Select Stance to View</label>
-                    {heroType === "Frantic" ? (
-                        <div className="grid grid-cols-3 gap-4">
-                            <select
-                                value={franticArchetype?.name || ""}
-                                onChange={(e) => handleFranticArchetypeSelection(e.target.value)}
-                                className="w-full p-2 border rounded bg-gray-800 text-white"
-                            >
-                                <option value="">Select Archetype</option>
-                                {selectedArchetypes
-                                    .filter((a, i) => !isNull(a) && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
-                                    .map(
-                                        (archetype) =>
-                                            archetype && (
-                                                <option key={archetype.name} value={archetype.name}>
-                                                    {archetype.name}
-                                                </option>
-                                            )
-                                    )}
-                            </select>
-                            <select
-                                value={franticStyle?.name || ""}
-                                onChange={(e) => handleFranticStyleSelection(e.target.value)}
-                                className="w-full p-2 border rounded bg-gray-800 text-white"
-                            >
-                                <option value="">Select Style</option>
-                                {selectedStyles
-                                    .filter((a) => !isNull(a))
-                                    .map(
-                                        (style) =>
-                                            style && (
-                                                <option key={style.name} value={style.name}>
-                                                    {style.name}
-                                                </option>
-                                            )
-                                    )}
-                            </select>
-                            <select
-                                value={franticForm?.name || ""}
-                                onChange={(e) => handleFranticFormSelection(e.target.value)}
-                                className="w-full p-2 border rounded bg-gray-800 text-white"
-                            >
-                                <option value="">Select Form</option>
-                                {selectedForms
-                                    .filter((a) => !isNull(a))
-                                    .map(
-                                        (form) =>
-                                            form && (
-                                                <option key={form.name} value={form.name}>
-                                                    {form.name}
-                                                </option>
-                                            )
-                                    )}
-                            </select>
-                        </div>
-                    ) : (
-                        <select
-                            value={currentStance?.index}
-                            onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
-                            className="w-full p-2 border rounded bg-gray-800 text-white"
-                        >
-                            <option value="-1">Select Stance</option>
-                            {selectedStyles.map(
-                                (style, index) =>
-                                    !isNull(style) &&
-                                    !isNull(selectedForms[index]) && (
-                                        <option key={index} value={index}>
-                                            {selectedStyles[index].name} {selectedForms[index].name}
-                                        </option>
-                                    )
-                            )}
-                        </select>
-                    )}
-                    <label className="block text-sm font-medium mb-2">Sorting</label>
-                    <select
-                        value={sortOption}
-                        onChange={(e) => handleSortOptionChange(e.target.value as SortOption)}
-                        className="w-full p-2 border rounded bg-gray-800 text-white"
-                    >
-                        <option value="Source (Default)">Source (Default)</option>
-                        <option value="Name">Name</option>
-                        <option value="Trigger/Cost">Trigger/Cost</option>
-                    </select>
-                </section>
-            )}
-
-            {/* Super Move Selection */}
-            {characterLevel >= 2 && (
-                <section className="card">
-                    <h2 className="text-2xl font-semibold mb-4">Super Moves</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        {Array.from({ length: characterLevel >= 6 ? 2 : 1 }).map((_, index) => (
-                            <div key={index} className="p-4 rounded-lg">
-                                <label className="block text-sm font-medium mb-2">Super Move {index + 1}</label>
                                 <select
-                                    value={superMoves[index].name || ""}
-                                    onChange={(e) => handleSuperMoveChange(e.target.value, index)}
-                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                    value={heroType || ""}
+                                    onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
+                                    className="w-1/2 p-2 border rounded bg-gray-800 text-white"
                                 >
-                                    <option value="">Select Super Move</option>
-                                    {selectedArchetypes
-                                        .filter((a) => !isNull(a))
-                                        .flatMap((archetype) =>
-                                            [archetype.alphaSuper, archetype.deltaSuper].map((move) => (
-                                                <option key={move.name} value={move.name}>
-                                                    {move.name}
-                                                </option>
-                                            ))
-                                        )}
+                                    <option value="">Select Hero Type</option>
+                                    <option value="Focused">Focused</option>
+                                    <option value="Fused">Fused</option>
+                                    <option value="Frantic">Frantic</option>
                                 </select>
                             </div>
-                        ))}
-                    </div>
-                </section>
-            )}
+                        </section>
 
-            {/* Combined Stance Information */}
-            {currentStance && (
-                <section className="stance-details">
-                    <div className="stance-header">
-                        <h2 className="stance-title">
-                            {heroType === "Frantic" ? currentStance.archetype.name + "'s " : ""}
-                            {currentStance.style.name} {currentStance.form.name}
-                        </h2>
-                        <div className="stance-subtitle">
-                            <span>
-                                <strong>Range:</strong>
-                                {currentStance.style.minRange === maxRange
-                                    ? currentStance.style.minRange
-                                    : `${currentStance.style.minRange}-${maxRange}`}
-                            </span>
-                            <span>
-                                <strong>Dice:</strong> {diceList.join(", ")}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="abilities-section">
-                        <h3 className="text-xl font-semibold mb-4">Abilities</h3>
-                        <div className="ability-list">
-                            {combinedAbilities.map((ability, index) => (
-                                <div key={index} className="ability-item">
-                                    {ability.name ? (
-                                        <div className="ability-header">
-                                            <span className="action-name">{ability.name}</span>
+                        {/* Archetype Selection */}
+                        {heroType && (
+                            <section className="card">
+                                <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
+                                <div className="grid grid-cols-1 gap-4">
+                                    {Array.from({
+                                        length: numArchetypes[heroType][characterLevel],
+                                    }).map((_, index) => (
+                                        <div key={index} className="p-4 rounded-lg">
+                                            <label className="block text-sm font-medium mb-2">
+                                                {archetypeHeader(heroType, index)}
+                                            </label>
+                                            <select
+                                                value={selectedArchetypes[index]?.name || ""}
+                                                onChange={(e) => handleArchetypeChange(e.target.value, index)}
+                                                className="w-full p-2 border rounded bg-gray-800 text-white"
+                                            >
+                                                <option value="">Select Archetype</option>
+                                                {availableArchetypes(index).map((archetype) => (
+                                                    <option key={archetype.name} value={archetype.name}>
+                                                        {archetype.name}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
-                                    ) : (
-                                        ""
-                                    )}
-                                    <div className="ability-description">
-                                        {ability.desc.split("\n").map((line, i) => (
-                                            <p key={i}>{line}</p>
-                                        ))}
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+                            </section>
+                        )}
 
-                    <div className="actions-section">
-                        <h3 className="text-xl font-semibold mb-4">Actions</h3>
-                        <div className="action-list">
-                            {combinedActions.map((action, index) => (
-                                <div key={index} className="action-card">
-                                    <div className="action-header">
-                                        <span className="action-cost">{action.cost}:</span>
-                                        <span className="action-name">{action.name}</span>
-                                    </div>
-                                    <div className="action-description">
-                                        {action.desc.split("\n").map((line, i) => {
-                                            const [trigger, ...rest] = line.split(":");
-                                            return (
-                                                <div key={i} className="action-line">
-                                                    {line.includes(":") ? (
-                                                        <>
-                                                            <span className="trigger-part">{trigger}:</span>
-                                                            {rest.join(":")}
-                                                        </>
-                                                    ) : (
-                                                        line
-                                                    )}
+                        {/* Style and Form Selection */}
+                        {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
+                            <section className="card">
+                                <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
+                                {heroType === "Frantic" ? (
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <h3 className="text-xl font-medium mb-2">Styles</h3>
+                                            {Array.from({ length: numFranticStyles[characterLevel] }).map(
+                                                (_, index) => (
+                                                    <div key={index} className="mb-6">
+                                                        <label className="block text-sm font-medium mb-2">
+                                                            Style {index + 1}
+                                                        </label>
+                                                        <select
+                                                            value={selectedStyles[index]?.name || ""}
+                                                            onChange={(e) => handleStyleChange(e.target.value, index)}
+                                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                                        >
+                                                            <option value="">Select Style</option>
+                                                            {availableStyles(index).map((style) => (
+                                                                <option key={style.name} value={style.name}>
+                                                                    {style.name}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-medium mb-2">Forms</h3>
+                                            {Array.from({ length: numFranticForms[characterLevel] }).map((_, index) => (
+                                                <div key={index} className="mb-6">
+                                                    <label className="block text-sm font-medium mb-2">
+                                                        Form {index + 1}
+                                                    </label>
+                                                    <select
+                                                        value={selectedForms[index]?.name || ""}
+                                                        onChange={(e) => handleFormChange(e.target.value, index)}
+                                                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                                                    >
+                                                        <option value="">Select Form</option>
+                                                        {availableForms(index).map((form) => (
+                                                            <option key={form.name} value={form.name}>
+                                                                {form.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                                 </div>
-                                            );
-                                        })}
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            )}
+                                ) : (
+                                    Array.from({ length: numStances[heroType][characterLevel] }).map((_, index) => (
+                                        <div key={index} className="mb-6">
+                                            <h3 className="text-xl font-medium mb-2">Stance {index + 1}</h3>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                {/* Style Dropdown */}
+                                                <div>
+                                                    <label className="block text-sm font-medium mb-2">Style</label>
+                                                    <select
+                                                        value={selectedStyles[index]?.name || ""}
+                                                        onChange={(e) => handleStyleChange(e.target.value, index)}
+                                                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                                                    >
+                                                        <option value="">Select Style</option>
+                                                        {availableStyles(index).map((style) => (
+                                                            <option key={style.name} value={style.name}>
+                                                                {style.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
 
-            {/* Skills Selection */}
-            {selectedForms.every((form) => form.name) && (
-                <section className="card">
-                    <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        {Array.from({ length: 3 }).map((_, index) => (
-                            <div key={index} className="p-4 rounded-lg">
-                                <label className="block text-sm font-medium mb-2">Skill {index + 1}</label>
+                                                {/* Form Dropdown */}
+                                                <div>
+                                                    <label className="block text-sm font-medium mb-2">Form</label>
+                                                    <select
+                                                        value={selectedForms[index]?.name || ""}
+                                                        onChange={(e) => handleFormChange(e.target.value, index)}
+                                                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                                                    >
+                                                        <option value="">Select Form</option>
+                                                        {availableForms(index).map((form) => (
+                                                            <option key={form.name} value={form.name}>
+                                                                {form.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </section>
+                        )}
+
+                        {/* Super Move Selection */}
+                        {characterLevel >= 2 && (
+                            <section className="card">
+                                <h2 className="text-2xl font-semibold mb-4">Super Moves</h2>
+                                <div className="grid grid-cols-1 gap-4">
+                                    {Array.from({ length: characterLevel >= 6 ? 2 : 1 }).map((_, index) => (
+                                        <div key={index} className="p-4 rounded-lg">
+                                            <label className="block text-sm font-medium mb-2">
+                                                Super Move {index + 1}
+                                            </label>
+                                            <select
+                                                value={superMoves[index].name || ""}
+                                                onChange={(e) => handleSuperMoveChange(e.target.value, index)}
+                                                className="w-full p-2 border rounded bg-gray-800 text-white"
+                                            >
+                                                <option value="">Select Super Move</option>
+                                                {selectedArchetypes
+                                                    .filter((a) => !isNull(a))
+                                                    .flatMap((archetype) =>
+                                                        [archetype.alphaSuper, archetype.deltaSuper].map((move) => (
+                                                            <option key={move.name} value={move.name}>
+                                                                {move.name}
+                                                            </option>
+                                                        ))
+                                                    )}
+                                            </select>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </>
+                )}
+            </section>
+
+            {/* Collapsible Combined Stance Information Section */}
+            <button
+                className="p-2 bg-gray-800 text-white rounded mb-4"
+                onClick={() => setStanceDetailsOpen(!stanceDetailsOpen)}
+            >
+                {stanceDetailsOpen ? "Hide" : "Show"} Combined Stance Information
+            </button>
+            {stanceDetailsOpen && (
+                <section>
+                    {/* Stance Selection Dropdown */}
+                    {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
+                        <section className="card">
+                            <label className="block text-sm font-medium mb-2">Select Stance to View</label>
+                            {heroType === "Frantic" ? (
+                                <div className="grid grid-cols-3 gap-4">
+                                    <select
+                                        value={franticArchetype?.name || ""}
+                                        onChange={(e) => handleFranticArchetypeSelection(e.target.value)}
+                                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                                    >
+                                        <option value="">Select Archetype</option>
+                                        {selectedArchetypes
+                                            .filter((a, i) => !isNull(a) && ![4, 6].includes(i)) // cannot use Fused archetypes for Frantic ability
+                                            .map(
+                                                (archetype) =>
+                                                    archetype && (
+                                                        <option key={archetype.name} value={archetype.name}>
+                                                            {archetype.name}
+                                                        </option>
+                                                    )
+                                            )}
+                                    </select>
+                                    <select
+                                        value={franticStyle?.name || ""}
+                                        onChange={(e) => handleFranticStyleSelection(e.target.value)}
+                                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                                    >
+                                        <option value="">Select Style</option>
+                                        {selectedStyles
+                                            .filter((a) => !isNull(a))
+                                            .map(
+                                                (style) =>
+                                                    style && (
+                                                        <option key={style.name} value={style.name}>
+                                                            {style.name}
+                                                        </option>
+                                                    )
+                                            )}
+                                    </select>
+                                    <select
+                                        value={franticForm?.name || ""}
+                                        onChange={(e) => handleFranticFormSelection(e.target.value)}
+                                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                                    >
+                                        <option value="">Select Form</option>
+                                        {selectedForms
+                                            .filter((a) => !isNull(a))
+                                            .map(
+                                                (form) =>
+                                                    form && (
+                                                        <option key={form.name} value={form.name}>
+                                                            {form.name}
+                                                        </option>
+                                                    )
+                                            )}
+                                    </select>
+                                </div>
+                            ) : (
                                 <select
-                                    value={selectedSkills[index].name || ""}
-                                    onChange={(e) => handleSkillChange(e.target.value, index)}
+                                    value={currentStance?.index}
+                                    onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
                                 >
-                                    <option value="">Select Skill</option>
-                                    {availableSkillForms(index).map((f) => {
-                                        const skill = f.skill;
-                                        return (
-                                            <option key={skill.name} value={skill.name}>
-                                                {skill.name} ({f.name})
-                                            </option>
-                                        );
-                                    })}
+                                    <option value="-1">Select Stance</option>
+                                    {selectedStyles.map(
+                                        (style, index) =>
+                                            !isNull(style) &&
+                                            !isNull(selectedForms[index]) && (
+                                                <option key={index} value={index}>
+                                                    {selectedStyles[index].name} {selectedForms[index].name}
+                                                </option>
+                                            )
+                                    )}
                                 </select>
+                            )}
+                            <label className="block text-sm font-medium mb-2">Sorting</label>
+                            <select
+                                value={sortOption}
+                                onChange={(e) => handleSortOptionChange(e.target.value as SortOption)}
+                                className="w-full p-2 border rounded bg-gray-800 text-white"
+                            >
+                                <option value="Source (Default)">Source (Default)</option>
+                                <option value="Name">Name</option>
+                                <option value="Trigger/Cost">Trigger/Cost</option>
+                            </select>
+                        </section>
+                    )}
+                    {currentStance && (
+                        <section className="stance-details">
+                            <div className="stance-header">
+                                <h2 className="stance-title">
+                                    {heroType === "Frantic" ? currentStance.archetype.name + "'s " : ""}
+                                    {currentStance.style.name} {currentStance.form.name}
+                                </h2>
+                                <div className="stance-subtitle">
+                                    <span>
+                                        <strong>Range:</strong>
+                                        {currentStance.style.minRange === maxRange
+                                            ? currentStance.style.minRange
+                                            : `${currentStance.style.minRange}-${maxRange}`}
+                                    </span>
+                                    <span>
+                                        <strong>Dice:</strong> {diceList.join(", ")}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="abilities-section">
+                                <h3 className="text-xl font-semibold mb-4">Abilities</h3>
+                                <div className="ability-list">
+                                    {combinedAbilities.map((ability, index) => (
+                                        <div key={index} className="ability-item">
+                                            {ability.name ? (
+                                                <div className="ability-header">
+                                                    <span className="action-name">{ability.name}</span>
+                                                </div>
+                                            ) : (
+                                                ""
+                                            )}
+                                            <div className="ability-description">
+                                                {ability.desc.split("\n").map((line, i) => (
+                                                    <p key={i}>{line}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="actions-section">
+                                <h3 className="text-xl font-semibold mb-4">Actions</h3>
+                                <div className="action-list">
+                                    {combinedActions.map((action, index) => (
+                                        <div key={index} className="action-card">
+                                            <div className="action-header">
+                                                <span className="action-cost">{action.cost}:</span>
+                                                <span className="action-name">{action.name}</span>
+                                            </div>
+                                            <div className="action-description">
+                                                {action.desc.split("\n").map((line, i) => {
+                                                    const [trigger, ...rest] = line.split(":");
+                                                    return (
+                                                        <div key={i} className="action-line">
+                                                            {line.includes(":") ? (
+                                                                <>
+                                                                    <span className="trigger-part">{trigger}:</span>
+                                                                    {rest.join(":")}
+                                                                </>
+                                                            ) : (
+                                                                line
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+                    {/* Skills Selection */}
+                    {selectedForms.every((form) => form.name) && (
+                        <section className="card">
+                            <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+                            <div className="grid grid-cols-1 gap-4">
+                                {Array.from({ length: 3 }).map((_, index) => (
+                                    <div key={index} className="p-4 rounded-lg">
+                                        <label className="block text-sm font-medium mb-2">Skill {index + 1}</label>
+                                        <select
+                                            value={selectedSkills[index].name || ""}
+                                            onChange={(e) => handleSkillChange(e.target.value, index)}
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        >
+                                            <option value="">Select Skill</option>
+                                            {availableSkillForms(index).map((f) => {
+                                                const skill = f.skill;
+                                                return (
+                                                    <option key={skill.name} value={skill.name}>
+                                                        {skill.name} ({f.name})
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                        <textarea
+                                            value={selectedSkills[index].desc || ""}
+                                            readOnly
+                                            className="w-full p-2 border rounded bg-gray-800 text-white"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="p-4 rounded-lg mt-4">
+                                <label className="block text-sm font-medium mb-2">Custom Skill</label>
+                                <input
+                                    type="text"
+                                    value={customSkill.name || ""}
+                                    onChange={(e) => handleCustomSkillChange("name", e.target.value)}
+                                    className="w-full p-2 border rounded bg-gray-800 text-white mb-2"
+                                    placeholder="Enter custom skill name"
+                                />
                                 <textarea
-                                    value={selectedSkills[index].desc || ""}
-                                    readOnly
+                                    value={customSkill.desc || ""}
+                                    onChange={(e) => handleCustomSkillChange("desc", e.target.value)}
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
+                                    placeholder="Enter custom skill description"
                                 />
                             </div>
-                        ))}
-                    </div>
-                    <div className="p-4 rounded-lg mt-4">
-                        <label className="block text-sm font-medium mb-2">Custom Skill</label>
-                        <input
-                            type="text"
-                            value={customSkill.name || ""}
-                            onChange={(e) => handleCustomSkillChange("name", e.target.value)}
-                            className="w-full p-2 border rounded bg-gray-800 text-white mb-2"
-                            placeholder="Enter custom skill name"
-                        />
-                        <textarea
-                            value={customSkill.desc || ""}
-                            onChange={(e) => handleCustomSkillChange("desc", e.target.value)}
-                            className="w-full p-2 border rounded bg-gray-800 text-white"
-                            placeholder="Enter custom skill description"
-                        />
-                    </div>
+                        </section>
+                    )}
                 </section>
             )}
         </div>
