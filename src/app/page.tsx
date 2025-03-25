@@ -23,7 +23,7 @@ import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
 import { SuperMove } from "./data/types/Super";
 
-type SortOption = "Source (Default)" | "Name" | "Description/Cost";
+type SortOption = "Source (Default)" | "Name" | "Trigger/Cost";
 
 const DEFAULT_STANCE_COUNT = 3;
 
@@ -566,7 +566,7 @@ export default function CharacterBuilder() {
             // neither defined, leave unchanged
             return 0;
         });
-    } else if (sortOption === "Description/Cost") {
+    } else if (sortOption === "Trigger/Cost") {
         combinedAbilities.sort((a, b) => a.desc.localeCompare(b.desc));
     }
 
@@ -601,7 +601,7 @@ export default function CharacterBuilder() {
     // Sort actions based on selected sort option
     if (sortOption === "Name") {
         combinedActions.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortOption === "Description/Cost") {
+    } else if (sortOption === "Trigger/Cost") {
         combinedActions.sort((a, b) => a.cost.localeCompare(b.cost));
     }
 
@@ -996,7 +996,7 @@ export default function CharacterBuilder() {
                     >
                         <option value="Source (Default)">Source (Default)</option>
                         <option value="Name">Name</option>
-                        <option value="Description/Cost">Description/Cost</option>
+                        <option value="Trigger/Cost">Trigger/Cost</option>
                     </select>
                 </section>
             )}
