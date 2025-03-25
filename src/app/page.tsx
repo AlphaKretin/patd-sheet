@@ -552,22 +552,37 @@ export default function CharacterBuilder() {
     if (sortOption === "Name") {
         combinedAbilities.sort((a, b) => {
             // both defined
-            if (!!a.name && !!b.name) {
+            if (a.name && b.name) {
                 return a.name.localeCompare(b.name);
             }
             // a undefined, should sort to back
-            if (!a.name && !!b.name) {
+            if (!a.name && b.name) {
                 return -1;
             }
             // b undefined, should sort to back
-            if (!!a.name && !b.name) {
+            if (a.name && !b.name) {
                 return 1;
             }
             // neither defined, leave unchanged
             return 0;
         });
     } else if (sortOption === "Trigger/Cost") {
-        combinedAbilities.sort((a, b) => a.desc.localeCompare(b.desc));
+        combinedAbilities.sort((a, b) => {
+            // neither passive
+            if (a.trigger && b.trigger) {
+                // TODO: hand-pick an order for ability triggers rather than lexical sorting
+                return a.trigger.localeCompare(b.trigger);
+            }
+            // b is passive, put it first
+            if (a.trigger && !b.trigger) {
+                return -1;
+            }
+            // a is passive, put it first
+            if (!a.trigger && b.trigger) {
+                return 1;
+            }
+            return 0;
+        });
     }
 
     const archetypeActions =
