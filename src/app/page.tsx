@@ -243,7 +243,7 @@ export default function CharacterBuilder() {
     };
 
     const handleCustomSkillChange = (field: "name" | "desc", value: string) => {
-        setCustomSkill({ ...customSkill, [field]: value });
+        setCustomSkill({ ...customSkill, [field]: value || "" });
     };
 
     // Save current selections to localStorage
@@ -1028,6 +1028,7 @@ export default function CharacterBuilder() {
                                 </select>
                                 <textarea
                                     value={selectedSkills[index].desc || ""}
+                                    readOnly
                                     className="w-full p-2 border rounded bg-gray-800 text-white"
                                 />
                             </div>
