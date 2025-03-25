@@ -624,7 +624,7 @@ export default function CharacterBuilder() {
             <h1 className="text-3xl font-bold mb-6">Panic At The Dojo 2e Digital Character Sheet</h1>
 
             {/* Character Name and Level Input */}
-            <section className="mb-8">
+            <section className="card">
                 <h2 className="text-2xl font-semibold mb-4">Character Name and Level</h2>
                 <div className="flex space-x-4">
                     <input
@@ -647,7 +647,7 @@ export default function CharacterBuilder() {
             </section>
 
             {/* Save and Load Buttons */}
-            <section className="mb-8">
+            <section className="card">
                 <button onClick={saveCharacter} className="p-2 bg-blue-500 text-white rounded mr-2">
                     Save Character
                 </button>
@@ -664,41 +664,38 @@ export default function CharacterBuilder() {
                 </select>
             </section>
 
-            {/* Build Selection */}
-            <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">Build</h2>
-                <select
-                    value={selectedBuild?.name || ""}
-                    onChange={(e) => handleBuildChange(e.target.value)}
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                >
-                    <option value="">Select Build</option>
-                    {builds.map((build) => (
-                        <option key={build.name} value={build.name}>
-                            {build.name}
-                        </option>
-                    ))}
-                </select>
-            </section>
-
-            {/* Hero Type Selection */}
-            <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
-                <select
-                    value={heroType || ""}
-                    onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                >
-                    <option value="">Select Hero Type</option>
-                    <option value="Focused">Focused</option>
-                    <option value="Fused">Fused</option>
-                    <option value="Frantic">Frantic</option>
-                </select>
+            {/* Build and Hero Type Selection */}
+            <section className="card">
+                <h2 className="text-2xl font-semibold mb-4">Build and Hero Type</h2>
+                <div className="flex space-x-4">
+                    <select
+                        value={selectedBuild?.name || ""}
+                        onChange={(e) => handleBuildChange(e.target.value)}
+                        className="w-1/2 p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="">Select Build</option>
+                        {builds.map((build) => (
+                            <option key={build.name} value={build.name}>
+                                {build.name}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        value={heroType || ""}
+                        onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
+                        className="w-1/2 p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="">Select Hero Type</option>
+                        <option value="Focused">Focused</option>
+                        <option value="Fused">Fused</option>
+                        <option value="Frantic">Frantic</option>
+                    </select>
+                </div>
             </section>
 
             {/* Archetype Selection */}
             {heroType && (
-                <section className="mb-8">
+                <section className="card">
                     <h2 className="text-2xl font-semibold mb-4">Archetypes</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {Array.from({
@@ -728,7 +725,7 @@ export default function CharacterBuilder() {
 
             {/* Style and Form Selection */}
             {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
-                <section className="mb-8">
+                <section className="card">
                     <h2 className="text-2xl font-semibold mb-4">Styles and Forms</h2>
                     {heroType === "Frantic" ? (
                         <div className="grid grid-cols-2 gap-4">
@@ -820,7 +817,7 @@ export default function CharacterBuilder() {
 
             {/* Stance Selection Dropdown */}
             {heroType && selectedArchetypes.filter((a) => !isNull(a)).length > 0 && (
-                <section className="mb-8">
+                <section className="card">
                     <label className="block text-sm font-medium mb-2">Select Stance to View</label>
                     {heroType === "Frantic" ? (
                         <div className="grid grid-cols-3 gap-4">
@@ -903,7 +900,7 @@ export default function CharacterBuilder() {
 
             {/* Super Move Selection */}
             {characterLevel >= 2 && (
-                <section className="mb-8">
+                <section className="card">
                     <h2 className="text-2xl font-semibold mb-4">Super Moves</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {Array.from({ length: characterLevel >= 6 ? 2 : 1 }).map((_, index) => (
@@ -933,29 +930,41 @@ export default function CharacterBuilder() {
 
             {/* Combined Stance Information */}
             {currentStance && (
-                <section>
-                    <h2 className="text-2xl font-semibold mb-4">
-                        {heroType === "Frantic" ? currentStance.archetype.name + "'s " : ""}
-                        {currentStance.style.name} {currentStance.form.name}
-                    </h2>
-                    <div className="p-4 rounded-lg">
-                        <div>
-                            <strong>Range: </strong>{" "}
-                            {currentStance.style.minRange === currentStance.style.maxRange
-                                ? currentStance.style.minRange
-                                : `${currentStance.style.minRange}-${currentStance.style.maxRange}`}{" "}
-                            <strong>Dice: {diceList.join(", ")}</strong>
+                <section className="stance-details">
+                    <div className="stance-header">
+                        <h2 className="stance-title">
+                            {heroType === "Frantic" ? currentStance.archetype.name + "'s " : ""}
+                            {currentStance.style.name} {currentStance.form.name}
+                        </h2>
+                        <div className="stance-subtitle">
+                            <span>
+                                <strong>Range:</strong>
+                                {currentStance.style.minRange === currentStance.style.maxRange
+                                    ? currentStance.style.minRange
+                                    : `${currentStance.style.minRange}-${currentStance.style.maxRange}`}
+                            </span>
+                            <span>
+                                <strong>Dice:</strong> {diceList.join(", ")}
+                            </span>
                         </div>
-                        <div>
+                    </div>
+
+                    <div className="abilities-section">
+                        <h3 className="text-xl font-semibold mb-4">Abilities</h3>
+                        <div className="ability-list">
                             {combinedAbilities.map((ability, index) => (
-                                <div key={index}>
+                                <div key={index} className="ability-item">
                                     {ability.split("\n").map((line, i) => (
-                                        <div key={i}>{line}</div>
+                                        <p key={i}>{line}</p>
                                     ))}
                                 </div>
                             ))}
                         </div>
-                        <div>
+                    </div>
+
+                    <div className="actions-section">
+                        <h3 className="text-xl font-semibold mb-4">Actions</h3>
+                        <div className="action-list">
                             {combinedActions
                                 .sort((a, b) => {
                                     if (customSort) {
@@ -965,22 +974,27 @@ export default function CharacterBuilder() {
                                     return 0;
                                 })
                                 .map((action, index) => (
-                                    <div key={index}>
-                                        <h3 className="text-xl font-medium mt-4 mb-2">
-                                            {action.cost}: {action.name}
-                                        </h3>
-                                        <div>
-                                            {action.desc.split("\n").map((line, i) => (
-                                                <div key={i} className="pl-4">
-                                                    {line.includes(":")
-                                                        ? line
-                                                              .split(":")
-                                                              .map((part, j) =>
-                                                                  j === 0 ? <strong key={j}>{part}:</strong> : part
-                                                              )
-                                                        : line}
-                                                </div>
-                                            ))}
+                                    <div key={index} className="action-card">
+                                        <div className="action-header">
+                                            <span className="action-cost">{action.cost}:</span>
+                                            <span className="action-name">{action.name}</span>
+                                        </div>
+                                        <div className="action-description">
+                                            {action.desc.split("\n").map((line, i) => {
+                                                const [trigger, ...rest] = line.split(":");
+                                                return (
+                                                    <div key={i} className="action-line">
+                                                        {line.includes(":") ? (
+                                                            <>
+                                                                <span className="trigger-part">{trigger}:</span>
+                                                                {rest.join(":")}
+                                                            </>
+                                                        ) : (
+                                                            line
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 ))}
@@ -991,7 +1005,7 @@ export default function CharacterBuilder() {
 
             {/* Skills Selection */}
             {selectedForms.every((form) => form.name) && (
-                <section className="mb-8">
+                <section className="card">
                     <h2 className="text-2xl font-semibold mb-4">Skills</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {Array.from({ length: 3 }).map((_, index) => (
@@ -1012,7 +1026,10 @@ export default function CharacterBuilder() {
                                         );
                                     })}
                                 </select>
-                                <p className="text-sm text-gray-400 mt-2">{selectedSkills[index].desc || ""}</p>
+                                <textarea
+                                    value={selectedSkills[index].desc || ""}
+                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                />
                             </div>
                         ))}
                     </div>
