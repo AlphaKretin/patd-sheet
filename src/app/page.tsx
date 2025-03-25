@@ -621,6 +621,9 @@ export default function CharacterBuilder() {
           )
         : [];
 
+    let maxRange = currentStance?.style.maxRange;
+    if (maxRange) maxRange += combinedAbilities.reduce((sum, ability) => sum + (ability.bonusMaxRange || 0), 0);
+
     const handleSuperMoveChange = (move: string, index: number) => {
         const newSuperMoves = [...superMoves];
         const newMove = archetypes.flatMap((a) => [a.alphaSuper, a.deltaSuper]).find((m) => m.name === move);
@@ -1027,9 +1030,9 @@ export default function CharacterBuilder() {
                         <div className="stance-subtitle">
                             <span>
                                 <strong>Range:</strong>
-                                {currentStance.style.minRange === currentStance.style.maxRange
+                                {currentStance.style.minRange === maxRange
                                     ? currentStance.style.minRange
-                                    : `${currentStance.style.minRange}-${currentStance.style.maxRange}`}
+                                    : `${currentStance.style.minRange}-${maxRange}`}
                             </span>
                             <span>
                                 <strong>Dice:</strong> {diceList.join(", ")}
