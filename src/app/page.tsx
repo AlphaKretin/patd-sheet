@@ -575,11 +575,11 @@ export default function CharacterBuilder() {
             }
             // b is passive, put it first
             if (a.trigger && !b.trigger) {
-                return -1;
+                return 1;
             }
             // a is passive, put it first
             if (!a.trigger && b.trigger) {
-                return 1;
+                return -1;
             }
             return 0;
         });
