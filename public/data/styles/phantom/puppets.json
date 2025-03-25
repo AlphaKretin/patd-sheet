@@ -1,0 +1,20 @@
+{
+    "name": "Puppet's",
+    "minRange": 1,
+    "maxRange": 5,
+    "abilities": [
+        {
+            "desc": "After each space you move using Free Movement, you may Move 1 to one ally or obstacle within range. Obstacles you move with this Ability become Rubble."
+        },
+        {
+            "desc": "At the end of your turn, each enemy that moved this turn takes 1 damage, and each ally that moved this turn heals 2."
+        }
+    ],
+    "actions": [
+        {
+            "name": "Pull The Strings",
+            "cost": "2+ or 4+ or 7+",
+            "desc": "Target an enemy or ally you can see. Pull them 3.\n4+: Target an enemy or ally within range. Push them 3.\n7+: Target an enemy or ally within range. Choose one: Push them up to 4; -or- Pull them up to 4."
+        }
+    ]
+}
