@@ -277,8 +277,7 @@ button:hover,
 }
 
 .trigger-part {
-    font-weight: 500;
-    color: var(--primary);
+    text-decoration: underline;
 }
 
 .action-list {
