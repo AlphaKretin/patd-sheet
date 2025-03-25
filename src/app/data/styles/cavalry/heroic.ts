@@ -5,8 +5,10 @@ export const heroic: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, you heal 1.",
-        "Whenever an ally within range takes damage, they take half that damage (rounded down) and you take the other half (rounded up).",
+        { desc: "At the start of your turn, you heal 1." },
+        {
+            desc: "Whenever an ally within range takes damage, they take half that damage (rounded down) and you take the other half (rounded up).",
+        },
     ],
     actions: [
         {

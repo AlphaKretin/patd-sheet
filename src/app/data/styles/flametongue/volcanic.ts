@@ -5,9 +5,9 @@ export const volcanic: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "At the start and end of your turn, you may place a Trap into a space within range.",
-        "After an enemy within range takes damage from a Trap, give that enemy 1 Burning token.",
-        "You do not take damage from Traps.",
+        { desc: "At the start and end of your turn, you may place a Trap into a space within range." },
+        { desc: "After an enemy within range takes damage from a Trap, give that enemy 1 Burning token." },
+        { desc: "You do not take damage from Traps." },
     ],
     actions: [
         {

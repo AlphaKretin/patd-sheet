@@ -5,9 +5,9 @@ export const spirit: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "You and your Copies do not take damage from Pits or Traps.",
-        "You and your Copies treat Walls as if they were Rubble.",
-        "After each space of Free Movement you do, any number of your Copies may Move 1.",
+        { desc: "You and your Copies do not take damage from Pits or Traps." },
+        { desc: "You and your Copies treat Walls as if they were Rubble." },
+        { desc: "After each space of Free Movement you do, any number of your Copies may Move 1." },
     ],
     actions: [
         {

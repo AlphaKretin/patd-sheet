@@ -5,8 +5,8 @@ export const halcyon: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, you may discard one token you hold.",
-        "After you discard tokens using an Action or Ability, you gain an equal number of Iron tokens.",
+        { desc: "At the start of your turn, you may discard one token you hold." },
+        { desc: "After you discard tokens using an Action or Ability, you gain an equal number of Iron tokens." },
     ],
     actions: [
         {

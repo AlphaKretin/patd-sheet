@@ -7,8 +7,8 @@ export const ego: Freestyle = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "Once per turn, when an enemy you can see gains Basic tokens, you gain 1 Power token.",
-        "You can Enhance a Hit one additional time.",
+        { desc: "Once per turn, when an enemy you can see gains Basic tokens, you gain 1 Power token." },
+        { desc: "You can Enhance a Hit one additional time." },
     ],
     actions: [
         {

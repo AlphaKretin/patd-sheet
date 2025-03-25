@@ -8,13 +8,19 @@ import { Archetype } from "../types/Archetype";
 export const wardancer: Archetype = {
     name: "Wardancer",
     focusedAbilities: [
-        "At the start of the Action Phase of your turn, increase one of your numbers by 3, a different one of your numbers by 2, and one of your remaining numbers by 1. This can only increase a number to a maximum value of 9.",
+        {
+            desc: "At the start of the Action Phase of your turn, increase one of your numbers by 3, a different one of your numbers by 2, and one of your remaining numbers by 1. This can only increase a number to a maximum value of 9.",
+        },
     ],
     fusedAbilities: [
-        "At the start of the Action Phase of your turn, increase one of your numbers by 2, and one of your other numbers by 1. This can only increase a number to a maximum value of 5.",
+        {
+            desc: "At the start of the Action Phase of your turn, increase one of your numbers by 2, and one of your other numbers by 1. This can only increase a number to a maximum value of 5.",
+        },
     ],
     franticAbilities: [
-        "At the start of the Action Phase of this turn, increase one of your numbers by 3, a different one of your numbers by 2, and one of your remaining numbers by 1. This can only increase a number to a maximum value of 9.",
+        {
+            desc: "At the start of the Action Phase of this turn, increase one of your numbers by 3, a different one of your numbers by 2, and one of your remaining numbers by 1. This can only increase a number to a maximum value of 9.",
+        },
     ],
     actions: [
         {

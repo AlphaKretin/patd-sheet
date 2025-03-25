@@ -5,7 +5,9 @@ export const singing: Style = {
     minRange: 2,
     maxRange: 4,
     abilities: [
-        "At the start of your turn, choose a Mood: Despair, Sorrow, or Rage.\nIf you picked Despair, give 1 Fatigue token to all enemies.\nIf you picked Sorrow, give 1 Weakness token to all enemies.\nIf you picked Rage, give 1 Burning token to all enemies",
+        {
+            desc: "At the start of your turn, choose a Mood: Despair, Sorrow, or Rage.\nIf you picked Despair, give 1 Fatigue token to all enemies.\nIf you picked Sorrow, give 1 Weakness token to all enemies.\nIf you picked Rage, give 1 Burning token to all enemies",
+        },
     ],
     actions: [
         {

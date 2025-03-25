@@ -5,8 +5,10 @@ export const control: Form = {
     greenDice: [10, 4],
     purpleDice: [8, 6],
     abilities: [
-        "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled.",
-        "When you add Control Form to a Style, choose one:\n• Increase that Style's maximum range by 3.\n• Set that Style's minimum range to 0.",
+        { desc: "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled." },
+        {
+            desc: "When you add Control Form to a Style, choose one:\n• Increase that Style's maximum range by 3.\n• Set that Style's minimum range to 0.",
+        },
     ],
     actions: [
         {

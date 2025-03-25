@@ -5,7 +5,9 @@ export const song: Form = {
     greenDice: [6, 6],
     purpleDice: [8, 4],
     abilities: [
-        "At the start of your turn, choose your song: Iron, Power, or Speed. You gain 3 tokens of the chosen type, and each ally (other than yourself) gains 1 token of the chosen type.",
+        {
+            desc: "At the start of your turn, choose your song: Iron, Power, or Speed. You gain 3 tokens of the chosen type, and each ally (other than yourself) gains 1 token of the chosen type.",
+        },
     ],
     actions: [
         {

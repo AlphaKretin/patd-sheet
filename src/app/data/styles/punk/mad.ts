@@ -5,7 +5,9 @@ export const mad: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, choose a Weapon: Club, Knife, or Pistol. You have the chosen Weapon’s effect until your next turn.\nClub: After each damage-dealing Action you perform, give each enemy dealt damage by that Action one Fatigue token.\nKnife: Your Actions and Abilities are Unblockable by Armor and Tokens.\nPistol: You have +3 maximum Range.",
+        {
+            desc: "At the start of your turn, choose a Weapon: Club, Knife, or Pistol. You have the chosen Weapon’s effect until your next turn.\nClub: After each damage-dealing Action you perform, give each enemy dealt damage by that Action one Fatigue token.\nKnife: Your Actions and Abilities are Unblockable by Armor and Tokens.\nPistol: You have +3 maximum Range.",
+        },
     ],
     actions: [
         {

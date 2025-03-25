@@ -7,9 +7,11 @@ export const circular: Freestyle = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "After you take damage, pay HP, or are healed, you gain 1 Speed token.",
-        "When you Bleed, gain 3 Speed tokens.",
-        "After each Dice Action you perform, if it applied Forced Movement to an enemy, they must discard 1 Basic token, if they have any. If it applied Forced Movement to an ally, they heal 1. If it moved, swapped, or teleported you, you heal 1.",
+        { desc: "After you take damage, pay HP, or are healed, you gain 1 Speed token." },
+        { desc: "When you Bleed, gain 3 Speed tokens." },
+        {
+            desc: "After each Dice Action you perform, if it applied Forced Movement to an enemy, they must discard 1 Basic token, if they have any. If it applied Forced Movement to an ally, they heal 1. If it moved, swapped, or teleported you, you heal 1.",
+        },
     ],
     actions: [
         {

@@ -8,13 +8,19 @@ import { Archetype } from "../types/Archetype";
 export const cavalry: Archetype = {
     name: "Cavalry",
     focusedAbilities: [
-        "At the start and end of your turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
+        {
+            desc: "At the start and end of your turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
+        },
     ],
     fusedAbilities: [
-        "At the start of your turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
+        {
+            desc: "At the start of your turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
+        },
     ],
     franticAbilities: [
-        "At the start and end of this turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
+        {
+            desc: "At the start and end of this turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
+        },
     ],
     actions: [
         {

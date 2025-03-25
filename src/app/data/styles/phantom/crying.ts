@@ -5,9 +5,11 @@ export const crying: Style = {
     minRange: 1,
     maxRange: 4,
     abilities: [
-        "At the start of your turn, give 1 Weakness token to all enemies within range.",
-        "At the end of your turn, Challenge an enemy within range and give them 1 Weakness token.",
-        "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held it gains 3 Burning tokens.",
+        { desc: "At the start of your turn, give 1 Weakness token to all enemies within range." },
+        { desc: "At the end of your turn, Challenge an enemy within range and give them 1 Weakness token." },
+        {
+            desc: "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held it gains 3 Burning tokens.",
+        },
     ],
     actions: [
         {

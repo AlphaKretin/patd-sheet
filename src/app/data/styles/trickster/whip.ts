@@ -5,8 +5,8 @@ export const whip: Style = {
     minRange: 2,
     maxRange: 5,
     abilities: [
-        "Your Throw Actions may target within range.",
-        "After you Throw or Grapple an enemy, you deal 2 damage to them.",
+        { desc: "Your Throw Actions may target within range." },
+        { desc: "After you Throw or Grapple an enemy, you deal 2 damage to them." },
     ],
     actions: [
         {

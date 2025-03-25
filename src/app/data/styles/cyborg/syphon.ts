@@ -5,7 +5,9 @@ export const syphon: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start and end of your turn, you may choose 1 token you hold. Either replace it with a Power token, or gain another copy of it.",
+        {
+            desc: "At the start and end of your turn, you may choose 1 token you hold. Either replace it with a Power token, or gain another copy of it.",
+        },
     ],
     actions: [
         {

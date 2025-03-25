@@ -5,8 +5,12 @@ export const crystal: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After you perform an Action with exactly one target, you deal 1 damage to all enemies adjacent to that target.",
-        "The first time each turn one of your Copies is destroyed, you may place a Copy within range of your Original.",
+        {
+            desc: "After you perform an Action with exactly one target, you deal 1 damage to all enemies adjacent to that target.",
+        },
+        {
+            desc: "The first time each turn one of your Copies is destroyed, you may place a Copy within range of your Original.",
+        },
     ],
     actions: [
         {

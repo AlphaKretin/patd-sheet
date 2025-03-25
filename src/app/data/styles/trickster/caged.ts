@@ -5,7 +5,9 @@ export const caged: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "Adjacent enemies cannot gain or spend Speed tokens, and any Action Movement they would take is reduced to zero.",
+        {
+            desc: "Adjacent enemies cannot gain or spend Speed tokens, and any Action Movement they would take is reduced to zero.",
+        },
     ],
     actions: [
         {

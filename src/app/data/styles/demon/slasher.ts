@@ -5,8 +5,8 @@ export const slasher: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After an effect Pushes you, you may Pull yourself up to 2 towards the source of that Push.",
-        "At the end of every turn, you may Move 1, then you deal 1 damage to an enemy within range.",
+        { desc: "After an effect Pushes you, you may Pull yourself up to 2 towards the source of that Push." },
+        { desc: "At the end of every turn, you may Move 1, then you deal 1 damage to an enemy within range." },
     ],
     actions: [
         {

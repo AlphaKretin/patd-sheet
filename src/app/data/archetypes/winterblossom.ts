@@ -8,13 +8,17 @@ import { Archetype } from "../types/Archetype";
 export const winterblossom: Archetype = {
     name: "Winterblossom",
     focusedAbilities: [
-        "At the start of each turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+        { desc: "At the start of each turn, give 1 Weakness token to one enemy within range of you or your Copies." },
     ],
     fusedAbilities: [
-        "At the start of each allied turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+        {
+            desc: "At the start of each allied turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+        },
     ],
     franticAbilities: [
-        "At the start of each turn until your next turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+        {
+            desc: "At the start of each turn until your next turn, give 1 Weakness token to one enemy within range of you or your Copies.",
+        },
     ],
     actions: [
         {

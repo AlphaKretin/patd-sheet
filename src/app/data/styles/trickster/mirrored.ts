@@ -5,9 +5,9 @@ export const mirrored: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "After you spend Iron tokens, you may deal 1 damage to one enemy within range of you or your Copies.",
-        "Your Copies have 2 HP each.",
-        "You may spend Iron tokens to Reduce Hits to your Copies.",
+        { desc: "After you spend Iron tokens, you may deal 1 damage to one enemy within range of you or your Copies." },
+        { desc: "Your Copies have 2 HP each." },
+        { desc: "You may spend Iron tokens to Reduce Hits to your Copies." },
     ],
     actions: [
         {

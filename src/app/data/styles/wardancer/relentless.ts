@@ -5,8 +5,8 @@ export const relentless: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "Enemies holding your Challenge are within your range.",
-        "After you deal damage, Push 1.",
+        { desc: "Enemies holding your Challenge are within your range." },
+        { desc: "After you deal damage, Push 1." },
     ],
     actions: [
         {

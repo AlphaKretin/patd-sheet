@@ -5,8 +5,10 @@ export const parkour: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "You may move through and stand on top of Walls as though they were empty spaces. You can see and target enemies through Walls.",
-        "After you end movement within a Wall’s space, you may Move 1.",
+        {
+            desc: "You may move through and stand on top of Walls as though they were empty spaces. You can see and target enemies through Walls.",
+        },
+        { desc: "After you end movement within a Wall’s space, you may Move 1." },
     ],
     actions: [
         {

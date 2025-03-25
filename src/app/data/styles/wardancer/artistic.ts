@@ -5,8 +5,10 @@ export const artistic: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, you gain 2 Iron tokens.",
-        "After you deal damage to, or Reduce a Hit from, an enemy, you may spend 1 Iron token to give them 1 Status token of your choice.",
+        { desc: "At the start of your turn, you gain 2 Iron tokens." },
+        {
+            desc: "After you deal damage to, or Reduce a Hit from, an enemy, you may spend 1 Iron token to give them 1 Status token of your choice.",
+        },
     ],
     actions: [
         {

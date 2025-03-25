@@ -7,8 +7,10 @@ export const persistent: Freestyle = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start of your turn and when you Bleed, add a 3 to your Action Pool.",
-        "When you discard numbers from your Action Pool during the End Phase, you may keep up to two of them with a total value of 5 or less.",
+        { desc: "At the start of your turn and when you Bleed, add a 3 to your Action Pool." },
+        {
+            desc: "When you discard numbers from your Action Pool during the End Phase, you may keep up to two of them with a total value of 5 or less.",
+        },
     ],
     actions: [
         {

@@ -5,8 +5,8 @@ export const incinerator: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "After you use a Power token to Enhance a Hit, give 1 Burning token to the target of that hit.",
-        "After you take damage from Burning Tokens, gain 1 Power token.",
+        { desc: "After you use a Power token to Enhance a Hit, give 1 Burning token to the target of that hit." },
+        { desc: "After you take damage from Burning Tokens, gain 1 Power token." },
     ],
     actions: [
         {

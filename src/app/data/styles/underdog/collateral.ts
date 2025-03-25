@@ -5,8 +5,10 @@ export const collateral: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After you deal damage to an enemy with an Action, you may destroy 1 obstacle within range per enemy dealt damage.",
-        "At the end of your turn, you gain 1 Power token per obstacle you destroyed during that turn.",
+        {
+            desc: "After you deal damage to an enemy with an Action, you may destroy 1 obstacle within range per enemy dealt damage.",
+        },
+        { desc: "At the end of your turn, you gain 1 Power token per obstacle you destroyed during that turn." },
     ],
     actions: [
         {

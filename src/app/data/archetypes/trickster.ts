@@ -8,13 +8,19 @@ import { Archetype } from "../types/Archetype";
 export const trickster: Archetype = {
     name: "Trickster",
     focusedAbilities: [
-        "At the start of each turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
+        {
+            desc: "At the start of each turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
+        },
     ],
     fusedAbilities: [
-        "At the start of each allied turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
+        {
+            desc: "At the start of each allied turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
+        },
     ],
     franticAbilities: [
-        "Until your next turn, at the start of each turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
+        {
+            desc: "Until your next turn, at the start of each turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
+        },
     ],
     actions: [
         {

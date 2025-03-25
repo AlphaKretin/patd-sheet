@@ -5,8 +5,8 @@ export const elder: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "The cost of all Actions you perform are reduced by 1 (to a minimum of 1+ or 2 tokens/HP/Shield).",
-        "The damage values of all Actions you perform are reduced by 1 (to a minimum of zero).",
+        { desc: "The cost of all Actions you perform are reduced by 1 (to a minimum of 1+ or 2 tokens/HP/Shield)." },
+        { desc: "The damage values of all Actions you perform are reduced by 1 (to a minimum of zero)." },
     ],
     actions: [
         {

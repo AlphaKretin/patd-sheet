@@ -5,8 +5,8 @@ export const power: Form = {
     greenDice: [10],
     purpleDice: [10, 4],
     abilities: [
-        "When you gain Speed tokens, replace half of them (rounded down) with Power tokens.",
-        "You can Enhance a Hit two additional times.",
+        { desc: "When you gain Speed tokens, replace half of them (rounded down) with Power tokens." },
+        { desc: "You can Enhance a Hit two additional times." },
     ],
     actions: [
         {

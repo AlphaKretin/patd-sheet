@@ -5,9 +5,9 @@ export const shadow: Form = {
     greenDice: [4, 4, 4],
     purpleDice: [4, 4, 4],
     abilities: [
-        "At the start and end of your turn, you gain 2 Speed tokens.",
-        "At the start of each Movement Phase, you may Move 1.",
-        "You do not discard any Speed tokens during the End Phase.",
+        { desc: "At the start and end of your turn, you gain 2 Speed tokens." },
+        { desc: "At the start of each Movement Phase, you may Move 1." },
+        { desc: "You do not discard any Speed tokens during the End Phase." },
     ],
     actions: [
         {

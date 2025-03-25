@@ -5,8 +5,8 @@ export const jumping: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start and end of your turn, you may Teleport 3.",
-        "When you Bleed, you may Teleport 3.",
+        { desc: "At the start and end of your turn, you may Teleport 3." },
+        { desc: "When you Bleed, you may Teleport 3." },
     ],
     actions: [
         {

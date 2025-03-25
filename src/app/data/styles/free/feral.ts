@@ -7,9 +7,9 @@ export const feral: Freestyle = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "After each Action you perform, if you are not Bleeding, you pay 1 HP.",
-        "At the start of your turn, you gain 2 Power tokens.",
-        "When you Bleed, add a 4 to your Action Pool.",
+        { desc: "After each Action you perform, if you are not Bleeding, you pay 1 HP." },
+        { desc: "At the start of your turn, you gain 2 Power tokens." },
+        { desc: "When you Bleed, add a 4 to your Action Pool." },
     ],
     actions: [
         {

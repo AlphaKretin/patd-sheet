@@ -8,19 +8,23 @@ import { Archetype } from "../types/Archetype";
 export const angel: Archetype = {
     name: "Angel",
     focusedAbilities: [
-        "Your Challenges are Unblockable By Shields.",
-        "At the start of your turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
-        "After you challenge an enemy, deal 1 damage to them and heal 1.",
+        { desc: "Your Challenges are Unblockable By Shields." },
+        {
+            desc: "At the start of your turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
+        },
+        { desc: "After you challenge an enemy, deal 1 damage to them and heal 1." },
     ],
     fusedAbilities: [
-        "Your Challenges are Unblockable by Shields.",
-        "At the start of your turn, you may heal 2, then if you did, Challenge an enemy you can see.",
-        "After you Challenge an enemy, you deal 1 damage to them.",
+        { desc: "Your Challenges are Unblockable by Shields." },
+        { desc: "At the start of your turn, you may heal 2, then if you did, Challenge an enemy you can see." },
+        { desc: "After you Challenge an enemy, you deal 1 damage to them." },
     ],
     franticAbilities: [
-        "Your Challenges are Unblockable by Shields.",
-        "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
-        "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1.",
+        { desc: "Your Challenges are Unblockable by Shields." },
+        {
+            desc: "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
+        },
+        { desc: "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1." },
     ],
     actions: [
         {

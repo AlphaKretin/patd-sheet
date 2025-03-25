@@ -4,7 +4,7 @@ export const lucky: Style = {
     name: "Lucky",
     minRange: 1,
     maxRange: 2,
-    abilities: ["Add d4 to your Action Dice.", "You have Armor."],
+    abilities: [{ desc: "Add d4 to your Action Dice.", bonusDice: [4] }, { desc: "You have Armor." }],
     actions: [
         {
             name: "Slip Up",

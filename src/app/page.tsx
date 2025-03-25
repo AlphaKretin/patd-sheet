@@ -23,6 +23,8 @@ import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
 import { SuperMove } from "./data/types/Super";
 
+type SortOption = "Source (Default)" | "Name" | "Description/Cost";
+
 const DEFAULT_STANCE_COUNT = 3;
 
 function isNull(o: Archetype | Style | Form | Skill | SuperMove) {
@@ -59,7 +61,7 @@ export default function CharacterBuilder() {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [characterLevel, setCharacterLevel] = useState<number>(1);
     const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill(nullSuper));
-    const [customSort, setCustomSort] = useState<boolean>(true);
+    const [sortOption, setSortOption] = useState<SortOption>("Source (Default)");
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -166,6 +168,10 @@ export default function CharacterBuilder() {
 
     // Handle Stance selection
     const handleStanceSelection = (index: number) => {
+        if (index === -1) {
+            setCurrentStance(null);
+            return;
+        }
         setCurrentStance({
             archetype: selectedArchetypes[index], // unused but for Frantic
             style: selectedStyles[index],
@@ -244,6 +250,10 @@ export default function CharacterBuilder() {
 
     const handleCustomSkillChange = (field: "name" | "desc", value: string) => {
         setCustomSkill({ ...customSkill, [field]: value || "" });
+    };
+
+    const handleSortOptionChange = (option: SortOption) => {
+        setSortOption(option);
     };
 
     type SaveData = {
@@ -538,10 +548,26 @@ export default function CharacterBuilder() {
         ...(currentStance ? [...currentStance.style.abilities] : []),
     ];
 
-    // if user enables, sort by text to put triggers near each other
-    // otherwise, will remain in its order, based on the source of the ability
-    if (customSort) {
-        combinedAbilities.sort();
+    // Sort abilities based on selected sort option
+    if (sortOption === "Name") {
+        combinedAbilities.sort((a, b) => {
+            // both defined
+            if (!!a.name && !!b.name) {
+                return a.name.localeCompare(b.name);
+            }
+            // a undefined, should sort to back
+            if (!a.name && !!b.name) {
+                return -1;
+            }
+            // b undefined, should sort to back
+            if (!!a.name && !b.name) {
+                return 1;
+            }
+            // neither defined, leave unchanged
+            return 0;
+        });
+    } else if (sortOption === "Description/Cost") {
+        combinedAbilities.sort((a, b) => a.desc.localeCompare(b.desc));
     }
 
     const archetypeActions =
@@ -570,33 +596,45 @@ export default function CharacterBuilder() {
         ...archetypeActions,
         ...(currentStance ? [...currentStance.style.actions, ...currentStance.form.actions] : []),
         ...superMoveActions,
-    ].sort((a, b) => {
-        if (customSort) {
-            if (a.cost < b.cost) return -1;
-            if (a.cost > b.cost) return 1;
-        }
-        return 0;
-    });
+    ];
+
+    // Sort actions based on selected sort option
+    if (sortOption === "Name") {
+        combinedActions.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "Description/Cost") {
+        combinedActions.sort((a, b) => a.cost.localeCompare(b.cost));
+    }
 
     function isFreestyle(style: Style): style is Freestyle {
         return style && "bannedForm" in style;
     }
 
-    const allDice = currentStance
+    let allDice = currentStance
         ? isFreestyle(currentStance.style)
             ? currentStance.form.purpleDice.concat(currentStance.style.dice)
             : currentStance.form.purpleDice.concat(currentStance.form.greenDice)
         : null;
 
-    if (allDice && characterLevel in bonusDice) {
-        allDice.push(bonusDice[characterLevel]);
+    if (allDice) {
+        const abilityDice = combinedAbilities.flatMap((ability) => ability.bonusDice).filter(isDefined);
+        allDice = allDice.concat(abilityDice);
+        if (characterLevel in bonusDice) {
+            allDice.push(bonusDice[characterLevel]);
+        }
     }
 
     const diceList = allDice
-        ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
-              (a, b) => parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""))
-          )
+        ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort((a, b) => {
+              const aIsPositive = a.startsWith("d");
+              const bIsPositive = b.startsWith("d");
+              if (aIsPositive && !bIsPositive) return -1;
+              if (!aIsPositive && bIsPositive) return 1;
+              return parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""));
+          })
         : [];
+
+    let maxRange = currentStance?.style.maxRange;
+    if (maxRange) maxRange += combinedAbilities.reduce((sum, ability) => sum + (ability.bonusMaxRange || 0), 0);
 
     const handleSuperMoveChange = (move: string, index: number) => {
         const newSuperMoves = [...superMoves];
@@ -639,10 +677,6 @@ export default function CharacterBuilder() {
         }
         return `Fused Archetype 2`;
     }
-
-    const handleSortToggle = () => {
-        setCustomSort(!customSort);
-    };
 
     return (
         <div className="container mx-auto p-4 max-w-4xl relative">
@@ -942,7 +976,7 @@ export default function CharacterBuilder() {
                             onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                         >
-                            <option value="">Select Stance</option>
+                            <option value="-1">Select Stance</option>
                             {selectedStyles.map(
                                 (style, index) =>
                                     !isNull(style) &&
@@ -954,10 +988,16 @@ export default function CharacterBuilder() {
                             )}
                         </select>
                     )}
-                    <label className="block text-sm font-medium mb-2">
-                        <input type="checkbox" checked={customSort} onChange={handleSortToggle} className="mr-2" />
-                        Custom Sorting
-                    </label>
+                    <label className="block text-sm font-medium mb-2">Sorting</label>
+                    <select
+                        value={sortOption}
+                        onChange={(e) => handleSortOptionChange(e.target.value as SortOption)}
+                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="Source (Default)">Source (Default)</option>
+                        <option value="Name">Name</option>
+                        <option value="Description/Cost">Description/Cost</option>
+                    </select>
                 </section>
             )}
 
@@ -1002,9 +1042,9 @@ export default function CharacterBuilder() {
                         <div className="stance-subtitle">
                             <span>
                                 <strong>Range:</strong>
-                                {currentStance.style.minRange === currentStance.style.maxRange
+                                {currentStance.style.minRange === maxRange
                                     ? currentStance.style.minRange
-                                    : `${currentStance.style.minRange}-${currentStance.style.maxRange}`}
+                                    : `${currentStance.style.minRange}-${maxRange}`}
                             </span>
                             <span>
                                 <strong>Dice:</strong> {diceList.join(", ")}
@@ -1017,9 +1057,18 @@ export default function CharacterBuilder() {
                         <div className="ability-list">
                             {combinedAbilities.map((ability, index) => (
                                 <div key={index} className="ability-item">
-                                    {ability.split("\n").map((line, i) => (
-                                        <p key={i}>{line}</p>
-                                    ))}
+                                    {ability.name ? (
+                                        <div className="ability-header">
+                                            <span className="action-name">{ability.name}</span>
+                                        </div>
+                                    ) : (
+                                        ""
+                                    )}
+                                    <div className="ability-description">
+                                        {ability.desc.split("\n").map((line, i) => (
+                                            <p key={i}>{line}</p>
+                                        ))}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -1028,39 +1077,31 @@ export default function CharacterBuilder() {
                     <div className="actions-section">
                         <h3 className="text-xl font-semibold mb-4">Actions</h3>
                         <div className="action-list">
-                            {combinedActions
-                                .sort((a, b) => {
-                                    if (customSort) {
-                                        if (a.cost < b.cost) return -1;
-                                        if (a.cost > b.cost) return 1;
-                                    }
-                                    return 0;
-                                })
-                                .map((action, index) => (
-                                    <div key={index} className="action-card">
-                                        <div className="action-header">
-                                            <span className="action-cost">{action.cost}:</span>
-                                            <span className="action-name">{action.name}</span>
-                                        </div>
-                                        <div className="action-description">
-                                            {action.desc.split("\n").map((line, i) => {
-                                                const [trigger, ...rest] = line.split(":");
-                                                return (
-                                                    <div key={i} className="action-line">
-                                                        {line.includes(":") ? (
-                                                            <>
-                                                                <span className="trigger-part">{trigger}:</span>
-                                                                {rest.join(":")}
-                                                            </>
-                                                        ) : (
-                                                            line
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
+                            {combinedActions.map((action, index) => (
+                                <div key={index} className="action-card">
+                                    <div className="action-header">
+                                        <span className="action-cost">{action.cost}:</span>
+                                        <span className="action-name">{action.name}</span>
                                     </div>
-                                ))}
+                                    <div className="action-description">
+                                        {action.desc.split("\n").map((line, i) => {
+                                            const [trigger, ...rest] = line.split(":");
+                                            return (
+                                                <div key={i} className="action-line">
+                                                    {line.includes(":") ? (
+                                                        <>
+                                                            <span className="trigger-part">{trigger}:</span>
+                                                            {rest.join(":")}
+                                                        </>
+                                                    ) : (
+                                                        line
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>

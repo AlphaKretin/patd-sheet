@@ -5,7 +5,9 @@ export const misfortunes: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "After you take damage from anything other than an Action or an Ability, choose one: You deal 1 damage to an enemy within range; -or- you heal 2.",
+        {
+            desc: "After you take damage from anything other than an Action or an Ability, choose one: You deal 1 damage to an enemy within range; -or- you heal 2.",
+        },
     ],
     actions: [
         {

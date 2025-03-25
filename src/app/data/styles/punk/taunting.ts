@@ -5,8 +5,8 @@ export const taunting: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "After you take damage, you gain 1 Iron token.",
-        "After you take damage from an enemy with your Challenge, you may Move 1.",
+        { desc: "After you take damage, you gain 1 Iron token." },
+        { desc: "After you take damage from an enemy with your Challenge, you may Move 1." },
     ],
     actions: [
         {

@@ -5,8 +5,8 @@ export const distracting: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After an enemy deals damage to you with an Action, give that enemy 1 Weakness token.",
-        "Your Challenge tokens cannot be discarded by enemy Actions or Abilities.",
+        { desc: "After an enemy deals damage to you with an Action, give that enemy 1 Weakness token." },
+        { desc: "Your Challenge tokens cannot be discarded by enemy Actions or Abilities." },
     ],
     actions: [
         {

@@ -5,9 +5,9 @@ export const phoenix: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start of your turn, you gain Shield 2, then if you are Bleeding, you heal.",
-        "When you Bleed, you heal and gain Shield 3.",
-        "You do not take damage from Burning Tokens.",
+        { desc: "At the start of your turn, you gain Shield 2, then if you are Bleeding, you heal." },
+        { desc: "When you Bleed, you heal and gain Shield 3." },
+        { desc: "You do not take damage from Burning Tokens." },
     ],
     actions: [
         {

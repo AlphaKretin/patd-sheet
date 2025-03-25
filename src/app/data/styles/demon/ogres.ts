@@ -5,8 +5,10 @@ export const ogres: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "Your Throws may target any number of enemies within range.",
-        "After you perform an Action that inflicted Forced Movement on any enemies, you deal 1 damage to each enemy moved by that Action.",
+        { desc: "Your Throws may target any number of enemies within range." },
+        {
+            desc: "After you perform an Action that inflicted Forced Movement on any enemies, you deal 1 damage to each enemy moved by that Action.",
+        },
     ],
     actions: [
         {

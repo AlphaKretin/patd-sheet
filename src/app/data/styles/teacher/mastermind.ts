@@ -5,8 +5,10 @@ export const mastermind: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "You cannot perform Actions. Instead, you pay their costs, but make your allies perform them for you.\nEach Action you take uses an ally's current location, range, and Stance bonuses as if they'd taken that Action themselves. You can only give Actions to allies you can see.",
-        "After each Action an ally performs during your turn, you may Move 1.",
+        {
+            desc: "You cannot perform Actions. Instead, you pay their costs, but make your allies perform them for you.\nEach Action you take uses an ally's current location, range, and Stance bonuses as if they'd taken that Action themselves. You can only give Actions to allies you can see.",
+        },
+        { desc: "After each Action an ally performs during your turn, you may Move 1." },
     ],
     actions: [
         {

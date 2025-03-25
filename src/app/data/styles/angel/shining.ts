@@ -5,9 +5,11 @@ export const shining: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start of your turn, Push 1 to all obstacles and enemies adjacent to you.",
-        "Enemies cannot use Action Movement, Free Movement, or teleports to enter a space adjacent to you.",
-        "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token takes 3 damage.",
+        { desc: "At the start of your turn, Push 1 to all obstacles and enemies adjacent to you." },
+        { desc: "Enemies cannot use Action Movement, Free Movement, or teleports to enter a space adjacent to you." },
+        {
+            desc: "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token takes 3 damage.",
+        },
     ],
     actions: [
         {

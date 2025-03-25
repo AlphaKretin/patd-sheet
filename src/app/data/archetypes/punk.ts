@@ -8,13 +8,19 @@ import { Archetype } from "../types/Archetype";
 export const punk: Archetype = {
     name: "Punk",
     focusedAbilities: [
-        "At the start of your turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3.",
+        {
+            desc: "At the start of your turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3.",
+        },
     ],
     fusedAbilities: [
-        "At the start of your turn, add X to your Action Pool.\nX is equal to half the damage on your current health bar, rounded up, to a maximum of 9. If your health bar is full, X = 2.",
+        {
+            desc: "At the start of your turn, add X to your Action Pool.\nX is equal to half the damage on your current health bar, rounded up, to a maximum of 9. If your health bar is full, X = 2.",
+        },
     ],
     franticAbilities: [
-        "At the start of this turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3.",
+        {
+            desc: "At the start of this turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3.",
+        },
     ],
     actions: [
         {

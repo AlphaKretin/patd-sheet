@@ -5,10 +5,10 @@ export const iron: Form = {
     greenDice: [6, 6],
     purpleDice: [8, 6],
     abilities: [
-        "You have Armor.",
-        "When your Armor triggers, you gain 1 Iron token.",
-        "When you gain Speed tokens, replace half of them (rounded down) with Iron tokens.",
-        "You may spend 1 Iron token to take 1 less damage from any source (even Reduced Hits).",
+        { desc: "You have Armor." },
+        { desc: "When your Armor triggers, you gain 1 Iron token." },
+        { desc: "When you gain Speed tokens, replace half of them (rounded down) with Iron tokens." },
+        { desc: "You may spend 1 Iron token to take 1 less damage from any source (even Reduced Hits)." },
     ],
     actions: [
         {

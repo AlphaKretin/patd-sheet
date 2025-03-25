@@ -5,8 +5,12 @@ export const puppets: Style = {
     minRange: 1,
     maxRange: 5,
     abilities: [
-        "After each space you move using Free Movement, you may Move 1 to one ally or obstacle within range. Obstacles you move with this Ability become Rubble.",
-        "At the end of your turn, each enemy that moved this turn takes 1 damage, and each ally that moved this turn heals 2.",
+        {
+            desc: "After each space you move using Free Movement, you may Move 1 to one ally or obstacle within range. Obstacles you move with this Ability become Rubble.",
+        },
+        {
+            desc: "At the end of your turn, each enemy that moved this turn takes 1 damage, and each ally that moved this turn heals 2.",
+        },
     ],
     actions: [
         {

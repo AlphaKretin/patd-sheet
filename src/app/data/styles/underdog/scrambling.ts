@@ -5,10 +5,10 @@ export const scrambling: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, you gain 1 Power token and 1 Iron token.",
-        "After you spend Power tokens, you gain 1 Speed token.",
-        "After you spend Iron tokens, you gain 1 Speed token.",
-        "When you discard Speed tokens at the end of each turn, you do not discard below 2 Speed tokens.",
+        { desc: "At the start of your turn, you gain 1 Power token and 1 Iron token." },
+        { desc: "After you spend Power tokens, you gain 1 Speed token." },
+        { desc: "After you spend Iron tokens, you gain 1 Speed token." },
+        { desc: "When you discard Speed tokens at the end of each turn, you do not discard below 2 Speed tokens." },
     ],
     actions: [
         {

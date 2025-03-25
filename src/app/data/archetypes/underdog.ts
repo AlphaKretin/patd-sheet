@@ -8,16 +8,18 @@ import { Archetype } from "../types/Archetype";
 export const underdog: Archetype = {
     name: "Underdog",
     focusedAbilities: [
-        "At the start of your turn, you gain 2 Luck Tokens.",
-        "The first two times you take damage each turn, you gain 1 Basic token of your choice.",
+        { desc: "At the start of your turn, you gain 2 Luck Tokens." },
+        { desc: "The first two times you take damage each turn, you gain 1 Basic token of your choice." },
     ],
     fusedAbilities: [
-        "At the start of your turn, you gain 1 Luck Token.",
-        "The first time you take damage each turn, you gain 1 Basic token of your choice.",
+        { desc: "At the start of your turn, you gain 1 Luck Token." },
+        { desc: "The first time you take damage each turn, you gain 1 Basic token of your choice." },
     ],
     franticAbilities: [
-        "At the start of this turn, you gain 2 Luck Tokens.",
-        "Until your next turn, the first two times you take damage each turn, you gain 1 Basic token of your choice.",
+        { desc: "At the start of this turn, you gain 2 Luck Tokens." },
+        {
+            desc: "Until your next turn, the first two times you take damage each turn, you gain 1 Basic token of your choice.",
+        },
     ],
     actions: [
         {
