@@ -246,26 +246,55 @@ export default function CharacterBuilder() {
         setCustomSkill({ ...customSkill, [field]: value || "" });
     };
 
+    type SaveData = {
+        selectedBuild: string | undefined;
+        heroType: HeroType | null;
+        selectedArchetypes: string[];
+        selectedStyles: string[];
+        selectedForms: string[];
+        currentStance: {
+            archetype: string;
+            style: string;
+            form: string;
+            index: number;
+        } | null;
+        franticArchetype: string | undefined;
+        franticStyle: string | undefined;
+        franticForm: string | undefined;
+        selectedSkills: string[];
+        customSkill: Skill;
+        characterLevel: number;
+        superMoves: string[];
+    };
+
     // Save current selections to localStorage
     const saveCharacter = () => {
         if (!characterName) {
             alert("Please enter a character name before saving.");
             return;
         }
-        const characterData = {
-            selectedBuild,
+
+        const characterData: SaveData = {
+            selectedBuild: selectedBuild?.name,
             heroType,
-            selectedArchetypes,
-            selectedStyles,
-            selectedForms,
-            currentStance,
-            franticArchetype,
-            franticStyle,
-            franticForm,
-            selectedSkills,
+            selectedArchetypes: selectedArchetypes.map((a) => a.name),
+            selectedStyles: selectedStyles.map((s) => s.name),
+            selectedForms: selectedForms.map((f) => f.name),
+            currentStance: currentStance
+                ? {
+                      archetype: currentStance.archetype.name,
+                      style: currentStance.style.name,
+                      form: currentStance.form.name,
+                      index: currentStance.index,
+                  }
+                : null,
+            franticArchetype: franticArchetype?.name,
+            franticStyle: franticStyle?.name,
+            franticForm: franticForm?.name,
+            selectedSkills: selectedSkills.map((s) => s.name),
             customSkill,
             characterLevel,
-            superMoves,
+            superMoves: superMoves.map((m) => m.name),
         };
         localStorage.setItem(characterName, JSON.stringify(characterData));
         setSavedCharacters(Object.keys(localStorage));
@@ -274,6 +303,10 @@ export default function CharacterBuilder() {
 
     // Load saved character selections from localStorage
     const loadCharacter = (name: string) => {
+        if (name === "") {
+            // returning to null entry
+            return;
+        }
         const characterData = localStorage.getItem(name);
         if (characterData) {
             const {
@@ -290,21 +323,51 @@ export default function CharacterBuilder() {
                 customSkill,
                 characterLevel,
                 superMoves,
-            } = JSON.parse(characterData);
+            }: SaveData = JSON.parse(characterData);
             if (name) setCharacterName(name);
-            if (selectedBuild) setBuild(selectedBuild);
+            if (selectedBuild) setBuild(builds.find((b) => b.name === selectedBuild) || null);
             if (heroType) setHeroType(heroType);
-            if (selectedArchetypes) setSelectedArchetypes(selectedArchetypes);
-            if (selectedStyles) setSelectedStyles(selectedStyles);
-            if (selectedForms) setSelectedForms(selectedForms);
-            if (currentStance) setCurrentStance(currentStance);
-            if (franticArchetype) setFranticArchetype(franticArchetype);
-            if (franticStyle) setFranticStyle(franticStyle);
-            if (franticForm) setFranticForm(franticForm);
-            if (selectedSkills) setSelectedSkills(selectedSkills);
+            if (selectedArchetypes)
+                setSelectedArchetypes(
+                    selectedArchetypes.map((a) => archetypes.find((ar) => ar.name === a) || nullArchetype)
+                );
+            const allStyles = [...archetypes.flatMap((a) => a.styles), ...freestyles];
+            if (selectedStyles)
+                setSelectedStyles(selectedStyles.map((s) => allStyles.find((st) => st.name === s) || nullStyle));
+            if (selectedForms)
+                setSelectedForms(selectedForms.map((f) => forms.find((fo) => fo.name === f) || nullForm));
+            if (currentStance) {
+                const currentArchetype = archetypes.find((ar) => ar.name === currentStance.archetype);
+                const currentStyle = allStyles.find((st) => st.name === currentStance.style);
+                const currentForm = forms.find((fo) => fo.name === currentStance.form);
+                if ((currentArchetype || currentStance.index > -1) && currentStyle && currentForm) {
+                    setCurrentStance({
+                        archetype: currentArchetype || nullArchetype,
+                        style: currentStyle,
+                        form: currentForm,
+                        index: currentStance.index,
+                    });
+                } else {
+                    setCurrentStance(null);
+                }
+            }
+            if (franticArchetype) setFranticArchetype(archetypes.find((ar) => ar.name === franticArchetype));
+            if (franticStyle) setFranticStyle(allStyles.find((st) => st.name === franticStyle));
+            if (franticForm) setFranticForm(forms.find((fo) => fo.name === franticForm));
+            if (selectedSkills)
+                setSelectedSkills(
+                    selectedSkills.map((s) => forms.map((f) => f.skill).find((sk) => sk.name === s) || nullSkill)
+                );
             if (customSkill) setCustomSkill(customSkill);
             if (characterLevel) setCharacterLevel(characterLevel);
-            if (superMoves) setSuperMoves(superMoves);
+            if (superMoves)
+                setSuperMoves(
+                    superMoves.map(
+                        (s) =>
+                            archetypes.flatMap((a) => [a.alphaSuper, a.deltaSuper]).find((sk) => sk.name === s) ||
+                            nullSuper
+                    )
+                );
         } else {
             alert("No saved data found for this character.");
         }
