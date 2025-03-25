@@ -168,6 +168,10 @@ export default function CharacterBuilder() {
 
     // Handle Stance selection
     const handleStanceSelection = (index: number) => {
+        if (index === -1) {
+            setCurrentStance(null);
+            return;
+        }
         setCurrentStance({
             archetype: selectedArchetypes[index], // unused but for Frantic
             style: selectedStyles[index],
@@ -964,7 +968,7 @@ export default function CharacterBuilder() {
                             onChange={(e) => handleStanceSelection(parseInt(e.target.value))}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                         >
-                            <option value="">Select Stance</option>
+                            <option value="-1">Select Stance</option>
                             {selectedStyles.map(
                                 (style, index) =>
                                     !isNull(style) &&
