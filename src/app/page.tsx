@@ -609,14 +609,18 @@ export default function CharacterBuilder() {
         return style && "bannedForm" in style;
     }
 
-    const allDice = currentStance
+    let allDice = currentStance
         ? isFreestyle(currentStance.style)
             ? currentStance.form.purpleDice.concat(currentStance.style.dice)
             : currentStance.form.purpleDice.concat(currentStance.form.greenDice)
         : null;
 
-    if (allDice && characterLevel in bonusDice) {
-        allDice.push(bonusDice[characterLevel]);
+    if (allDice) {
+        const abilityDice = combinedAbilities.flatMap((ability) => ability.bonusDice).filter(isDefined);
+        allDice = allDice.concat(abilityDice);
+        if (characterLevel in bonusDice) {
+            allDice.push(bonusDice[characterLevel]);
+        }
     }
 
     const diceList = allDice

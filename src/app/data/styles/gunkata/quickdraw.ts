@@ -5,7 +5,7 @@ export const quickdraw: Style = {
     minRange: 2,
     maxRange: 3,
     abilities: [
-        { desc: "Add d6 to your Action Dice." },
+        { desc: "Add d6 to your Action Dice.", bonusDice: [6] },
         {
             desc: "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token gains 2 Fatigue tokens.",
         },
