@@ -620,9 +620,13 @@ export default function CharacterBuilder() {
     }
 
     const diceList = allDice
-        ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort(
-              (a, b) => parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""))
-          )
+        ? [...allDice.map((die) => (die > 0 ? `d${die}` : `<${Math.abs(die)}>`))].sort((a, b) => {
+              const aIsPositive = a.startsWith("d");
+              const bIsPositive = b.startsWith("d");
+              if (aIsPositive && !bIsPositive) return -1;
+              if (!aIsPositive && bIsPositive) return 1;
+              return parseInt(b.replace(/\D/g, "")) - parseInt(a.replace(/\D/g, ""));
+          })
         : [];
 
     let maxRange = currentStance?.style.maxRange;
