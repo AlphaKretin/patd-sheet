@@ -276,6 +276,11 @@ button:hover,
     margin: 0.5rem 0;
 }
 
+.trigger-part {
+    font-weight: 500;
+    color: var(--primary);
+}
+
 .action-list {
     display: flex;
     flex-direction: column;
@@ -340,7 +345,7 @@ button:hover,
     position: relative;
 }
 
-.trigger-part {
+.cost-part {
     font-weight: 500;
     color: var(--primary);
 }

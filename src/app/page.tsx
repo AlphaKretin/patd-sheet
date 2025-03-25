@@ -1110,9 +1110,23 @@ export default function CharacterBuilder() {
                                                 ""
                                             )}
                                             <div className="ability-description">
-                                                {ability.desc.split("\n").map((line, i) => (
-                                                    <p key={i}>{line}</p>
-                                                ))}
+                                                {ability.desc.split("\n").map((line, i) => {
+                                                    const trigger = ability.trigger ? ability.trigger : "";
+                                                    const parts = line.split(new RegExp(`(${trigger})`, "gi"));
+                                                    return (
+                                                        <p key={i}>
+                                                            {parts.map((part, index) =>
+                                                                part.toLowerCase() === trigger.toLowerCase() ? (
+                                                                    <span key={index} className="trigger-part">
+                                                                        {part}
+                                                                    </span>
+                                                                ) : (
+                                                                    part
+                                                                )
+                                                            )}
+                                                        </p>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     ))}
@@ -1130,12 +1144,12 @@ export default function CharacterBuilder() {
                                             </div>
                                             <div className="action-description">
                                                 {action.desc.split("\n").map((line, i) => {
-                                                    const [trigger, ...rest] = line.split(":");
+                                                    const [cost, ...rest] = line.split(":");
                                                     return (
                                                         <div key={i} className="action-line">
                                                             {line.includes(":") ? (
                                                                 <>
-                                                                    <span className="trigger-part">{trigger}:</span>
+                                                                    <span className="cost-part">{cost}:</span>
                                                                     {rest.join(":")}
                                                                 </>
                                                             ) : (
