@@ -664,36 +664,33 @@ export default function CharacterBuilder() {
                 </select>
             </section>
 
-            {/* Build Selection */}
+            {/* Build and Hero Type Selection */}
             <section className="card">
-                <h2 className="text-2xl font-semibold mb-4">Build</h2>
-                <select
-                    value={selectedBuild?.name || ""}
-                    onChange={(e) => handleBuildChange(e.target.value)}
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                >
-                    <option value="">Select Build</option>
-                    {builds.map((build) => (
-                        <option key={build.name} value={build.name}>
-                            {build.name}
-                        </option>
-                    ))}
-                </select>
-            </section>
-
-            {/* Hero Type Selection */}
-            <section className="card">
-                <h2 className="text-2xl font-semibold mb-4">Hero Type</h2>
-                <select
-                    value={heroType || ""}
-                    onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
-                    className="w-full p-2 border rounded bg-gray-800 text-white"
-                >
-                    <option value="">Select Hero Type</option>
-                    <option value="Focused">Focused</option>
-                    <option value="Fused">Fused</option>
-                    <option value="Frantic">Frantic</option>
-                </select>
+                <h2 className="text-2xl font-semibold mb-4">Build and Hero Type</h2>
+                <div className="flex space-x-4">
+                    <select
+                        value={selectedBuild?.name || ""}
+                        onChange={(e) => handleBuildChange(e.target.value)}
+                        className="w-1/2 p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="">Select Build</option>
+                        {builds.map((build) => (
+                            <option key={build.name} value={build.name}>
+                                {build.name}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        value={heroType || ""}
+                        onChange={(e) => handleHeroTypeChange(e.target.value as HeroType)}
+                        className="w-1/2 p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="">Select Hero Type</option>
+                        <option value="Focused">Focused</option>
+                        <option value="Fused">Fused</option>
+                        <option value="Frantic">Frantic</option>
+                    </select>
+                </div>
             </section>
 
             {/* Archetype Selection */}
