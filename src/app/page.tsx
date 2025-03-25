@@ -1038,13 +1038,13 @@ export default function CharacterBuilder() {
                         <label className="block text-sm font-medium mb-2">Custom Skill</label>
                         <input
                             type="text"
-                            value={customSkill.name}
+                            value={customSkill.name || ""}
                             onChange={(e) => handleCustomSkillChange("name", e.target.value)}
                             className="w-full p-2 border rounded bg-gray-800 text-white mb-2"
                             placeholder="Enter custom skill name"
                         />
                         <textarea
-                            value={customSkill.desc}
+                            value={customSkill.desc || ""}
                             onChange={(e) => handleCustomSkillChange("desc", e.target.value)}
                             className="w-full p-2 border rounded bg-gray-800 text-white"
                             placeholder="Enter custom skill description"
