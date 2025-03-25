@@ -31,13 +31,7 @@
             "desc": "Teleport 3, then deal 2 damage to an enemy within range."
         }
     ],
-    "styles": [
-        "dark",
-        "ogre's",
-        "slasher",
-        "vampire",
-        "zombie"
-    ],
+    "styles": ["dark", "ogres", "slasher", "vampire", "zombie"],
     "alphaSuper": {
         "name": "Unending Despair",
         "desc": "Target an adjacent enemy. Give them 4 Burning tokens, 3 Fatigue tokens, and 2 Weakness tokens. You gain 2 Iron tokens, 2 Power tokens, 2 Speed tokens, and 2 Chaos tokens."

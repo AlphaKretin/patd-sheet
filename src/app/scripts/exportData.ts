@@ -1,19 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
-import { archetypes } from "../data/archetypes";
+import { archetypes, SavableArchetype } from "../data/archetypes";
 import { forms } from "../data/forms";
 import { freestyles } from "../data/freestyles";
-import { Archetype } from "../data/types/Archetype";
 import { Form } from "../data/types/Form";
 import { Style } from "../data/types/Style";
 
 const outputDir = path.join(__dirname, "output");
 if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir);
-}
-
-interface SavableArchetype extends Omit<Archetype, "styles"> {
-    styles: string[];
 }
 
 function exportData(folder: string, data: Array<SavableArchetype | Style | Form>) {

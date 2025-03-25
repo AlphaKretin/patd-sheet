@@ -31,13 +31,7 @@
             "desc": "Choose one: Teleport 3; -or- Push 2 and deal 2 damage to an enemy within range; -or- you gain temporary Armor.\nUsable once per turn."
         }
     ],
-    "styles": [
-        "collateral",
-        "distracting",
-        "lucky",
-        "misfortune's",
-        "scrambling"
-    ],
+    "styles": ["collateral", "distracting", "lucky", "misfortunes", "scrambling"],
     "alphaSuper": {
         "name": "Lucky Hit",
         "desc": "Deal 4 damage to an adjacent enemy. Then, that enemy discards all Basic tokens they hold, discards all Shields they hold, and cannot have Armor or Shields for the rest of this Round."

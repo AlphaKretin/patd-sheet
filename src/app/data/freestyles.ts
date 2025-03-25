@@ -1,15 +1,15 @@
-import { chaotic } from "./styles/free/chaotic";
-import { circular } from "./styles/free/circular";
-import { dangerous } from "./styles/free/dangerous";
-import { ego } from "./styles/free/ego";
-import { eternal } from "./styles/free/eternal";
-import { feral } from "./styles/free/feral";
-import { grave } from "./styles/free/grave";
-import { mountainous } from "./styles/free/mountainous";
-import { mythical } from "./styles/free/mythical";
-import { persistent } from "./styles/free/persistent";
-import { secret } from "./styles/free/secret";
-import { silent } from "./styles/free/silent";
+import chaotic from "public/data/styles/free/chaotic.json";
+import circular from "public/data/styles/free/circular.json";
+import dangerous from "public/data/styles/free/dangerous.json";
+import ego from "public/data/styles/free/ego.json";
+import eternal from "public/data/styles/free/eternal.json";
+import feral from "public/data/styles/free/feral.json";
+import grave from "public/data/styles/free/grave.json";
+import mountainous from "public/data/styles/free/mountainous.json";
+import mythical from "public/data/styles/free/mythical.json";
+import persistent from "public/data/styles/free/persistent.json";
+import secret from "public/data/styles/free/secret.json";
+import silent from "public/data/styles/free/silent.json";
 import { Freestyle } from "./types/Style";
 
 export const freestyles: Freestyle[] = [
