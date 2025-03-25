@@ -1026,7 +1026,10 @@ export default function CharacterBuilder() {
                                         );
                                     })}
                                 </select>
-                                <p className="text-sm text-gray-400 mt-2">{selectedSkills[index].desc || ""}</p>
+                                <textarea
+                                    value={selectedSkills[index].desc || ""}
+                                    className="w-full p-2 border rounded bg-gray-800 text-white"
+                                />
                             </div>
                         ))}
                     </div>
