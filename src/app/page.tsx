@@ -23,6 +23,8 @@ import { Skill } from "./data/types/Skill";
 import { Freestyle, Style } from "./data/types/Style";
 import { SuperMove } from "./data/types/Super";
 
+type SortOption = "Source (Default)" | "Name" | "Description/Cost";
+
 const DEFAULT_STANCE_COUNT = 3;
 
 function isNull(o: Archetype | Style | Form | Skill | SuperMove) {
@@ -59,7 +61,7 @@ export default function CharacterBuilder() {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [characterLevel, setCharacterLevel] = useState<number>(1);
     const [superMoves, setSuperMoves] = useState<SuperMove[]>(Array(3).fill(nullSuper));
-    const [customSort, setCustomSort] = useState<boolean>(true);
+    const [sortOption, setSortOption] = useState<SortOption>("Source (Default)");
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -244,6 +246,10 @@ export default function CharacterBuilder() {
 
     const handleCustomSkillChange = (field: "name" | "desc", value: string) => {
         setCustomSkill({ ...customSkill, [field]: value || "" });
+    };
+
+    const handleSortOptionChange = (option: SortOption) => {
+        setSortOption(option);
     };
 
     type SaveData = {
@@ -538,10 +544,26 @@ export default function CharacterBuilder() {
         ...(currentStance ? [...currentStance.style.abilities] : []),
     ];
 
-    // if user enables, sort by text to put triggers near each other
-    // otherwise, will remain in its order, based on the source of the ability
-    if (customSort) {
-        combinedAbilities.sort();
+    // Sort abilities based on selected sort option
+    if (sortOption === "Name") {
+        combinedAbilities.sort((a, b) => {
+            // both defined
+            if (!!a.name && !!b.name) {
+                return a.name.localeCompare(b.name);
+            }
+            // a undefined, should sort to back
+            if (!a.name && !!b.name) {
+                return -1;
+            }
+            // b undefined, should sort to back
+            if (!!a.name && !b.name) {
+                return 1;
+            }
+            // neither defined, leave unchanged
+            return 0;
+        });
+    } else if (sortOption === "Description/Cost") {
+        combinedAbilities.sort((a, b) => a.desc.localeCompare(b.desc));
     }
 
     const archetypeActions =
@@ -570,13 +592,14 @@ export default function CharacterBuilder() {
         ...archetypeActions,
         ...(currentStance ? [...currentStance.style.actions, ...currentStance.form.actions] : []),
         ...superMoveActions,
-    ].sort((a, b) => {
-        if (customSort) {
-            if (a.cost < b.cost) return -1;
-            if (a.cost > b.cost) return 1;
-        }
-        return 0;
-    });
+    ];
+
+    // Sort actions based on selected sort option
+    if (sortOption === "Name") {
+        combinedActions.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "Description/Cost") {
+        combinedActions.sort((a, b) => a.cost.localeCompare(b.cost));
+    }
 
     function isFreestyle(style: Style): style is Freestyle {
         return style && "bannedForm" in style;
@@ -639,10 +662,6 @@ export default function CharacterBuilder() {
         }
         return `Fused Archetype 2`;
     }
-
-    const handleSortToggle = () => {
-        setCustomSort(!customSort);
-    };
 
     return (
         <div className="container mx-auto p-4 max-w-4xl relative">
@@ -954,10 +973,16 @@ export default function CharacterBuilder() {
                             )}
                         </select>
                     )}
-                    <label className="block text-sm font-medium mb-2">
-                        <input type="checkbox" checked={customSort} onChange={handleSortToggle} className="mr-2" />
-                        Custom Sorting
-                    </label>
+                    <label className="block text-sm font-medium mb-2">Sorting</label>
+                    <select
+                        value={sortOption}
+                        onChange={(e) => handleSortOptionChange(e.target.value as SortOption)}
+                        className="w-full p-2 border rounded bg-gray-800 text-white"
+                    >
+                        <option value="Source (Default)">Source (Default)</option>
+                        <option value="Name">Name</option>
+                        <option value="Description/Cost">Description/Cost</option>
+                    </select>
                 </section>
             )}
 
@@ -1037,39 +1062,31 @@ export default function CharacterBuilder() {
                     <div className="actions-section">
                         <h3 className="text-xl font-semibold mb-4">Actions</h3>
                         <div className="action-list">
-                            {combinedActions
-                                .sort((a, b) => {
-                                    if (customSort) {
-                                        if (a.cost < b.cost) return -1;
-                                        if (a.cost > b.cost) return 1;
-                                    }
-                                    return 0;
-                                })
-                                .map((action, index) => (
-                                    <div key={index} className="action-card">
-                                        <div className="action-header">
-                                            <span className="action-cost">{action.cost}:</span>
-                                            <span className="action-name">{action.name}</span>
-                                        </div>
-                                        <div className="action-description">
-                                            {action.desc.split("\n").map((line, i) => {
-                                                const [trigger, ...rest] = line.split(":");
-                                                return (
-                                                    <div key={i} className="action-line">
-                                                        {line.includes(":") ? (
-                                                            <>
-                                                                <span className="trigger-part">{trigger}:</span>
-                                                                {rest.join(":")}
-                                                            </>
-                                                        ) : (
-                                                            line
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
+                            {combinedActions.map((action, index) => (
+                                <div key={index} className="action-card">
+                                    <div className="action-header">
+                                        <span className="action-cost">{action.cost}:</span>
+                                        <span className="action-name">{action.name}</span>
                                     </div>
-                                ))}
+                                    <div className="action-description">
+                                        {action.desc.split("\n").map((line, i) => {
+                                            const [trigger, ...rest] = line.split(":");
+                                            return (
+                                                <div key={i} className="action-line">
+                                                    {line.includes(":") ? (
+                                                        <>
+                                                            <span className="trigger-part">{trigger}:</span>
+                                                            {rest.join(":")}
+                                                        </>
+                                                    ) : (
+                                                        line
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
