@@ -5,7 +5,9 @@ export const explosion: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After you perform an Action that destroyed any obstacles, deal 1 damage to all enemies on or adjacent to any of those obstacles.",
+        {
+            desc: "After you perform an Action that destroyed any obstacles, deal 1 damage to all enemies on or adjacent to any of those obstacles.",
+        },
     ],
     actions: [
         {

@@ -8,13 +8,19 @@ import { Archetype } from "../types/Archetype";
 export const gunkata: Archetype = {
     name: "Gunkata",
     focusedAbilities: [
-        "At the start and end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+        {
+            desc: "At the start and end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+        },
     ],
     fusedAbilities: [
-        "At the start -or- end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+        {
+            desc: "At the start -or- end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+        },
     ],
     franticAbilities: [
-        "At the start and end of this turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+        {
+            desc: "At the start and end of this turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+        },
     ],
     actions: [
         {

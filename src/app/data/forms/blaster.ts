@@ -5,8 +5,8 @@ export const blaster: Form = {
     greenDice: [8, 8],
     purpleDice: [8],
     abilities: [
-        "Your Actions may apply to one extra target within range.",
-        "When you add Blaster Form to as Style, increase that Style's maximum range by 1.",
+        { desc: "Your Actions may apply to one extra target within range." },
+        { desc: "When you add Blaster Form to as Style, increase that Style's maximum range by 1." },
     ],
     actions: [
         {

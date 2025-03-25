@@ -8,13 +8,19 @@ import { Archetype } from "../types/Archetype";
 export const cyborg: Archetype = {
     name: "Cyborg",
     focusedAbilities: [
-        "At the start of your turn, you gain 3 Basic Tokens of one type, 2 Basic tokens of a different type, and 1 Basic token of the final type.",
+        {
+            desc: "At the start of your turn, you gain 3 Basic Tokens of one type, 2 Basic tokens of a different type, and 1 Basic token of the final type.",
+        },
     ],
     fusedAbilities: [
-        "At the start of your turn, you gain 2 Basic Tokens of one type, and 1 Basic token of each other type.",
+        {
+            desc: "At the start of your turn, you gain 2 Basic Tokens of one type, and 1 Basic token of each other type.",
+        },
     ],
     franticAbilities: [
-        "At the start of this turn, you gain 3 Basic Tokens of one type, 2 Basic tokens of a different type, and 1 Basic token of the final type.",
+        {
+            desc: "At the start of this turn, you gain 3 Basic Tokens of one type, 2 Basic tokens of a different type, and 1 Basic token of the final type.",
+        },
     ],
     actions: [
         {

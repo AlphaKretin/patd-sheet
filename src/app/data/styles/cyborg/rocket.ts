@@ -5,8 +5,8 @@ export const rocket: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "After you Push, you may Teleport to an empty space adjacent to the target of that Push.",
-        "At the start of your turn, you may Push 3 to an obstacle, ally, or enemy within range.",
+        { desc: "After you Push, you may Teleport to an empty space adjacent to the target of that Push." },
+        { desc: "At the start of your turn, you may Push 3 to an obstacle, ally, or enemy within range." },
     ],
     actions: [
         {

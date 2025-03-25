@@ -5,8 +5,10 @@ export const vigilance: Form = {
     greenDice: [-4, -2, -1],
     purpleDice: [-5, -3],
     abilities: [
-        "At the start of your turn, discard up to 2 Status tokens you hold; then, if you are Bleeding, you heal.",
-        "At the end of your turn, choose up to two enemies within range and give them each 1 Weakness token.",
+        {
+            desc: "At the start of your turn, discard up to 2 Status tokens you hold; then, if you are Bleeding, you heal.",
+        },
+        { desc: "At the end of your turn, choose up to two enemies within range and give them each 1 Weakness token." },
     ],
     actions: [
         {

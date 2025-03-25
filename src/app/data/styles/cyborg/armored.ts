@@ -5,8 +5,12 @@ export const armored: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After you spend Iron tokens or trigger your Armor, you heal 1. This can heal a maximum of 3 HP per turn.",
-        "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token gains 2 Weakness tokens.",
+        {
+            desc: "After you spend Iron tokens or trigger your Armor, you heal 1. This can heal a maximum of 3 HP per turn.",
+        },
+        {
+            desc: "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token gains 2 Weakness tokens.",
+        },
     ],
     actions: [
         {

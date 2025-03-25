@@ -7,8 +7,10 @@ export const mythical: Freestyle = {
     minRange: 2,
     maxRange: 3,
     abilities: [
-        "Whenever you roll a 3 or less on the mythical d12 , re-roll it.",
-        "After you roll your Action Dice during your turn, you may re-roll one die. Keep the new result, even if it is worse.",
+        { desc: "Whenever you roll a 3 or less on the mythical d12 , re-roll it." },
+        {
+            desc: "After you roll your Action Dice during your turn, you may re-roll one die. Keep the new result, even if it is worse.",
+        },
     ],
     actions: [
         {

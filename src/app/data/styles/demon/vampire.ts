@@ -5,8 +5,12 @@ export const vampire: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "After you deal damage with an Action or Ability, you heal 1. This Ability cannot heal you more than the Bleed Value in a single turn.",
-        "After you give Weakness tokens to an enemy, you gain 1 Power token, to a maximum of 4 Power tokens per turn.",
+        {
+            desc: "After you deal damage with an Action or Ability, you heal 1. This Ability cannot heal you more than the Bleed Value in a single turn.",
+        },
+        {
+            desc: "After you give Weakness tokens to an enemy, you gain 1 Power token, to a maximum of 4 Power tokens per turn.",
+        },
     ],
     actions: [
         {

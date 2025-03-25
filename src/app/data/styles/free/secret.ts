@@ -7,7 +7,9 @@ export const secret: Freestyle = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, add 6 to your Action Pool, gain Shield 4, and you gain +3 maximum Range until the start of your next turn.\nThis Ability triggers only once per fight.\nThis Ability cannot trigger on Round 1.",
+        {
+            desc: "At the start of your turn, add 6 to your Action Pool, gain Shield 4, and you gain +3 maximum Range until the start of your next turn.\nThis Ability triggers only once per fight.\nThis Ability cannot trigger on Round 1.",
+        },
     ],
     actions: [
         {

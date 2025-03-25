@@ -5,7 +5,9 @@ export const crosshair: Style = {
     minRange: 4,
     maxRange: 5,
     abilities: [
-        "Whenever you deal 3 or more damage to an enemy in a single hit, they gain 1 Weakness token and you gain 1 Power token.",
+        {
+            desc: "Whenever you deal 3 or more damage to an enemy in a single hit, they gain 1 Weakness token and you gain 1 Power token.",
+        },
     ],
     actions: [
         {

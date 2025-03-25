@@ -5,10 +5,14 @@ export const weightless: Style = {
     minRange: 0,
     maxRange: 1,
     abilities: [
-        "You do not take Fall Damage.",
-        "Rubble does not give you Fatigue.",
-        "All spaces are Empty spaces to you. You can move into and share a space with Copies, Walls, and other units.",
-        "All spaces cost 1 Speed token to enter using Free Movement. Ignore all additional Speed token costs, from leaving Pits or moving diagonally or any other source.",
+        { desc: "You do not take Fall Damage." },
+        { desc: "Rubble does not give you Fatigue." },
+        {
+            desc: "All spaces are Empty spaces to you. You can move into and share a space with Copies, Walls, and other units.",
+        },
+        {
+            desc: "All spaces cost 1 Speed token to enter using Free Movement. Ignore all additional Speed token costs, from leaving Pits or moving diagonally or any other source.",
+        },
     ],
     actions: [
         {

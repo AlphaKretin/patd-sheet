@@ -5,9 +5,11 @@ export const reversal: Form = {
     greenDice: [10],
     purpleDice: [10],
     abilities: [
-        "You have Armor.",
-        "Unblockable by Control Tokens and Iron Tokens.",
-        "The first time your Armor triggers each turn, you may Teleport 2. Then, if your Action Pool is empty, add a 3 to your Action Pool.",
+        { desc: "You have Armor." },
+        { desc: "Unblockable by Control Tokens and Iron Tokens." },
+        {
+            desc: "The first time your Armor triggers each turn, you may Teleport 2. Then, if your Action Pool is empty, add a 3 to your Action Pool.",
+        },
     ],
     actions: [
         {

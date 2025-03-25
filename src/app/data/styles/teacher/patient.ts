@@ -5,9 +5,11 @@ export const patient: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "You have Armor.",
-        "At the end of each allied turn, you gain 1 Iron token.",
-        "After you use Armor or Iron tokens to reduce the damage you would take, one ally you can see other than yourself may heal 1.",
+        { desc: "You have Armor." },
+        { desc: "At the end of each allied turn, you gain 1 Iron token." },
+        {
+            desc: "After you use Armor or Iron tokens to reduce the damage you would take, one ally you can see other than yourself may heal 1.",
+        },
     ],
     actions: [
         {

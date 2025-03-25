@@ -7,8 +7,10 @@ export const dangerous: Freestyle = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start and end of your turn, you gain Shield 2.",
-        "After your Shield absorbs from an enemy Action, you deal 1 damage to them. If it broke your Shield, you deal 2 damage instead.",
+        { desc: "At the start and end of your turn, you gain Shield 2." },
+        {
+            desc: "After your Shield absorbs from an enemy Action, you deal 1 damage to them. If it broke your Shield, you deal 2 damage instead.",
+        },
     ],
     actions: [
         {

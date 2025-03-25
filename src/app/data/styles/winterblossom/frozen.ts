@@ -5,8 +5,8 @@ export const frozen: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start of your turn, you gain 2 Iron tokens.",
-        "After you Reduce a Hit, give 1 Weakness token to your attacker.",
+        { desc: "At the start of your turn, you gain 2 Iron tokens." },
+        { desc: "After you Reduce a Hit, give 1 Weakness token to your attacker." },
     ],
     actions: [
         {

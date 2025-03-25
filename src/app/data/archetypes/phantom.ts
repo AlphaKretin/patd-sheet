@@ -7,15 +7,9 @@ import { Archetype } from "../types/Archetype";
 
 export const phantom: Archetype = {
     name: "Phantom",
-    focusedAbilities: [
-        "At the start of your turn, you gain 4 Poltergeist Tokens.",
-    ],
-    fusedAbilities: [
-        "At the start of your turn, you gain 2 Poltergeist Tokens.",
-    ],
-    franticAbilities: [
-        "At the start of this turn, you gain 4 Poltergeist Tokens.",
-    ],
+    focusedAbilities: [{ desc: "At the start of your turn, you gain 4 Poltergeist Tokens." }],
+    fusedAbilities: [{ desc: "At the start of your turn, you gain 2 Poltergeist Tokens." }],
+    franticAbilities: [{ desc: "At the start of this turn, you gain 4 Poltergeist Tokens." }],
     actions: [
         {
             name: "Telekinesis",

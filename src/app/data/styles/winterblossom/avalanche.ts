@@ -5,8 +5,8 @@ export const avalanche: Style = {
     minRange: 2,
     maxRange: 3,
     abilities: [
-        "At the start of your turn, you may place up to three Walls into empty adjacent spaces.",
-        "You can see and target enemies through Walls.",
+        { desc: "At the start of your turn, you may place up to three Walls into empty adjacent spaces." },
+        { desc: "You can see and target enemies through Walls." },
     ],
     actions: [
         {

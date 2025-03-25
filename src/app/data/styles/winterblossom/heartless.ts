@@ -5,8 +5,10 @@ export const heartless: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "Whenever you give Tokens to an enemy, you heal 1. This Ability cannot heal you more than the Bleed Value in a single turn.",
-        "Your Actions and Abilities are Unblockable by Shields.",
+        {
+            desc: "Whenever you give Tokens to an enemy, you heal 1. This Ability cannot heal you more than the Bleed Value in a single turn.",
+        },
+        { desc: "Your Actions and Abilities are Unblockable by Shields." },
     ],
     actions: [
         {

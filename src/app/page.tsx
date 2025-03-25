@@ -1017,7 +1017,7 @@ export default function CharacterBuilder() {
                         <div className="ability-list">
                             {combinedAbilities.map((ability, index) => (
                                 <div key={index} className="ability-item">
-                                    {ability.split("\n").map((line, i) => (
+                                    {ability.desc.split("\n").map((line, i) => (
                                         <p key={i}>{line}</p>
                                     ))}
                                 </div>

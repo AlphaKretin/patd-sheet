@@ -5,8 +5,8 @@ export const inferno: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "You have Armor against damage from Burning tokens.",
-        "After you Reduce a Hit, give 1 Burning token to your attacker.",
+        { desc: "You have Armor against damage from Burning tokens." },
+        { desc: "After you Reduce a Hit, give 1 Burning token to your attacker." },
     ],
     actions: [
         {

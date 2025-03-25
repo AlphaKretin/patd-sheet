@@ -5,8 +5,8 @@ export const unbreakable: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "Your allies within range may spend your tokens",
-        "At the start and end of your turn, give 1 Iron token to each ally within range.",
+        { desc: "Your allies within range may spend your tokens" },
+        { desc: "At the start and end of your turn, give 1 Iron token to each ally within range." },
     ],
     actions: [
         {

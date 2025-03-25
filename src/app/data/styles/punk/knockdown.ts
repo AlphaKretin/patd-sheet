@@ -5,7 +5,9 @@ export const knockdown: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "After you take damage from an Action, you deal 1 damage to each enemy that dealt damage to you. If that enemy holds your Challenge, you deal 2 damage to them instead.",
+        {
+            desc: "After you take damage from an Action, you deal 1 damage to each enemy that dealt damage to you. If that enemy holds your Challenge, you deal 2 damage to them instead.",
+        },
     ],
     actions: [
         {

@@ -5,8 +5,12 @@ export const training: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start of your turn, you gain 1 Training Token, then one ally you can see (other than yourself) heals 2 and gains 2 Power tokens.",
-        "After you spend a Training Token, give 1 Training Token to an ally you can see, other than yourself.",
+        {
+            desc: "At the start of your turn, you gain 1 Training Token, then one ally you can see (other than yourself) heals 2 and gains 2 Power tokens.",
+        },
+        {
+            desc: "After you spend a Training Token, give 1 Training Token to an ally you can see, other than yourself.",
+        },
     ],
     actions: [
         {

@@ -5,9 +5,11 @@ export const aura: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "At the start of your turn, you gain Shield 3.",
-        "After an enemy within range damages or breaks an ally’s Shield, or has their own Shield damaged or broken, you may Push 1 or Pull 1 to that enemy.",
-        "After a Shield within range breaks, you gain 1 Power token.",
+        { desc: "At the start of your turn, you gain Shield 3." },
+        {
+            desc: "After an enemy within range damages or breaks an ally’s Shield, or has their own Shield damaged or broken, you may Push 1 or Pull 1 to that enemy.",
+        },
+        { desc: "After a Shield within range breaks, you gain 1 Power token." },
     ],
     actions: [
         {

@@ -5,8 +5,8 @@ export const machine: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, you gain 1 Iron token.",
-        "You may spend your Iron Tokens as if they were Power tokens or Speed tokens.",
+        { desc: "At the start of your turn, you gain 1 Iron token." },
+        { desc: "You may spend your Iron Tokens as if they were Power tokens or Speed tokens." },
     ],
     actions: [
         {

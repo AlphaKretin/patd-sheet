@@ -5,8 +5,8 @@ export const dark: Style = {
     minRange: 2,
     maxRange: 4,
     abilities: [
-        "You can see and target enemies through Fog.",
-        "At the end of your turn, place a Fog obstacle into your space.",
+        { desc: "You can see and target enemies through Fog." },
+        { desc: "At the end of your turn, place a Fog obstacle into your space." },
     ],
     actions: [
         {

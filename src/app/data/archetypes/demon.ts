@@ -8,16 +8,22 @@ import { Archetype } from "../types/Archetype";
 export const demon: Archetype = {
     name: "Demon",
     focusedAbilities: [
-        "At the end of your turn, you gain 2 Chaos Tokens.",
-        "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+        { desc: "At the end of your turn, you gain 2 Chaos Tokens." },
+        {
+            desc: "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+        },
     ],
     fusedAbilities: [
-        "At the end of your turn, you gain 1 Chaos Token.",
-        "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+        { desc: "At the end of your turn, you gain 1 Chaos Token." },
+        {
+            desc: "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+        },
     ],
     franticAbilities: [
-        "At the end of this turn, you gain 2 Chaos Tokens.",
-        "Until your next turn, at the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+        { desc: "At the end of this turn, you gain 2 Chaos Tokens." },
+        {
+            desc: "Until your next turn, at the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+        },
     ],
     actions: [
         {

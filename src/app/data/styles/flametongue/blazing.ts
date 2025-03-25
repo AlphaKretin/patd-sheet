@@ -4,9 +4,7 @@ export const blazing: Style = {
     name: "Blazing",
     minRange: 1,
     maxRange: 3,
-    abilities: [
-        "At the start of each allied turn, give 1 Burning token to each enemy within range.",
-    ],
+    abilities: [{ desc: "At the start of each allied turn, give 1 Burning token to each enemy within range." }],
     actions: [
         {
             name: "Blazing Speed",

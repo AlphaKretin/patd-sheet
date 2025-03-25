@@ -8,13 +8,13 @@ import { Archetype } from "../types/Archetype";
 export const flametongue: Archetype = {
     name: "Flametongue",
     focusedAbilities: [
-        "Three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
+        { desc: "Three times per turn, after you deal damage to an enemy, give them 2 Burning tokens." },
     ],
-    fusedAbilities: [
-        "Three times per turn, after you deal damage to an enemy, give them 1 Burning token.",
-    ],
+    fusedAbilities: [{ desc: "Three times per turn, after you deal damage to an enemy, give them 1 Burning token." }],
     franticAbilities: [
-        "Until your next turn, three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
+        {
+            desc: "Until your next turn, three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
+        },
     ],
     actions: [
         {

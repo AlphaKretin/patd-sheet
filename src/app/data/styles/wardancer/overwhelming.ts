@@ -5,9 +5,11 @@ export const overwhelming: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "Your Actions and Abilities are Unblockable by Armor.",
-        "At the start of your turn, you gain 2 Power tokens.",
-        "After an enemy deals damage to you with an Action, you may spend a Power token to deal 1 damage and Push 1 to your attacker.",
+        { desc: "Your Actions and Abilities are Unblockable by Armor." },
+        { desc: "At the start of your turn, you gain 2 Power tokens." },
+        {
+            desc: "After an enemy deals damage to you with an Action, you may spend a Power token to deal 1 damage and Push 1 to your attacker.",
+        },
     ],
     actions: [
         {

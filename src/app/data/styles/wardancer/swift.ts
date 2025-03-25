@@ -5,8 +5,8 @@ export const swift: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "Before each Reactive Action you perform, you may Move 1.",
-        "After each Action you perform, you gain 1 Speed token.",
+        { desc: "Before each Reactive Action you perform, you may Move 1." },
+        { desc: "After each Action you perform, you gain 1 Speed token." },
     ],
     actions: [
         {

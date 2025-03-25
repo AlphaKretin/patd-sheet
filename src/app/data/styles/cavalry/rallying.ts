@@ -5,8 +5,10 @@ export const rallying: Style = {
     minRange: 1,
     maxRange: 3,
     abilities: [
-        "At the start of each ally's turn, if they are within Range of you or your Copies, they may heal.",
-        "At the end of your turn, choose an ally you can see other than yourself. They heal and gain Shield 2.",
+        { desc: "At the start of each ally's turn, if they are within Range of you or your Copies, they may heal." },
+        {
+            desc: "At the end of your turn, choose an ally you can see other than yourself. They heal and gain Shield 2.",
+        },
     ],
     actions: [
         {

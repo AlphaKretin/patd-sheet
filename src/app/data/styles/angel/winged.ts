@@ -5,10 +5,10 @@ export const winged: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "You do not take Fall Damage.",
-        "Rubble does not give you Fatigue tokens",
-        "At the end of every turn, you may move 1 space.",
-        "After you give an enemy your Challenge token, you may Move 2.",
+        { desc: "You do not take Fall Damage." },
+        { desc: "Rubble does not give you Fatigue tokens" },
+        { desc: "At the end of every turn, you may move 1 space." },
+        { desc: "After you give an enemy your Challenge token, you may Move 2." },
     ],
     actions: [
         {

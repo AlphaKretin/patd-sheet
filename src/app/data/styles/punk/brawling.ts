@@ -5,8 +5,8 @@ export const brawling: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the end of each turn you took damage, you gain Shield 2.",
-        "After your Shield absorbs, you gain 1 Power token.",
+        { desc: "At the end of each turn you took damage, you gain Shield 2." },
+        { desc: "After your Shield absorbs, you gain 1 Power token." },
     ],
     actions: [
         {

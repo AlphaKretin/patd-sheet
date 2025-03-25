@@ -5,9 +5,11 @@ export const onetwo: Form = {
     greenDice: [6, 4],
     purpleDice: [6, 4],
     abilities: [
-        "Before each Action you perform, you may Move 1.",
-        "After your first Action on your turn, Move 1, then deal 2 damage to an enemy within range.",
-        "At the end of each turn where you performed any Actions, you may deal 1 damage to an enemy within range, then Move 2.",
+        { desc: "Before each Action you perform, you may Move 1." },
+        { desc: "After your first Action on your turn, Move 1, then deal 2 damage to an enemy within range." },
+        {
+            desc: "At the end of each turn where you performed any Actions, you may deal 1 damage to an enemy within range, then Move 2.",
+        },
     ],
     actions: [
         {

@@ -5,8 +5,10 @@ export const vortex: Style = {
     minRange: 1,
     maxRange: 4,
     abilities: [
-        "You do not take damage from Pits.",
-        "When you are standing on a Pit, every other Pit counts as an adjacent space you can move to. Your range is still calculated only from the space you are currently standing in.",
+        { desc: "You do not take damage from Pits." },
+        {
+            desc: "When you are standing on a Pit, every other Pit counts as an adjacent space you can move to. Your range is still calculated only from the space you are currently standing in.",
+        },
     ],
     actions: [
         {

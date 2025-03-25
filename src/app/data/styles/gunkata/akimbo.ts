@@ -5,8 +5,8 @@ export const akimbo: Style = {
     minRange: 2,
     maxRange: 4,
     abilities: [
-        "At the start and end of your turn, Move 2.",
-        "After each Action you perform, Move 1.",
+        { desc: "At the start and end of your turn, Move 2." },
+        { desc: "After each Action you perform, Move 1." },
     ],
     actions: [
         {

@@ -5,7 +5,9 @@ export const pressure: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start and end of your turn, each enemy within range must pay 1 HP, then gain 1 Weakness token.",
+        {
+            desc: "At the start and end of your turn, each enemy within range must pay 1 HP, then gain 1 Weakness token.",
+        },
     ],
     actions: [
         {

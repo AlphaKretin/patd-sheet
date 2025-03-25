@@ -7,9 +7,9 @@ import { Archetype } from "../types/Archetype";
 
 export const teacher: Archetype = {
     name: "Teacher",
-    focusedAbilities: ["At the start of your turn, you gain 2 Mentor Tokens."],
-    fusedAbilities: ["At the start of your turn, you gain 1 Mentor Token."],
-    franticAbilities: ["At the start of this turn, you gain 2 Mentor Tokens."],
+    focusedAbilities: [{ desc: "At the start of your turn, you gain 2 Mentor Tokens." }],
+    fusedAbilities: [{ desc: "At the start of your turn, you gain 1 Mentor Token." }],
+    franticAbilities: [{ desc: "At the start of this turn, you gain 2 Mentor Tokens." }],
     actions: [
         {
             name: "Remember Your Training",

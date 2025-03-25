@@ -5,8 +5,8 @@ export const charging: Style = {
     minRange: 1,
     maxRange: 1,
     abilities: [
-        "At the start of your turn, you gain temporary Armor and may Move up to 2.",
-        "At the start of each ally's turn, that ally may Move up to 2.",
+        { desc: "At the start of your turn, you gain temporary Armor and may Move up to 2." },
+        { desc: "At the start of each ally's turn, that ally may Move up to 2." },
     ],
     actions: [
         {

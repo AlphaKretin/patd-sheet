@@ -5,8 +5,8 @@ export const hidden: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "At the start of your turn, place Fog into your space.",
-        "While you stand in Fog, you have Armor and your maximum range is increased by 3.",
+        { desc: "At the start of your turn, place Fog into your space." },
+        { desc: "While you stand in Fog, you have Armor and your maximum range is increased by 3." },
     ],
     actions: [
         {

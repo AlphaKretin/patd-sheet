@@ -5,9 +5,11 @@ export const zombie: Style = {
     minRange: 1,
     maxRange: 2,
     abilities: [
-        "After an enemy destroys any of your Copies, you deal 1 damage to them.",
-        "At the start of your turn and when you Bleed, place a Copy into a space within range of you or your Copies.",
-        "At the end of your turn, you deal 1 damage to each enemy adjacent to any of your Copies.",
+        { desc: "After an enemy destroys any of your Copies, you deal 1 damage to them." },
+        {
+            desc: "At the start of your turn and when you Bleed, place a Copy into a space within range of you or your Copies.",
+        },
+        { desc: "At the end of your turn, you deal 1 damage to each enemy adjacent to any of your Copies." },
     ],
     actions: [
         {

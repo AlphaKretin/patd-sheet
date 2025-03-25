@@ -7,8 +7,10 @@ export const grave: Freestyle = {
     minRange: 3,
     maxRange: 3,
     abilities: [
-        "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled.",
-        "At the start of your turn, choose one:\n• Set your Range to 3-6 until your next turn.\n• Set your range to 0-3 until your next turn.",
+        { desc: "After you spend Control tokens, you may Push 1 or Pull 1 to the enemy whose Action you controlled." },
+        {
+            desc: "At the start of your turn, choose one:\n• Set your Range to 3-6 until your next turn.\n• Set your range to 0-3 until your next turn.",
+        },
     ],
     actions: [
         {
