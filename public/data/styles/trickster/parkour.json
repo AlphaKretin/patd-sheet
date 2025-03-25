@@ -7,7 +7,8 @@
             "desc": "You may move through and stand on top of Walls as though they were empty spaces. You can see and target enemies through Walls."
         },
         {
-            "desc": "After you end movement within a Wall’s space, you may Move 1."
+            "desc": "After you end movement within a Wall\u00e2\u20ac\u2122s space, you may Move 1.",
+            "trigger": "after you end movement within a wall\u00e2\u20ac\u2122s space"
         }
     ],
     "actions": [

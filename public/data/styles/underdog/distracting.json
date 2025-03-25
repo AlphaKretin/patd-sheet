@@ -4,7 +4,8 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "After an enemy deals damage to you with an Action, give that enemy 1 Weakness token."
+            "desc": "After an enemy deals damage to you with an Action, give that enemy 1 Weakness token.",
+            "trigger": "after an enemy deals damage to you with an action"
         },
         {
             "desc": "Your Challenge tokens cannot be discarded by enemy Actions or Abilities."

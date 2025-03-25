@@ -2,26 +2,32 @@
     "name": "Demon",
     "focusedAbilities": [
         {
-            "desc": "At the end of your turn, you gain 2 Chaos Tokens."
+            "desc": "At the end of your turn, you gain 2 Chaos Tokens.",
+            "trigger": "at the end of your turn"
         },
         {
-            "desc": "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold."
+            "desc": "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+            "trigger": "at the start of each enemy turn"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "At the end of your turn, you gain 1 Chaos Token."
+            "desc": "At the end of your turn, you gain 1 Chaos Token.",
+            "trigger": "at the end of your turn"
         },
         {
-            "desc": "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold."
+            "desc": "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+            "trigger": "at the start of each enemy turn"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "At the end of this turn, you gain 2 Chaos Tokens."
+            "desc": "At the end of this turn, you gain 2 Chaos Tokens.",
+            "trigger": "at the end of this turn"
         },
         {
-            "desc": "Until your next turn, at the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold."
+            "desc": "Until your next turn, at the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
+            "trigger": "at the start of each enemy turn"
         }
     ],
     "actions": [
@@ -31,7 +37,13 @@
             "desc": "Teleport 3, then deal 2 damage to an enemy within range."
         }
     ],
-    "styles": ["dark", "ogres", "slasher", "vampire", "zombie"],
+    "styles": [
+        "dark",
+        "ogres",
+        "slasher",
+        "vampire",
+        "zombie"
+    ],
     "alphaSuper": {
         "name": "Unending Despair",
         "desc": "Target an adjacent enemy. Give them 4 Burning tokens, 3 Fatigue tokens, and 2 Weakness tokens. You gain 2 Iron tokens, 2 Power tokens, 2 Speed tokens, and 2 Chaos tokens."

@@ -4,10 +4,12 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "After you Push, you may Teleport to an empty space adjacent to the target of that Push."
+            "desc": "After you Push, you may Teleport to an empty space adjacent to the target of that Push.",
+            "trigger": "after you push"
         },
         {
-            "desc": "At the start of your turn, you may Push 3 to an obstacle, ally, or enemy within range."
+            "desc": "At the start of your turn, you may Push 3 to an obstacle, ally, or enemy within range.",
+            "trigger": "at the start of your turn"
         }
     ],
     "actions": [

@@ -4,13 +4,16 @@
     "maxRange": 4,
     "abilities": [
         {
-            "desc": "At the start of your turn, give 1 Weakness token to all enemies within range."
+            "desc": "At the start of your turn, give 1 Weakness token to all enemies within range.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "At the end of your turn, Challenge an enemy within range and give them 1 Weakness token."
+            "desc": "At the end of your turn, Challenge an enemy within range and give them 1 Weakness token.",
+            "trigger": "at the end of your turn"
         },
         {
-            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held it gains 3 Burning tokens."
+            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held it gains 3 Burning tokens.",
+            "trigger": "if an enemy discards your challenge token using an enemy action or ability"
         }
     ],
     "actions": [

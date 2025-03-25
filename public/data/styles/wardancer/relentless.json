@@ -7,7 +7,8 @@
             "desc": "Enemies holding your Challenge are within your range."
         },
         {
-            "desc": "After you deal damage, Push 1."
+            "desc": "After you deal damage, Push 1.",
+            "trigger": "after you deal damage"
         }
     ],
     "actions": [

@@ -7,7 +7,8 @@
             "desc": "You have Armor against damage from Burning tokens."
         },
         {
-            "desc": "After you Reduce a Hit, give 1 Burning token to your attacker."
+            "desc": "After you Reduce a Hit, give 1 Burning token to your attacker.",
+            "trigger": "after you reduce a hit"
         }
     ],
     "actions": [

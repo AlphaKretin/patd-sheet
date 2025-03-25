@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "After you spend Iron tokens or trigger your Armor, you heal 1. This can heal a maximum of 3 HP per turn."
+            "desc": "After you spend Iron tokens or trigger your Armor, you heal 1. This can heal a maximum of 3 HP per turn.",
+            "trigger": "after you spend iron tokens or trigger your armor"
         },
         {
-            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token gains 2 Weakness tokens."
+            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token gains 2 Weakness tokens.",
+            "trigger": "if an enemy discards your challenge token using an enemy action or ability"
         }
     ],
     "actions": [

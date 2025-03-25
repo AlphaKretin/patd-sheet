@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "At the start of your turn, you may discard one token you hold."
+            "desc": "At the start of your turn, you may discard one token you hold.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "After you discard tokens using an Action or Ability, you gain an equal number of Iron tokens."
+            "desc": "After you discard tokens using an Action or Ability, you gain an equal number of Iron tokens.",
+            "trigger": "after you discard tokens using an action or ability"
         }
     ],
     "actions": [

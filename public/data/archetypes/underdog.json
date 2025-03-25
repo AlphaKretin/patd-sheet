@@ -2,26 +2,32 @@
     "name": "Underdog",
     "focusedAbilities": [
         {
-            "desc": "At the start of your turn, you gain 2 Luck Tokens."
+            "desc": "At the start of your turn, you gain 2 Luck Tokens.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "The first two times you take damage each turn, you gain 1 Basic token of your choice."
+            "desc": "The first two times you take damage each turn, you gain 1 Basic token of your choice.",
+            "trigger": "the first two times you take damage each turn"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "At the start of your turn, you gain 1 Luck Token."
+            "desc": "At the start of your turn, you gain 1 Luck Token.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "The first time you take damage each turn, you gain 1 Basic token of your choice."
+            "desc": "The first time you take damage each turn, you gain 1 Basic token of your choice.",
+            "trigger": "the first time you take damage each turn"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "At the start of this turn, you gain 2 Luck Tokens."
+            "desc": "At the start of this turn, you gain 2 Luck Tokens.",
+            "trigger": "at the start of this turn"
         },
         {
-            "desc": "Until your next turn, the first two times you take damage each turn, you gain 1 Basic token of your choice."
+            "desc": "Until your next turn, the first two times you take damage each turn, you gain 1 Basic token of your choice.",
+            "trigger": "the first two times you take damage each turn"
         }
     ],
     "actions": [
@@ -31,7 +37,13 @@
             "desc": "Choose one: Teleport 3; -or- Push 2 and deal 2 damage to an enemy within range; -or- you gain temporary Armor.\nUsable once per turn."
         }
     ],
-    "styles": ["collateral", "distracting", "lucky", "misfortunes", "scrambling"],
+    "styles": [
+        "collateral",
+        "distracting",
+        "lucky",
+        "misfortunes",
+        "scrambling"
+    ],
     "alphaSuper": {
         "name": "Lucky Hit",
         "desc": "Deal 4 damage to an adjacent enemy. Then, that enemy discards all Basic tokens they hold, discards all Shields they hold, and cannot have Armor or Shields for the rest of this Round."

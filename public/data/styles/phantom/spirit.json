@@ -10,7 +10,8 @@
             "desc": "You and your Copies treat Walls as if they were Rubble."
         },
         {
-            "desc": "After each space of Free Movement you do, any number of your Copies may Move 1."
+            "desc": "After each space of Free Movement you do, any number of your Copies may Move 1.",
+            "trigger": "after each space of free movement you do"
         }
     ],
     "actions": [

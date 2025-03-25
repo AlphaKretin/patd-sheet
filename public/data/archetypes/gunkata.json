@@ -2,17 +2,20 @@
     "name": "Gunkata",
     "focusedAbilities": [
         {
-            "desc": "At the start and end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance."
+            "desc": "At the start and end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+            "trigger": "at the start and end of your turn"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "At the start -or- end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance."
+            "desc": "At the start -or- end of your turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+            "trigger": "at the start -or- end of your turn"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "At the start and end of this turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance."
+            "desc": "At the start and end of this turn, you perform one Gunslinger Action of your choice without paying its cost, from among those available to you in your current Stance.",
+            "trigger": "at the start and end of this turn"
         }
     ],
     "actions": [

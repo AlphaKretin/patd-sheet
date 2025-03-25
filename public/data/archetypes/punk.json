@@ -2,17 +2,20 @@
     "name": "Punk",
     "focusedAbilities": [
         {
-            "desc": "At the start of your turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3."
+            "desc": "At the start of your turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3.",
+            "trigger": "at the start of your turn"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "At the start of your turn, add X to your Action Pool.\nX is equal to half the damage on your current health bar, rounded up, to a maximum of 9. If your health bar is full, X = 2."
+            "desc": "At the start of your turn, add X to your Action Pool.\nX is equal to half the damage on your current health bar, rounded up, to a maximum of 9. If your health bar is full, X = 2.",
+            "trigger": "at the start of your turn"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "At the start of this turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3."
+            "desc": "At the start of this turn, add X to your Action Pool.\nX is equal to the damage on your current health bar, to a maximum of 13. If your health bar is full, X = 3.",
+            "trigger": "at the start of this turn"
         }
     ],
     "actions": [

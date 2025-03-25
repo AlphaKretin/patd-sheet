@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "After you perform an Action with exactly one target, you deal 1 damage to all enemies adjacent to that target."
+            "desc": "After you perform an Action with exactly one target, you deal 1 damage to all enemies adjacent to that target.",
+            "trigger": "after you perform an action with exactly one target"
         },
         {
-            "desc": "The first time each turn one of your Copies is destroyed, you may place a Copy within range of your Original."
+            "desc": "The first time each turn one of your Copies is destroyed, you may place a Copy within range of your Original.",
+            "trigger": "the first time each turn one of your copies is destroyed"
         }
     ],
     "actions": [

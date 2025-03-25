@@ -4,10 +4,12 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "After you take damage, you gain 1 Iron token."
+            "desc": "After you take damage, you gain 1 Iron token.",
+            "trigger": "after you take damage"
         },
         {
-            "desc": "After you take damage from an enemy with your Challenge, you may Move 1."
+            "desc": "After you take damage from an enemy with your Challenge, you may Move 1.",
+            "trigger": "after you take damage from an enemy with your challenge"
         }
     ],
     "actions": [

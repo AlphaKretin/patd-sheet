@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "After an effect Pushes you, you may Pull yourself up to 2 towards the source of that Push."
+            "desc": "After an effect Pushes you, you may Pull yourself up to 2 towards the source of that Push.",
+            "trigger": "after an effect pushes you"
         },
         {
-            "desc": "At the end of every turn, you may Move 1, then you deal 1 damage to an enemy within range."
+            "desc": "At the end of every turn, you may Move 1, then you deal 1 damage to an enemy within range.",
+            "trigger": "at the end of every turn"
         }
     ],
     "actions": [

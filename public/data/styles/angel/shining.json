@@ -4,13 +4,16 @@
     "maxRange": 1,
     "abilities": [
         {
-            "desc": "At the start of your turn, Push 1 to all obstacles and enemies adjacent to you."
+            "desc": "At the start of your turn, Push 1 to all obstacles and enemies adjacent to you.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "Enemies cannot use Action Movement, Free Movement, or teleports to enter a space adjacent to you."
+            "desc": "Enemies cannot use Action Movement, Free Movement, or teleports to enter a space adjacent to you.",
+            "trigger": "enemies cannot use action movement"
         },
         {
-            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token takes 3 damage."
+            "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held the token takes 3 damage.",
+            "trigger": "if an enemy discards your challenge token using an enemy action or ability"
         }
     ],
     "actions": [

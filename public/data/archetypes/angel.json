@@ -5,10 +5,12 @@
             "desc": "Your Challenges are Unblockable By Shields."
         },
         {
-            "desc": "At the start of your turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them."
+            "desc": "At the start of your turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "After you challenge an enemy, deal 1 damage to them and heal 1."
+            "desc": "After you challenge an enemy, deal 1 damage to them and heal 1.",
+            "trigger": "after you challenge an enemy"
         }
     ],
     "fusedAbilities": [
@@ -16,10 +18,12 @@
             "desc": "Your Challenges are Unblockable by Shields."
         },
         {
-            "desc": "At the start of your turn, you may heal 2, then if you did, Challenge an enemy you can see."
+            "desc": "At the start of your turn, you may heal 2, then if you did, Challenge an enemy you can see.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "After you Challenge an enemy, you deal 1 damage to them."
+            "desc": "After you Challenge an enemy, you deal 1 damage to them.",
+            "trigger": "after you challenge an enemy"
         }
     ],
     "franticAbilities": [
@@ -27,10 +31,12 @@
             "desc": "Your Challenges are Unblockable by Shields."
         },
         {
-            "desc": "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them."
+            "desc": "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
+            "trigger": "at the start of this turn"
         },
         {
-            "desc": "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1."
+            "desc": "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1.",
+            "trigger": "after you challenge an enemy"
         }
     ],
     "actions": [

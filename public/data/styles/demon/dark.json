@@ -7,7 +7,8 @@
             "desc": "You can see and target enemies through Fog."
         },
         {
-            "desc": "At the end of your turn, place a Fog obstacle into your space."
+            "desc": "At the end of your turn, place a Fog obstacle into your space.",
+            "trigger": "at the end of your turn"
         }
     ],
     "actions": [

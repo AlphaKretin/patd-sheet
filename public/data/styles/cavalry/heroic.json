@@ -4,10 +4,12 @@
     "maxRange": 2,
     "abilities": [
         {
-            "desc": "At the start of your turn, you heal 1."
+            "desc": "At the start of your turn, you heal 1.",
+            "trigger": "at the start of your turn"
         },
         {
-            "desc": "Whenever an ally within range takes damage, they take half that damage (rounded down) and you take the other half (rounded up)."
+            "desc": "Whenever an ally within range takes damage, they take half that damage (rounded down) and you take the other half (rounded up).",
+            "trigger": "whenever an ally within range takes damage"
         }
     ],
     "actions": [

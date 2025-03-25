@@ -10,10 +10,12 @@
             "desc": "Rubble does not give you Fatigue tokens"
         },
         {
-            "desc": "At the end of every turn, you may move 1 space."
+            "desc": "At the end of every turn, you may move 1 space.",
+            "trigger": "at the end of every turn"
         },
         {
-            "desc": "After you give an enemy your Challenge token, you may Move 2."
+            "desc": "After you give an enemy your Challenge token, you may Move 2.",
+            "trigger": "after you give an enemy your challenge token"
         }
     ],
     "actions": [

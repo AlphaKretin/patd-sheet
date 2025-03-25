@@ -4,7 +4,8 @@
     "maxRange": 3,
     "abilities": [
         {
-            "desc": "At the start of each allied turn, give 1 Burning token to each enemy within range."
+            "desc": "At the start of each allied turn, give 1 Burning token to each enemy within range.",
+            "trigger": "at the start of each allied turn"
         }
     ],
     "actions": [

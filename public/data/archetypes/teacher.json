@@ -2,24 +2,27 @@
     "name": "Teacher",
     "focusedAbilities": [
         {
-            "desc": "At the start of your turn, you gain 2 Mentor Tokens."
+            "desc": "At the start of your turn, you gain 2 Mentor Tokens.",
+            "trigger": "at the start of your turn"
         }
     ],
     "fusedAbilities": [
         {
-            "desc": "At the start of your turn, you gain 1 Mentor Token."
+            "desc": "At the start of your turn, you gain 1 Mentor Token.",
+            "trigger": "at the start of your turn"
         }
     ],
     "franticAbilities": [
         {
-            "desc": "At the start of this turn, you gain 2 Mentor Tokens."
+            "desc": "At the start of this turn, you gain 2 Mentor Tokens.",
+            "trigger": "at the start of this turn"
         }
     ],
     "actions": [
         {
             "name": "Remember Your Training",
             "cost": "1 Mentor Token",
-            "desc": "The active character heals 1, then performs a Unique Action available to their current Stance, without paying its cost. For the purposes of Gates or the value of X, use a value of 4.\nUsable once per turn, only during allies’ turns.\nUsable while you are Taken Out."
+            "desc": "The active character heals 1, then performs a Unique Action available to their current Stance, without paying its cost. For the purposes of Gates or the value of X, use a value of 4.\nUsable once per turn, only during allies\u00e2\u20ac\u2122 turns.\nUsable while you are Taken Out."
         }
     ],
     "styles": [
