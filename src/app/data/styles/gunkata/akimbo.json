@@ -1,0 +1,25 @@
+{
+    "name": "Akimbo",
+    "minRange": 2,
+    "maxRange": 4,
+    "abilities": [
+        {
+            "desc": "At the start and end of your turn, Move 2."
+        },
+        {
+            "desc": "After each Action you perform, Move 1."
+        }
+    ],
+    "actions": [
+        {
+            "name": "Firing Wild",
+            "cost": "3+ or 5+ or 8+",
+            "desc": "Choose one: Deal 1 damage to each adjacent enemy; -or- deal 1 damage to up to 3 enemies within range; -or- deal 1 damage to up to 2 enemies you can see beyond your maximum range.\n5+: Choose two instead.\n8+: Deal 2 damage instead."
+        },
+        {
+            "name": "Kneecapper",
+            "cost": "4+",
+            "desc": "This is a Gunslinger Action.\nChoose one or two enemies within range. Deal 1 damage and give 2 Fatigue tokens to each target."
+        }
+    ]
+}

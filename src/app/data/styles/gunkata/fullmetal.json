@@ -1,0 +1,22 @@
+{
+    "name": "Fullmetal",
+    "minRange": 3,
+    "maxRange": 6,
+    "abilities": [
+        {
+            "desc": "At the start of your turn, choose your Ammo: Incendiary, Toxin, or Tracer. You have the chosen Ammo effect until your next turn.\nIncendiary: After each damage-dealing Action you perform, give each enemy dealt damage by that Action 1 Burning token.\nToxin: After each damage-dealing Action you perform, give each enemy dealt damage by that Action 1 Weakness token.\nTracer: You can see and target enemies through Fog and Walls. You have +2 maximum Range."
+        }
+    ],
+    "actions": [
+        {
+            "name": "Bombardment",
+            "cost": "5+",
+            "desc": "This is a Gunslinger Action. Place a Trap into any space within range. Then, deal 2 damage to each enemy adjacent to, or on, that Trap."
+        },
+        {
+            "name": "Bazooka",
+            "cost": "7+",
+            "desc": "Deal 4 damage to an enemy within range, then deal 1 damage and give 2 Burning tokens to an enemy adjacent to you."
+        }
+    ]
+}
