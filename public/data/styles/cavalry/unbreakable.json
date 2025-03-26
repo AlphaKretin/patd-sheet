@@ -8,7 +8,8 @@
         },
         {
             "desc": "At the start and end of your turn, give 1 Iron token to each ally within range.",
-            "trigger": "at the start and end of your turn"
+            "trigger": "at the start and end of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

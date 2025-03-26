@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start of each ally's turn, if they are within Range of you or your Copies, they may heal.",
-            "trigger": "at the start of each ally's turn"
+            "trigger": "at the start of each ally's turn",
+            "triggerCategory": "start of other turns"
         },
         {
             "desc": "At the end of your turn, choose an ally you can see other than yourself. They heal and gain Shield 2.",
-            "trigger": "at the end of your turn"
+            "trigger": "at the end of your turn",
+            "triggerCategory": "end of turn"
         }
     ],
     "actions": [

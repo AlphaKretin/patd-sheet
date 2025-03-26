@@ -5,15 +5,18 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain Shield 3.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After an enemy within range damages or breaks an ally\u00e2\u20ac\u2122s Shield, or has their own Shield damaged or broken, you may Push 1 or Pull 1 to that enemy.",
-            "trigger": "after an enemy within range damages or breaks an ally\u00e2\u20ac\u2122s shield"
+            "trigger": "after an enemy within range damages or breaks an ally\u00e2\u20ac\u2122s shield",
+            "triggerCategory": "after action"
         },
         {
             "desc": "After a Shield within range breaks, you gain 1 Power token.",
-            "trigger": "after a shield within range breaks"
+            "trigger": "after a shield within range breaks",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

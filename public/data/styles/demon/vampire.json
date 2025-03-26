@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "After you deal damage with an Action or Ability, you heal 1. This Ability cannot heal you more than the Bleed Value in a single turn.",
-            "trigger": "after you deal damage with an action or ability"
+            "trigger": "after you deal damage with an action or ability",
+            "triggerCategory": "after action"
         },
         {
             "desc": "After you give Weakness tokens to an enemy, you gain 1 Power token, to a maximum of 4 Power tokens per turn.",
-            "trigger": "after you give weakness tokens to an enemy"
+            "trigger": "after you give weakness tokens to an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

@@ -10,7 +10,8 @@
     "abilities": [
         {
             "desc": "When you gain Speed tokens, replace half of them (rounded down) with Power tokens.",
-            "trigger": "when you gain speed tokens"
+            "trigger": "when you gain speed tokens",
+            "triggerCategory": "after action"
         },
         {
             "desc": "You can Enhance a Hit two additional times."

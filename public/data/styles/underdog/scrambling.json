@@ -5,19 +5,23 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain 1 Power token and 1 Iron token.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After you spend Power tokens, you gain 1 Speed token.",
-            "trigger": "after you spend power tokens"
+            "trigger": "after you spend power tokens",
+            "triggerCategory": "after action"
         },
         {
             "desc": "After you spend Iron tokens, you gain 1 Speed token.",
-            "trigger": "after you spend iron tokens"
+            "trigger": "after you spend iron tokens",
+            "triggerCategory": "after action"
         },
         {
             "desc": "When you discard Speed tokens at the end of each turn, you do not discard below 2 Speed tokens.",
-            "trigger": "when you discard speed tokens at the end of each turn"
+            "trigger": "when you discard speed tokens at the end of each turn",
+            "triggerCategory": "end of turn"
         }
     ],
     "actions": [

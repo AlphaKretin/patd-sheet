@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain temporary Armor and may Move up to 2.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "At the start of each ally's turn, that ally may Move up to 2.",
-            "trigger": "at the start of each ally's turn"
+            "trigger": "at the start of each ally's turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "actions": [

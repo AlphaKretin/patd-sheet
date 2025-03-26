@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "After each Action you perform, you may choose one: deal 1 damage to one enemy within range that was not targeted by that Action; -or- replace one obstacle you can see with Rubble.",
-            "trigger": "after each action you perform"
+            "trigger": "after each action you perform",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

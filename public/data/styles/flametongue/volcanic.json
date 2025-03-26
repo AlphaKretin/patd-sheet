@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start and end of your turn, you may place a Trap into a space within range.",
-            "trigger": "at the start and end of your turn"
+            "trigger": "at the start and end of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After an enemy within range takes damage from a Trap, give that enemy 1 Burning token.",
-            "trigger": "after an enemy within range takes damage from a trap"
+            "trigger": "after an enemy within range takes damage from a trap",
+            "triggerCategory": "after action"
         },
         {
             "desc": "You do not take damage from Traps."

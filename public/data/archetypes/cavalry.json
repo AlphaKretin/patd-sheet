@@ -3,19 +3,22 @@
     "focusedAbilities": [
         {
             "desc": "At the start and end of your turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
-            "trigger": "at the start and end of your turn"
+            "trigger": "at the start and end of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "At the start of your turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "franticAbilities": [
         {
             "desc": "At the start and end of this turn, you may Move up to 2, then you and each ally within range gains Shield 2.",
-            "trigger": "at the start and end of this turn"
+            "trigger": "at the start and end of this turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

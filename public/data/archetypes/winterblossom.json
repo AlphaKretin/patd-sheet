@@ -3,19 +3,22 @@
     "focusedAbilities": [
         {
             "desc": "At the start of each turn, give 1 Weakness token to one enemy within range of you or your Copies.",
-            "trigger": "at the start of each turn"
+            "trigger": "at the start of each turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "At the start of each allied turn, give 1 Weakness token to one enemy within range of you or your Copies.",
-            "trigger": "at the start of each allied turn"
+            "trigger": "at the start of each allied turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "franticAbilities": [
         {
             "desc": "At the start of each turn until your next turn, give 1 Weakness token to one enemy within range of you or your Copies.",
-            "trigger": "at the start of each turn until your next turn"
+            "trigger": "at the start of each turn until your next turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "actions": [

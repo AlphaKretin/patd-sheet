@@ -5,15 +5,18 @@
     "abilities": [
         {
             "desc": "At the start of each enemy turn, you may pay 1 HP to Challenge the active character.",
-            "trigger": "at the start of each enemy turn"
+            "trigger": "at the start of each enemy turn",
+            "triggerCategory": "start of other turns"
         },
         {
             "desc": "After you Challenge an enemy, you deal 2 damage to them.",
-            "trigger": "after you challenge an enemy"
+            "trigger": "after you challenge an enemy",
+            "triggerCategory": "after action"
         },
         {
             "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, heal your nearest ally to them, other than yourself.",
-            "trigger": "if an enemy discards your challenge token using an enemy action or ability"
+            "trigger": "if an enemy discards your challenge token using an enemy action or ability",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "At the start of your turn, choose your Ammo: Incendiary, Toxin, or Tracer. You have the chosen Ammo effect until your next turn.\nIncendiary: After each damage-dealing Action you perform, give each enemy dealt damage by that Action 1 Burning token.\nToxin: After each damage-dealing Action you perform, give each enemy dealt damage by that Action 1 Weakness token.\nTracer: You can see and target enemies through Fog and Walls. You have +2 maximum Range.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

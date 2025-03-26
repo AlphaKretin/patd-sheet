@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain Shield 2, then if you are Bleeding, you heal.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "When you Bleed, you heal and gain Shield 3.",
-            "trigger": "when you bleed"
+            "trigger": "when you bleed",
+            "triggerCategory": "bleed"
         },
         {
             "desc": "You do not take damage from Burning Tokens."

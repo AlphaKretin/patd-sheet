@@ -8,7 +8,8 @@
         },
         {
             "desc": "After you Throw or Grapple an enemy, you deal 2 damage to them.",
-            "trigger": "after you throw or grapple an enemy"
+            "trigger": "after you throw or grapple an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

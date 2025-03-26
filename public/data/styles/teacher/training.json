@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain 1 Training Token, then one ally you can see (other than yourself) heals 2 and gains 2 Power tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After you spend a Training Token, give 1 Training Token to an ally you can see, other than yourself.",
-            "trigger": "after you spend a training token"
+            "trigger": "after you spend a training token",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

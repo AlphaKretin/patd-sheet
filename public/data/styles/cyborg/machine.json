@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain 1 Iron token.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "You may spend your Iron Tokens as if they were Power tokens or Speed tokens."

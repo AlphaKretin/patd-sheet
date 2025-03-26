@@ -6,11 +6,13 @@
         },
         {
             "desc": "At the start of your turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After you challenge an enemy, deal 1 damage to them and heal 1.",
-            "trigger": "after you challenge an enemy"
+            "trigger": "after you challenge an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "fusedAbilities": [
@@ -19,11 +21,13 @@
         },
         {
             "desc": "At the start of your turn, you may heal 2, then if you did, Challenge an enemy you can see.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After you Challenge an enemy, you deal 1 damage to them.",
-            "trigger": "after you challenge an enemy"
+            "trigger": "after you challenge an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "franticAbilities": [
@@ -32,11 +36,13 @@
         },
         {
             "desc": "At the start of this turn, you may heal, then if you did, Challenge an enemy you can see and deal 1 damage to them.",
-            "trigger": "at the start of this turn"
+            "trigger": "at the start of this turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "Until your next turn, after you Challenge an enemy, deal 1 damage to them and heal 1.",
-            "trigger": "after you challenge an enemy"
+            "trigger": "after you challenge an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

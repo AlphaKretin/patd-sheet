@@ -3,31 +3,37 @@
     "focusedAbilities": [
         {
             "desc": "At the start of your turn, you gain 2 Luck Tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "The first two times you take damage each turn, you gain 1 Basic token of your choice.",
-            "trigger": "the first two times you take damage each turn"
+            "trigger": "the first two times you take damage each turn",
+            "triggerCategory": "after action"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "At the start of your turn, you gain 1 Luck Token.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "The first time you take damage each turn, you gain 1 Basic token of your choice.",
-            "trigger": "the first time you take damage each turn"
+            "trigger": "the first time you take damage each turn",
+            "triggerCategory": "after action"
         }
     ],
     "franticAbilities": [
         {
             "desc": "At the start of this turn, you gain 2 Luck Tokens.",
-            "trigger": "at the start of this turn"
+            "trigger": "at the start of this turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "Until your next turn, the first two times you take damage each turn, you gain 1 Basic token of your choice.",
-            "trigger": "the first two times you take damage each turn"
+            "trigger": "the first two times you take damage each turn",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

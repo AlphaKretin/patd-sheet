@@ -10,7 +10,8 @@
     "abilities": [
         {
             "desc": "Once per turn, when an enemy you can see gains Basic tokens, you gain 1 Power token.",
-            "trigger": "when an enemy you can see gains basic tokens"
+            "trigger": "when an enemy you can see gains basic tokens",
+            "triggerCategory": "after action"
         },
         {
             "desc": "You can Enhance a Hit one additional time."

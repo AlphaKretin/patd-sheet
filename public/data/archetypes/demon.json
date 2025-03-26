@@ -3,31 +3,37 @@
     "focusedAbilities": [
         {
             "desc": "At the end of your turn, you gain 2 Chaos Tokens.",
-            "trigger": "at the end of your turn"
+            "trigger": "at the end of your turn",
+            "triggerCategory": "end of turn"
         },
         {
             "desc": "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
-            "trigger": "at the start of each enemy turn"
+            "trigger": "at the start of each enemy turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "At the end of your turn, you gain 1 Chaos Token.",
-            "trigger": "at the end of your turn"
+            "trigger": "at the end of your turn",
+            "triggerCategory": "end of turn"
         },
         {
             "desc": "At the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
-            "trigger": "at the start of each enemy turn"
+            "trigger": "at the start of each enemy turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "franticAbilities": [
         {
             "desc": "At the end of this turn, you gain 2 Chaos Tokens.",
-            "trigger": "at the end of this turn"
+            "trigger": "at the end of this turn",
+            "triggerCategory": "end of turn"
         },
         {
             "desc": "Until your next turn, at the start of each enemy turn, you may Pull yourself up to X spaces towards the active character, where X is the number of Chaos Tokens you hold.",
-            "trigger": "at the start of each enemy turn"
+            "trigger": "at the start of each enemy turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "actions": [

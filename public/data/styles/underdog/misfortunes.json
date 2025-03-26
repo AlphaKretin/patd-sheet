@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "After you take damage from anything other than an Action or an Ability, choose one: You deal 1 damage to an enemy within range; -or- you heal 2.",
-            "trigger": "after you take damage from anything other than an action or an ability"
+            "trigger": "after you take damage from anything other than an action or an ability",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

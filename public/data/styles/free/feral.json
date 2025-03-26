@@ -10,15 +10,18 @@
     "abilities": [
         {
             "desc": "After each Action you perform, if you are not Bleeding, you pay 1 HP.",
-            "trigger": "after each action you perform"
+            "trigger": "after each action you perform",
+            "triggerCategory": "after action"
         },
         {
             "desc": "At the start of your turn, you gain 2 Power tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "When you Bleed, add a 4 to your Action Pool.",
-            "trigger": "when you bleed"
+            "trigger": "when you bleed",
+            "triggerCategory": "bleed"
         }
     ],
     "actions": [

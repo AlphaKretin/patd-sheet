@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "Before each Reactive Action you perform, you may Move 1.",
-            "trigger": "before each reactive action you perform"
+            "trigger": "before each reactive action you perform",
+            "triggerCategory": "before action"
         },
         {
             "desc": "After each Action you perform, you gain 1 Speed token.",
-            "trigger": "after each action you perform"
+            "trigger": "after each action you perform",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

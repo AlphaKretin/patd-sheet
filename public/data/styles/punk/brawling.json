@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the end of each turn you took damage, you gain Shield 2.",
-            "trigger": "at the end of each turn you took damage"
+            "trigger": "at the end of each turn you took damage",
+            "triggerCategory": "end of turn"
         },
         {
             "desc": "After your Shield absorbs, you gain 1 Power token.",
-            "trigger": "after your shield absorbs"
+            "trigger": "after your shield absorbs",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

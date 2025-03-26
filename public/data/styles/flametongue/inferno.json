@@ -8,7 +8,8 @@
         },
         {
             "desc": "After you Reduce a Hit, give 1 Burning token to your attacker.",
-            "trigger": "after you reduce a hit"
+            "trigger": "after you reduce a hit",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

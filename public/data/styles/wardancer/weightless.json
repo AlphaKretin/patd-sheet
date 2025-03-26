@@ -10,12 +10,10 @@
             "desc": "Rubble does not give you Fatigue."
         },
         {
-            "desc": "All spaces are Empty spaces to you. You can move into and share a space with Copies, Walls, and other units.",
-            "trigger": "all spaces are empty spaces to you. you can move into and share a space with copies"
+            "desc": "All spaces are Empty spaces to you. You can move into and share a space with Copies, Walls, and other units."
         },
         {
-            "desc": "All spaces cost 1 Speed token to enter using Free Movement. Ignore all additional Speed token costs, from leaving Pits or moving diagonally or any other source.",
-            "trigger": "all spaces cost 1 speed token to enter using free movement. ignore all additional speed token costs"
+            "desc": "All spaces cost 1 Speed token to enter using Free Movement. Ignore all additional Speed token costs, from leaving Pits or moving diagonally or any other source."
         }
     ],
     "actions": [

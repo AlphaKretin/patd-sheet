@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "At the start of your turn, choose a Weapon: Club, Knife, or Pistol. You have the chosen Weapon\u00e2\u20ac\u2122s effect until your next turn.\nClub: After each damage-dealing Action you perform, give each enemy dealt damage by that Action one Fatigue token.\nKnife: Your Actions and Abilities are Unblockable by Armor and Tokens.\nPistol: You have +3 maximum Range.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

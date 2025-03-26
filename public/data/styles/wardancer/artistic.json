@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain 2 Iron tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After you deal damage to, or Reduce a Hit from, an enemy, you may spend 1 Iron token to give them 1 Status token of your choice.",
-            "trigger": "after you deal damage to"
+            "trigger": "after you deal damage to, or reduce a hit from, an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

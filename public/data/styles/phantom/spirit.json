@@ -11,7 +11,8 @@
         },
         {
             "desc": "After each space of Free Movement you do, any number of your Copies may Move 1.",
-            "trigger": "after each space of free movement you do"
+            "trigger": "after each space of free movement you do",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

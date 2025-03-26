@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "After you use a Power token to Enhance a Hit, give 1 Burning token to the target of that hit.",
-            "trigger": "after you use a power token to enhance a hit"
+            "trigger": "after you use a power token to enhance a hit",
+            "triggerCategory": "after action"
         },
         {
             "desc": "After you take damage from Burning Tokens, gain 1 Power token.",
-            "trigger": "after you take damage from burning tokens"
+            "trigger": "after you take damage from burning tokens",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

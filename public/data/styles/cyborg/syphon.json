@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "At the start and end of your turn, you may choose 1 token you hold. Either replace it with a Power token, or gain another copy of it.",
-            "trigger": "at the start and end of your turn"
+            "trigger": "at the start and end of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

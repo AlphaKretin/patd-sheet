@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "After you deal damage to an enemy with an Action, you may destroy 1 obstacle within range per enemy dealt damage.",
-            "trigger": "after you deal damage to an enemy with an action"
+            "trigger": "after you deal damage to an enemy with an action",
+            "triggerCategory": "after action"
         },
         {
             "desc": "At the end of your turn, you gain 1 Power token per obstacle you destroyed during that turn.",
-            "trigger": "at the end of your turn"
+            "trigger": "at the end of your turn",
+            "triggerCategory": "end of turn"
         }
     ],
     "actions": [

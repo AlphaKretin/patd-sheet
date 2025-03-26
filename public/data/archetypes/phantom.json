@@ -3,19 +3,22 @@
     "focusedAbilities": [
         {
             "desc": "At the start of your turn, you gain 4 Poltergeist Tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "At the start of your turn, you gain 2 Poltergeist Tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "franticAbilities": [
         {
             "desc": "At the start of this turn, you gain 4 Poltergeist Tokens.",
-            "trigger": "at the start of this turn"
+            "trigger": "at the start of this turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

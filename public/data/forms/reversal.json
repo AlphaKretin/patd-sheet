@@ -15,7 +15,8 @@
         },
         {
             "desc": "The first time your Armor triggers each turn, you may Teleport 2. Then, if your Action Pool is empty, add a 3 to your Action Pool.",
-            "trigger": "the first time your armor triggers each turn"
+            "trigger": "the first time your armor triggers each turn",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

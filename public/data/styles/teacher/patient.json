@@ -8,11 +8,13 @@
         },
         {
             "desc": "At the end of each allied turn, you gain 1 Iron token.",
-            "trigger": "at the end of each allied turn"
+            "trigger": "at the end of each allied turn",
+            "triggerCategory": "end of turn"
         },
         {
             "desc": "After you use Armor or Iron tokens to reduce the damage you would take, one ally you can see other than yourself may heal 1.",
-            "trigger": "after you use armor or iron tokens to reduce the damage you would take"
+            "trigger": "after you use armor or iron tokens to reduce the damage you would take",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

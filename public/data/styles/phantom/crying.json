@@ -5,15 +5,18 @@
     "abilities": [
         {
             "desc": "At the start of your turn, give 1 Weakness token to all enemies within range.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "At the end of your turn, Challenge an enemy within range and give them 1 Weakness token.",
-            "trigger": "at the end of your turn"
+            "trigger": "at the end of your turn",
+            "triggerCategory": "end of turn"
         },
         {
             "desc": "If an enemy discards your Challenge token using an enemy Action or Ability, the enemy who held it gains 3 Burning tokens.",
-            "trigger": "if an enemy discards your challenge token using an enemy action or ability"
+            "trigger": "if an enemy discards your challenge token using an enemy action or ability",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

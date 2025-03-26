@@ -8,7 +8,8 @@
         },
         {
             "desc": "After you end movement within a Wall\u00e2\u20ac\u2122s space, you may Move 1.",
-            "trigger": "after you end movement within a wall\u00e2\u20ac\u2122s space"
+            "trigger": "after you end movement within a wall\u00e2\u20ac\u2122s space",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

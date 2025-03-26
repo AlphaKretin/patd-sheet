@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "Whenever you give Tokens to an enemy, you heal 1. This Ability cannot heal you more than the Bleed Value in a single turn.",
-            "trigger": "whenever you give tokens to an enemy"
+            "trigger": "whenever you give tokens to an enemy",
+            "triggerCategory": "after action"
         },
         {
             "desc": "Your Actions and Abilities are Unblockable by Shields."

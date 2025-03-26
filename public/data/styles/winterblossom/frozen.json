@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "At the start of your turn, you gain 2 Iron tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After you Reduce a Hit, give 1 Weakness token to your attacker.",
-            "trigger": "after you reduce a hit"
+            "trigger": "after you reduce a hit",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

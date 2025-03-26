@@ -3,19 +3,22 @@
     "focusedAbilities": [
         {
             "desc": "At the start of each turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
-            "trigger": "at the start of each turn"
+            "trigger": "at the start of each turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "At the start of each allied turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
-            "trigger": "at the start of each allied turn"
+            "trigger": "at the start of each allied turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "franticAbilities": [
         {
             "desc": "Until your next turn, at the start of each turn, you may target 1 non-Unique token held by someone within range of you or your Copies, then choose one or both:\nSteal the chosen token; -and/or-\nConvert the chosen token into an Iron token.",
-            "trigger": "at the start of each turn"
+            "trigger": "at the start of each turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "actions": [

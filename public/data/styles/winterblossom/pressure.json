@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "At the start and end of your turn, each enemy within range must pay 1 HP, then gain 1 Weakness token.",
-            "trigger": "at the start and end of your turn"
+            "trigger": "at the start and end of your turn",
+            "triggerCategory": "start of your turn"
         }
     ],
     "actions": [

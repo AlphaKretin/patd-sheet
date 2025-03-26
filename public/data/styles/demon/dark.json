@@ -8,7 +8,8 @@
         },
         {
             "desc": "At the end of your turn, place a Fog obstacle into your space.",
-            "trigger": "at the end of your turn"
+            "trigger": "at the end of your turn",
+            "triggerCategory": "end of turn"
         }
     ],
     "actions": [

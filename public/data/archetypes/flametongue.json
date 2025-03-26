@@ -3,19 +3,22 @@
     "focusedAbilities": [
         {
             "desc": "Three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
-            "trigger": "after you deal damage to an enemy"
+            "trigger": "after you deal damage to an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "fusedAbilities": [
         {
             "desc": "Three times per turn, after you deal damage to an enemy, give them 1 Burning token.",
-            "trigger": "after you deal damage to an enemy"
+            "trigger": "after you deal damage to an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "franticAbilities": [
         {
             "desc": "Until your next turn, three times per turn, after you deal damage to an enemy, give them 2 Burning tokens.",
-            "trigger": "three times per turn"
+            "trigger": "after you deal damage to an enemy",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

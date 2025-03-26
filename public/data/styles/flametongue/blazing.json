@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "At the start of each allied turn, give 1 Burning token to each enemy within range.",
-            "trigger": "at the start of each allied turn"
+            "trigger": "at the start of each allied turn",
+            "triggerCategory": "start of other turns"
         }
     ],
     "actions": [

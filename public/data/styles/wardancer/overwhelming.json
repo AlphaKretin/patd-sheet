@@ -8,11 +8,13 @@
         },
         {
             "desc": "At the start of your turn, you gain 2 Power tokens.",
-            "trigger": "at the start of your turn"
+            "trigger": "at the start of your turn",
+            "triggerCategory": "start of your turn"
         },
         {
             "desc": "After an enemy deals damage to you with an Action, you may spend a Power token to deal 1 damage and Push 1 to your attacker.",
-            "trigger": "after an enemy deals damage to you with an action"
+            "trigger": "after an enemy deals damage to you with an action",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [

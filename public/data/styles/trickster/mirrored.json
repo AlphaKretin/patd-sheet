@@ -5,7 +5,8 @@
     "abilities": [
         {
             "desc": "After you spend Iron tokens, you may deal 1 damage to one enemy within range of you or your Copies.",
-            "trigger": "after you spend iron tokens"
+            "trigger": "after you spend iron tokens",
+            "triggerCategory": "after action"
         },
         {
             "desc": "Your Copies have 2 HP each."

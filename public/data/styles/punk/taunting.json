@@ -5,11 +5,13 @@
     "abilities": [
         {
             "desc": "After you take damage, you gain 1 Iron token.",
-            "trigger": "after you take damage"
+            "trigger": "after you take damage",
+            "triggerCategory": "after action"
         },
         {
             "desc": "After you take damage from an enemy with your Challenge, you may Move 1.",
-            "trigger": "after you take damage from an enemy with your challenge"
+            "trigger": "after you take damage from an enemy with your challenge",
+            "triggerCategory": "after action"
         }
     ],
     "actions": [
