@@ -15,7 +15,7 @@ import {
     numStances,
 } from "./data/levelbonuses";
 import { nullArchetype, nullForm, nullSkill, nullStyle, nullSuper } from "./data/nulls";
-import { Ability } from "./data/types/Ability";
+import { Ability, triggerSort } from "./data/types/Ability";
 import { Action } from "./data/types/Action";
 import { Archetype } from "./data/types/Archetype";
 import { Form } from "./data/types/Form";
@@ -570,20 +570,7 @@ export default function CharacterBuilder() {
         });
     } else if (sortOption === "Trigger/Cost") {
         combinedAbilities.sort((a, b) => {
-            // neither passive
-            if (a.trigger && b.trigger) {
-                // TODO: hand-pick an order for ability triggers rather than lexical sorting
-                return a.trigger.localeCompare(b.trigger);
-            }
-            // b is passive, put it first
-            if (a.trigger && !b.trigger) {
-                return 1;
-            }
-            // a is passive, put it first
-            if (!a.trigger && b.trigger) {
-                return -1;
-            }
-            return 0;
+            return triggerSort.indexOf(a.triggerCategory) - triggerSort.indexOf(b.triggerCategory);
         });
     }
 

@@ -25,4 +25,4 @@ export const freestyles: Freestyle[] = [
     persistent,
     secret,
     silent,
-];
+] as Freestyle[];

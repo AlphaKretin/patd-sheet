@@ -10,5 +10,19 @@ import song from "public/data/forms/song.json";
 import thorns from "public/data/forms/thorns.json";
 import vigilance from "public/data/forms/vigilance.json";
 import wild from "public/data/forms/wild.json";
+import { Form } from "./types/Form";
 
-export const forms = [blaster, control, dance, iron, onetwo, power, reversal, shadow, song, thorns, vigilance, wild];
+export const forms = [
+    blaster,
+    control,
+    dance,
+    iron,
+    onetwo,
+    power,
+    reversal,
+    shadow,
+    song,
+    thorns,
+    vigilance,
+    wild,
+] as Form[];

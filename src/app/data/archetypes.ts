@@ -109,7 +109,7 @@ const baseArchetypes: SavableArchetype[] = [
     underdog,
     wardancer,
     winterblossom,
-];
+] as SavableArchetype[];
 
 const styleMap: Record<string, Style> = {
     halcyon: halcyon,
@@ -189,7 +189,7 @@ const styleMap: Record<string, Style> = {
     frozen: frozen,
     heartless: heartless,
     pressure: pressure,
-};
+} as Record<string, Style>;
 
 function loadArchetypeStyles(archetype: SavableArchetype): Archetype {
     const styles = archetype.styles.map((style) => styleMap[style]);
