@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import InlineLink from "./components/InlineLink";
 import { archetypes } from "./data/archetypes";
 import { bleedAbilities, HeroType } from "./data/bleed";
 import { Build, builds } from "./data/builds";
@@ -706,8 +707,8 @@ export default function CharacterBuilder() {
                 </p>
                 <br />
                 <p className="text-white">
-                    Created by LunaFlare. This app is not associated with or endorsed by the authors or publishers of
-                    Panic At The Dojo.
+                    Created by <InlineLink url="https://www.alphakretin.com">LunaFlare</InlineLink>. This app is not
+                    associated with or endorsed by the authors or publishers of Panic At The Dojo.
                 </p>
                 <br />
                 <p className="text-white">
@@ -718,7 +719,9 @@ export default function CharacterBuilder() {
                 <br />
                 <p className="text-white">
                     This app is a work in progress. See future features, leave feedback, and contribute at{" "}
-                    <a href="https://github.com/AlphaKretin/patd-sheet">https://github.com/AlphaKretin/patd-sheet</a>
+                    <InlineLink url="https://github.com/AlphaKretin/patd-sheet">
+                        https://github.com/AlphaKretin/patd-sheet
+                    </InlineLink>
                 </p>
             </div>
 
