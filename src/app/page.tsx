@@ -74,7 +74,7 @@ export default function CharacterBuilder() {
 
     useEffect(() => {
         if (selectedForms.every((form) => form.name)) {
-            const newDefaultSkills = selectedForms.map((form) => form.skill);
+            const newDefaultSkills = selectedForms.slice(0, 3).map((form) => form.skill);
             setDefaultSkills(newDefaultSkills);
             setSelectedSkills(newDefaultSkills);
         }
@@ -712,7 +712,7 @@ export default function CharacterBuilder() {
                 </p>
                 <br />
                 <p className="text-white">
-                    To ensure data doesn not get into an invalid state, editing any selections further up the page will
+                    To ensure data does not get into an invalid state, editing any selections further up the page will
                     reset everything below. Please try to build your character top down to avoid this inconvenience.
                     Apologies, I am hoping to find a better solution in the future.
                 </p>
